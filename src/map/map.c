@@ -77,8 +77,11 @@ t_map	*map_parse_and_validate(char *filepath)
 	ret = file_read_and_parse(fd, map);
 	close(fd);
 	debug_parsed_map(map); //DEBUG
-	if (ret != EXIT_SUCCESS || !is_valid_metadata(map) || !is_valid_grid(map))
+	if (ret != EXIT_SUCCESS
+		|| trim_empty_lines_after_grid(map) != EXIT_SUCCESS
+		|| !is_valid_metadata(map) || !is_valid_grid(map))
 		(free_map(map), exit(EXIT_FAILURE));
+	debug_parsed_map(map); //DEBUG
 	//grid_handle_spaces(map->grid); //TODO
 	//grid_remove_trim_lines_after(map->grid) //TODO
 	return (map);

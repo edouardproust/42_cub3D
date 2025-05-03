@@ -76,3 +76,36 @@ bool	has_more_than_one_word(char *str)
 		return (true);
 	return (false);
 }
+
+/**
+ * Check if a string is composed of spaces only (based on ft_isspace).
+ */
+static int line_is_empty(char *line)
+{
+    while (*line && ft_isspace(*line))
+        line++;
+    return (*line == '\0');
+}
+
+int    trim_empty_lines_after_grid(t_map *map)
+{
+	int	new_h;
+	int	i;
+
+	new_h = map->grid_height;
+	while (new_h > 0 && line_is_empty(map->grid[new_h - 1]))
+		new_h--;
+	if (new_h != map->grid_height)
+	{
+		i = new_h;
+		while (i < map->grid_height)
+			free((map->grid)[i++]);
+		char **new_grid = ft_realloc(map->grid, map->grid_height * sizeof(char *),
+			new_h * sizeof(char *));
+		if (!new_grid)
+			return (put_error2(E_PARSING, "grid realloc"), EXIT_FAILURE);
+		map->grid = new_grid;
+		map->grid_height = new_h;
+	}
+	return (EXIT_SUCCESS);
+}

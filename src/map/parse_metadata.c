@@ -19,14 +19,14 @@ static int	parse_metadata(char *id, char *line, int start, char **map_tx)
 	int	i;
 
 	if (*map_tx != NULL)
-		return (put_error3(ERR_PARSING, id, "double definition"), EXIT_FAILURE);
+		return (put_error3(E_PARSING, id, "double definition"), EXIT_FAILURE);
 	start = skip_whitespaces(line, start);
 	i = start;
 	while (line[i] && line[i] != '\n')
 		i++;
 	*map_tx = ft_substr(line, start, i - start);
 	if (!*map_tx)
-		return (put_error3(ERR_PARSING, id, "map metadata"), EXIT_FAILURE);
+		return (put_error3(E_PARSING, id, "map metadata"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -64,7 +64,7 @@ int	parse_line_to_metadata(char *line, t_map *map, int ret)
 	else if (ft_strncmp(line, "C ", 2) == 0)
 		ret = parse_metadata("C", line, 1, &map->color_c);
 	else if (line[0] != '\0')
-		return (put_error3(ERR_PARSING, line, "invalid metadata line"),
+		return (put_error3(E_PARSING, line, "invalid metadata line"),
 			EXIT_FAILURE);
 	return (ret);
 }

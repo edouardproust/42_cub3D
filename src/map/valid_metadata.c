@@ -13,16 +13,8 @@
  * 🟢 Unlimited spacing
  * 🟢 Mixed order
  *
- * Grid:
- * ⭕ Must contains only the following characters: 0, 1, N, S, E, W
- * ⭕ Must be closed/surrounded by walls (char '1')
- * ⭕ Cannot contain empty lines
- * ⭕ Needs to be the last element in the file (no extra data after)
- * Allowed for grid:
- * ⭕ Spaces outside of the walls (char '1')
- *
- * If invalid grid:
- * ⭕ Clean program exit + print "Error\n" followed by detail
+ * If error:
+ * 🟠 Clean program exit + print "Error\n" followed by detail
  * of the error
 */
 
@@ -84,7 +76,7 @@ static bool	is_valid_color(char *id, char *color, bool ret)
 		return (put_error2(id, "Invalid color code"), false);
 	parts = ft_split(color, ',');
 	if (!parts)
-		return (put_error2(ERR_FATAL_PARSING, "color allocation"), false);
+		return (put_error2(E_FATAL_PARSING, "color allocation"), false);
 	if (ft_matrix_size(parts) != 3 || color[ft_strlen(color)-1] == ',')
 		return (ft_free_split(&parts), put_error2(id, "Invalid color code"),
 			false);
@@ -112,10 +104,4 @@ bool	is_valid_metadata(t_map *map)
 	ret = is_valid_color("C", map->color_c, ret);
 	ret = is_valid_color("F", map->color_f, ret);
 	return (ret);
-}
-
-bool	is_valid_grid(t_map *map)
-{
-	(void)map; //TODO
-	return (true);
 }

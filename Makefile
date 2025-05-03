@@ -16,7 +16,8 @@ C_FILES = debug.c\
 	map/map.c \
 	map/parse_metadata.c \
 	map/parse_grid.c \
-	map/validate.c \
+	map/valid_metadata.c \
+	map/valid_grid.c \
 	map/utils.c \
 
 SRCS = $(addprefix $(C_DIR)/,$(C_FILES))
@@ -103,7 +104,7 @@ mlx:
 	$(MAKE) -C $(MLX_DIR)
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes $(NAME) assets/maps/valid.cub
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes $(NAME) assets/maps/_valgrind_test.cub
 
 # ************************************
 # Phony                              *

@@ -14,8 +14,8 @@
 /****************************************/
 
 /* Errors prefix */
-# define ERR_PARSING "Parsing"
-# define ERR_FATAL_PARSING "Fatal: Parsing"
+# define E_PARSING "Parsing"
+# define E_FATAL_PARSING "Fatal: Parsing"
 
 typedef enum e_direction
 {
@@ -70,6 +70,7 @@ bool		has_valid_extension(char *path, char *ext);
 bool		is_empty_line(char *line);
 int			skip_whitespaces(char *line, int start);
 bool		has_more_than_one_word(char *str);
+int   		trim_empty_lines_after_grid(t_map *map);
 
 /* Utils */
 void		put_error(char *str);

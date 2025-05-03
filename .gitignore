@@ -4,5 +4,5 @@
 *.a
 *.o
 _obj
-cub3d
+cub3D
 .vscode
