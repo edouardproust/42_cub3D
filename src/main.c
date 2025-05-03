@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void init_data(t_data **d, t_map* map)
+static void	init_data(t_data **d, t_map *map)
 {
 	*d = malloc(sizeof(t_data));
 	if (!*d)

@@ -5,7 +5,7 @@ void	free_grid(char **grid, int n)
 	int	i;
 
 	i = 0;
-	while(i < n)
+	while (i < n)
 		free(grid[i++]);
 	free(grid);
 }
@@ -26,7 +26,7 @@ void	free_map(t_map *map)
 
 void	free_data(t_data **d)
 {
-	if(!d && !*d)
+	if (!d && !*d)
 		return ;
 	free_map((*d)->map);
 	free(*d);

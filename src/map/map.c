@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static t_map	*init_map()
+static t_map	*init_map(void)
 {
 	t_map	*map;
 
@@ -17,6 +17,33 @@ static t_map	*init_map()
 	map->grid_height = 0;
 	map->grid_width = 0;
 	return (map);
+}
+
+/**
+ * Read the file using get_next_line.
+ * - Start by parsing metadata. Parse grid only once all the
+ * metadata has been parsed correctly.
+ * - Finish reading the file but stop parsing as soon as an error
+ * is encountered: `ret == false`
+ */
+int	file_read_and_parse(int fd, t_map *map)
+{
+	char	*line;
+	int		ret;
+
+	ret = EXIT_SUCCESS;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (!is_metadata_parsed(map))
+			ret = parse_line_to_metadata(line, map, ret);
+		else
+			ret = parse_line_to_grid(line, map, ret);
+		free(line);
+	}
+	return (ret);
 }
 
 /**
@@ -39,7 +66,6 @@ t_map	*map_parse_and_validate(char *filepath)
 {
 	int		fd;
 	t_map	*map;
-	char	*line;
 	int		ret;
 
 	if (!has_valid_extension(filepath, ".cub"))
@@ -48,17 +74,7 @@ t_map	*map_parse_and_validate(char *filepath)
 	if (fd == -1)
 		error_exit(filepath);
 	map = init_map();
-	ret = EXIT_SUCCESS;
-	while (1) {
-		line = get_next_line(fd);
-		if (!line)
-		   break;
-		if (!is_metadata_parsed(map))
-			ret = parse_line_to_metadata(line, map, ret);
-		else
-			ret = parse_line_to_grid(line, map, ret);
-		free(line);
-	}
+	ret = file_read_and_parse(fd, map);
 	close(fd);
 	debug_parsed_map(map); //DEBUG
 	if (ret != EXIT_SUCCESS || !is_valid_metadata(map) || !is_valid_grid(map))

@@ -9,8 +9,10 @@ C_DIR = src
 
 C_FILES = debug.c\
 	main.c \
-	error.c \
-	free.c \
+	utils/error.c \
+	utils/exit.c \
+	utils/free.c \
+	utils/string.c \
 	map/map.c \
 	map/parse_metadata.c \
 	map/parse_grid.c \

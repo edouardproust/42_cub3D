@@ -47,12 +47,24 @@ bool	is_empty_line(char *line)
 }
 
 /**
+ * Skips generic whitespace in a string.
+ *
+ * @return New position after skipped chars.
+ */
+int	skip_whitespaces(char *str, int start)
+{
+	while (str[start] && ft_isspace(str[start]))
+		start++;
+	return (start);
+}
+
+/**
  * Checks if there is non-whitespace content after the first space
  * @param str Input string to check (may contain \n at end)
  * @return true if non-whitespace content exists after first space group,
  *         false otherwise (including NULL or single-word strings)
  */
-bool	has_content_after_space(char *str)
+bool	has_more_than_one_word(char *str)
 {
 	if (!str)
 		return (false);
