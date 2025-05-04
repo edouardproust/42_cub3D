@@ -14,17 +14,19 @@ bool	is_metadata_parsed(t_map *map)
  *
  * @note Skip spaces between id and value. //TODO verify if ok with subject
  */
-static int	parse_metadata(char *id, char *line, int start, char **map_tx)
+static int	parse_metadata(char *id, char *line, char **map_tx)
 {
 	int	i;
+	int	start;
 
 	if (*map_tx != NULL)
 		return (put_error3(E_PARSING, id, "double definition"), EXIT_FAILURE);
-	start = skip_whitespaces(line, start);
-	i = start;
+	start = count_space_chars(line, 0, ft_strlen(line), false);
+	line += start;
+	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	*map_tx = ft_substr(line, start, i - start);
+	*map_tx = ft_substr(line, 0, i);
 	if (!*map_tx)
 		return (put_error3(E_PARSING, id, "map metadata"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -52,17 +54,17 @@ int	parse_line_to_metadata(char *line, t_map *map, int ret)
 	while (ft_isspace(*line))
 		line++;
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		ret = parse_metadata("NO", line, 2, &map->texture_no);
+		ret = parse_metadata("NO", line + 2, &map->texture_no);
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-		ret = parse_metadata("SO", line, 2, &map->texture_so);
+		ret = parse_metadata("SO", line + 2, &map->texture_so);
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-		ret = parse_metadata("EA", line, 2, &map->texture_ea);
+		ret = parse_metadata("EA", line + 2, &map->texture_ea);
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-		ret = parse_metadata("WE", line, 2, &map->texture_we);
+		ret = parse_metadata("WE", line + 2, &map->texture_we);
 	else if (ft_strncmp(line, "F ", 2) == 0)
-		ret = parse_metadata("F", line, 1, &map->color_f);
+		ret = parse_metadata("F", line + 1, &map->color_f);
 	else if (ft_strncmp(line, "C ", 2) == 0)
-		ret = parse_metadata("C", line, 1, &map->color_c);
+		ret = parse_metadata("C", line + 1, &map->color_c);
 	else if (line[0] != '\0')
 		return (put_error3(E_PARSING, line, "invalid metadata line"),
 			EXIT_FAILURE);

@@ -9,16 +9,17 @@ C_DIR = src
 
 C_FILES = debug.c\
 	main.c \
+	map/map.c \
+	map/parse_grid.c \
+	map/parse_metadata.c \
+	map/trim_grid.c \
+	map/utils.c \
+	map/valid_grid.c \
+	map/valid_metadata.c \
 	utils/error.c \
 	utils/exit.c \
 	utils/free.c \
 	utils/string.c \
-	map/map.c \
-	map/parse_metadata.c \
-	map/parse_grid.c \
-	map/valid_metadata.c \
-	map/valid_grid.c \
-	map/utils.c \
 
 SRCS = $(addprefix $(C_DIR)/,$(C_FILES))
 

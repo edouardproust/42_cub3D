@@ -9,7 +9,7 @@
  * @note Stops writing when encountering newline or end of string
  *       Each character is written individually
  */
-int	ft_putstrnl_fd(char *str, int fd)
+int	putstrnl_fd(char *str, int fd)
 {
 	int	len;
 
@@ -23,4 +23,58 @@ int	ft_putstrnl_fd(char *str, int fd)
 		len += write(fd, str++, 1);
 	}
 	return (len);
+}
+
+/**
+ * Check if a string is empty or contains only space chars.
+ *
+ * @note A space is defined by ft_isspace.
+ */
+bool	is_blank_str(char *str)
+{
+	if (!str)
+		return (true);
+	while (*str)
+	{
+		if (!ft_isspace(*str))
+			return (false);
+		str++;
+	}
+	return (true);
+}
+
+/**
+ * Counts the number of space characters ' ' in a string segment.
+ * Can operate either left-to-right (LTR) or right-to-left (RTL).
+ *
+ * @param str The input string to analyze
+ * @param start The starting index (inclusive) of the segment to check
+ * @param end The ending index (exclusive) of the segment to check
+ * @param rtl Direction flag:
+ * - false = count spaces from start moving forward (LTR)
+ * - true  = count spaces from end-1 moving backward (RTL)
+ * @return The number of consecutive space characters found:
+ * - From start position in LTR mode
+ * - Before end position in RTL mode
+ * Returns 0 if no spaces are found at the starting position
+ */
+int	count_space_chars(char *str, int start, int end, bool rtl)
+{
+	int	count;
+
+	count = 0;
+	if (!str || start < 0 || end <= start)
+		return (0);
+	if (!rtl)
+	{
+		while (start + count < end && str[start + count]
+			&& ' ' == str[start + count])
+			count++;
+	}
+	else
+	{
+		while (end - count > start && ' ' == str[end - count - 1])
+			count++;
+	}
+	return (count);
 }

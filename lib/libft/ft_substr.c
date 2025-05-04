@@ -12,6 +12,23 @@
 
 #include "libft.h"
 
+/**
+ * Extracts a substring from `s` starting at index `start` (inclusive)
+ * with maximum length `len`.
+ *
+ * @param s Source string (NULL-terminated).
+ * @param start Starting index (inclusive, 0-based).
+ * @param len Maximum length of substring.
+ *
+ * @return Newly allocated substring, or:
+ *         - NULL if `s` is NULL or allocation fails
+ *         - Empty string if `start` is beyond string length
+ *
+ * @note The substring includes characters from `s[start]` to either:
+ *       - `s[start + len - 1]` (if within bounds)
+ *       - End of string (whichever comes first)
+ * @note Always NULL-terminates the result
+ */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;
@@ -21,7 +38,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	s_len = ft_strlen(s);
-	if (start > s_len)
+	if (start >= s_len)
 		return (ft_strdup(""));
 	alloc = s_len - start;
 	if (alloc > len)
