@@ -9,13 +9,13 @@ C_DIR = src
 
 C_FILES = debug.c\
 	main.c \
-	map/map.c \
-	map/parse_grid.c \
-	map/parse_metadata.c \
-	map/trim_grid.c \
-	map/utils.c \
-	map/valid_grid.c \
-	map/valid_metadata.c \
+	parsing/map.c \
+	parsing/parse_grid.c \
+	parsing/parse_metadata.c \
+	parsing/trim_grid.c \
+	parsing/utils.c \
+	parsing/valid_grid.c \
+	parsing/valid_metadata.c \
 	utils/char.c \
 	utils/error.c \
 	utils/exit.c \
