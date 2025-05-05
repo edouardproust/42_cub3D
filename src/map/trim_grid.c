@@ -6,20 +6,20 @@ int	trim_empty_lines_after_grid(t_map *map)
 	int		i;
 	char	**new_grid;
 
-	new_h = map->grid_height;
+	new_h = map->grid_rows;
 	while (new_h > 0 && is_blank_str(map->grid[new_h - 1]))
 		new_h--;
-	if (new_h != map->grid_height)
+	if (new_h != map->grid_rows)
 	{
 		i = new_h;
-		while (i < map->grid_height)
+		while (i < map->grid_rows)
 			free((map->grid)[i++]);
-		new_grid = ft_realloc(map->grid, map->grid_height * sizeof(char *),
+		new_grid = ft_realloc(map->grid, map->grid_rows * sizeof(char *),
 				new_h * sizeof(char *));
 		if (!new_grid)
 			return (put_error2(E_PARSING, "grid realloc"), EXIT_FAILURE);
 		map->grid = new_grid;
-		map->grid_height = new_h;
+		map->grid_rows = new_h;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -35,7 +35,7 @@ static void	set_grid_target_boundaries(t_map *map, int *left_bound,
 	*left_bound = INT_MAX;
 	*right_bound = 0;
 	i = 0;
-	while (i < map->grid_height)
+	while (i < map->grid_rows)
 	{
 		line_len = ft_strlen(map->grid[i]);
 		first_non_space = count_space_chars(map->grid[i], 0, line_len, false);
@@ -54,16 +54,16 @@ static char	*build_new_line(t_map *map, char *line, int left_bound)
 	char	*new_line;
 	int		i;
 
-	new_line = malloc(sizeof(char *) * (map->grid_width + 1));
+	new_line = malloc(sizeof(char *) * (map->grid_cols + 1));
 	if (!new_line)
 		return (put_error2(E_FATAL_PARSING, "uniformize grid"), NULL);
 	i = 0;
-	while (i < map->grid_width && line[left_bound + i])
+	while (i < map->grid_cols && line[left_bound + i])
 	{
 		new_line[i] = line[left_bound + i];
 		i++;
 	}
-	while (i < map->grid_width)
+	while (i < map->grid_cols)
 		new_line[i++] = ' ';
 	new_line[i] = '\0';
 	return (new_line);
@@ -78,9 +78,9 @@ int	uniformize_grid_margins(t_map *map)
 
 	set_grid_target_boundaries(map, &left_bound,
 		&right_bound);
-	map->grid_width = right_bound - left_bound + 1;
+	map->grid_cols = right_bound - left_bound + 1;
 	i = 0;
-	while (i < map->grid_height)
+	while (i < map->grid_rows)
 	{
 		new_line = build_new_line(map, map->grid[i], left_bound);
 		if (!new_line)

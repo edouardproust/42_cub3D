@@ -14,8 +14,8 @@ static t_map	*init_map(void)
 	map->color_c = NULL;
 	map->color_f = NULL;
 	map->grid = NULL;
-	map->grid_height = -1;
-	map->grid_width = -1;
+	map->grid_rows = -1;
+	map->grid_cols = -1;
 	map->player_pos.x = -1;
 	map->player_pos.y = -1;
 	map->player_dir = 0;
@@ -80,13 +80,13 @@ t_map	*map_parse_and_validate(char *filepath)
 	ret = file_read_and_parse(fd, map);
 	close(fd);
 	if (ret != EXIT_SUCCESS || !is_valid_metadata(map)
-		|| !is_prevalid_grid(map))
-		(free_map(map), exit(EXIT_FAILURE));
+		|| !is_valid_grid(map))
+		return (free_map(map), NULL);
 	if (trim_empty_lines_after_grid(map) != EXIT_SUCCESS)
-		(free_map(map), exit(EXIT_FAILURE));
+		return (free_map(map), NULL);
 	if (uniformize_grid_margins(map) != EXIT_SUCCESS)
-		(free_map(map), debug_parsed_map(map), exit(EXIT_FAILURE)); //DEBUG
-	if (!is_valid_grid(map))
-		(free(map), exit(EXIT_FAILURE));
+		return (free_map(map), NULL);
+	if (!is_grid_closed(map))
+		return (free_map(map), NULL);
 	return (map);
 }

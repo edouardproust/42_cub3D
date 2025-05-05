@@ -16,6 +16,9 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		error_exit("Wrong number of arguments. Usage: ./cub3D <map_file.cub>");
 	map = map_parse_and_validate(argv[1]);
+	if (!map)
+		return (EXIT_FAILURE);
+	debug_parsed_map(map); //DEBUG
 	init_data(&data, map);
 	// TODO display window
 	// TODO run game based on map

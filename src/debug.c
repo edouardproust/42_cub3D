@@ -18,17 +18,17 @@ static void	print_grid(t_map *map)
 {
 	int	i;
 
-	if (map->grid_width != -1)
+	if (map->grid_cols != -1)
 	{
 		printf("grid:\n");
-		print_char_repeat_nl('-', map->grid_width + 1);
+		print_char_repeat_nl('-', map->grid_cols + 1);
 		i = 0;
-		while (i < map->grid_height)
+		while (i < map->grid_rows)
 		{
 			printf("%d\t|%s|\n", i, map->grid[i]);
 			i++;
 		}
-		print_char_repeat_nl('-', map->grid_width + 1);
+		print_char_repeat_nl('-', map->grid_cols + 1);
 	}
 	else
 		printf("grid: (null)\n");
@@ -44,9 +44,9 @@ void	debug_parsed_map(t_map *map)
 	printf("color_c: '%s'\n", map->color_c);
 	printf("color_f: '%s'\n", map->color_f);
 	print_grid(map);
-	printf("grid_height: %d\n", map->grid_height);
-	printf("grid_width: %d\n", map->grid_width);
+	printf("grid_rows: %d\n", map->grid_rows);
+	printf("grid_cols: %d\n", map->grid_cols);
 	printf("player_pos: [x:%d, y:%d]\n", map->player_pos.x, map->player_pos.y);
-	printf("player_dir: %d\n", map->player_dir);
+	printf("player_dir: %c\n", map->player_dir);
 	printf("\n");
 }

@@ -2,9 +2,9 @@
  * @TODO
  * Grid:
  * 🟢 Must contains only the following characters: 0, 1, N, S, E, W
- * ⭕ Must be closed/surrounded by walls (char '1')
+ * 🟢 Must be closed/surrounded by walls (char '1')
  * 🟢 Cannot contain empty lines
- * ⭕ Cannot contain spaces between walls
+ * 🟢 Cannot contain spaces between walls
  * 🟢 Needs to be the last element in the file (no extra data after)
  * Allowed for grid:
  * 🟢 Spaces outside of the walls (char '1')
@@ -16,22 +16,12 @@
 
 #include "cub3d.h"
 
-static bool	is_grid_player_char(char c)
-{
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-static bool	is_valid_grid_char(char c)
-{
-	return (c == ' ' || c == '1' || c == '0' || is_grid_player_char(c));
-}
-
 static bool	is_valid_grid_line(char *line, bool *player_found,
 	bool *is_empty_line)
 {
 	while (*line)
 	{
-		if (!is_valid_grid_char(*line))
+		if (!is_grid_char(*line))
 			return (put_error2(E_PARSING,
 					"grid can contains only chars: 1, 0, N, S, E, W"), false);
 		if (*is_empty_line && !ft_isspace(*line))
@@ -52,7 +42,7 @@ static bool	is_valid_grid_line(char *line, bool *player_found,
  * @note This functions accepts empty lines after the grid, if they only
  *  contain spaces. //TODO verify with Ava that this is conform to subject
  */
-bool	is_prevalid_grid(t_map *map)
+bool	is_valid_grid(t_map *map)
 {
 	int		i;
 	bool	player_found;
@@ -62,7 +52,7 @@ bool	is_prevalid_grid(t_map *map)
 	player_found = false;
 	empty_line_found = false;
 	i = 0;
-	while (i < map->grid_height)
+	while (i < map->grid_rows)
 	{
 		is_empty_line = true;
 		if (!is_valid_grid_line(map->grid[i], &player_found, &is_empty_line))
@@ -79,11 +69,54 @@ bool	is_prevalid_grid(t_map *map)
 	return (true);
 }
 
-bool	is_valid_grid(t_map *map)
+static bool	check_surrounding_chars(t_map *map, int y, int x)
 {
-	debug_parsed_map(map); //DEBUG
-	//has_grid_holes(map->grid); //TODO
-	//is_grid_closed_by_walls(map->grid); //TODO
-	//set_player_position_and_dir(map->grid); //TODO
+	int	dy;
+	int	dx;
+	int	ny;
+	int	nx;
+
+	dy = -1;
+	while (dy <= 1)
+	{
+		dx = -1;
+		while (dx <= 1)
+		{
+			ny = y + dy;
+			nx = x + dx;
+			if (!(dx == 0 && dy == 0)
+				&& (ny < 0 || ny >= map->grid_rows || nx < 0
+					|| nx >= map->grid_cols || map->grid[ny][nx] == ' '))
+				return (false);
+			dx++;
+		}
+		dy++;
+	}
+	return (true);
+}
+
+bool	is_grid_closed(t_map *map)
+{
+	int	c;
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < map->grid_rows)
+	{
+		x = 0;
+		while (x < map->grid_cols)
+		{
+			c = map->grid[y][x];
+			set_map_player(map, x, y, c);
+			if (c == '0' || is_grid_player_char(c))
+			{
+				if (!check_surrounding_chars(map, y, x))
+					return (put_error2(E_PARSING, "Grid is not closed"), false);
+			}
+			x++;
+		}
+		y++;
+	}
 	return (true);
 }

@@ -16,17 +16,16 @@ bool	is_metadata_parsed(t_map *map)
  */
 static int	parse_metadata(char *id, char *line, char **map_tx)
 {
-	int	i;
 	int	start;
+	int	end;
+	int	line_len;
 
 	if (*map_tx != NULL)
 		return (put_error3(E_PARSING, id, "double definition"), EXIT_FAILURE);
-	start = count_space_chars(line, 0, ft_strlen(line), false);
-	line += start;
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	*map_tx = ft_substr(line, 0, i);
+	line_len = ft_strlen(line);
+	start = count_space_chars(line, 0, line_len, false);
+	end = count_space_chars(line, 0, line_len - 1, true);
+	*map_tx = ft_substr(line, start, line_len - start - end - 1);
 	if (!*map_tx)
 		return (put_error3(E_PARSING, id, "map metadata"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);

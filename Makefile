@@ -16,6 +16,7 @@ C_FILES = debug.c\
 	map/utils.c \
 	map/valid_grid.c \
 	map/valid_metadata.c \
+	utils/char.c \
 	utils/error.c \
 	utils/exit.c \
 	utils/free.c \
