@@ -1,27 +1,32 @@
 #include "cub3d.h"
 
-static void	init_data(t_data **d, t_map *map)
+static t_game	*init_game(char **argv)
 {
-	*d = malloc(sizeof(t_data));
-	if (!*d)
-		error_exit("Data memory allocation");
-	(*d)->map = map;
+	t_game	*g;
+
+	g = malloc(sizeof(t_game));
+	if (!g)
+		exit_game("Data memory allocation", NULL); //TODO
+	g->map = NULL;
+	g->map = map_parse_and_validate(argv[1], g);
+	if (!g->map)
+		exit_game(NULL, g);
+	debug_parsed_map(g->map); //DEBUG
+	return (g);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
-	t_map	*map;
+	t_game	*game;
 
 	if (argc != 2)
-		error_exit("Wrong number of arguments. Usage: ./cub3D <map_file.cub>");
-	map = map_parse_and_validate(argv[1]);
-	if (!map)
+	{
+		put_error("Wrong number of arguments. Usage: ./cub3D <map_file.cub>");
 		return (EXIT_FAILURE);
-	debug_parsed_map(map); //DEBUG
-	init_data(&data, map);
+	}
+	game = init_game(argv);
 	// TODO display window
 	// TODO run game based on map
-	free_data(&data);
+	free_game(game);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@ static t_map	*init_map(void)
 
 	map = malloc(sizeof(t_map));
 	if (!map)
-		error_exit("Map memory allocation");
+		return (NULL);
 	map->texture_no = NULL;
 	map->texture_so = NULL;
 	map->texture_ea = NULL;
@@ -29,24 +29,21 @@ static t_map	*init_map(void)
  * - Finish reading the file but stop parsing as soon as an error
  * is encountered: `ret == false`
  */
-int	file_read_and_parse(int fd, t_map *map)
+void	file_read_and_parse(int fd, t_map *map, t_game *g)
 {
 	char	*line;
-	int		ret;
 
-	ret = EXIT_SUCCESS;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
 		if (!is_metadata_parsed(map))
-			ret = parse_line_to_metadata(line, map, ret);
+			parse_line_to_metadata(line, map, g);
 		else
-			ret = parse_line_to_grid(line, map, ret);
+			parse_line_to_grid(line, map, g);
 		free(line);
 	}
-	return (ret);
 }
 
 /**
@@ -65,28 +62,28 @@ int	file_read_and_parse(int fd, t_map *map)
  *           - Grid is invalid (not surrounded by walls, etc.)
  * @note Caller is responsible for freeing the returned map.
  */
-t_map	*map_parse_and_validate(char *filepath)
+t_map	*map_parse_and_validate(char *filepath, t_game *g)
 {
 	int		fd;
 	t_map	*map;
-	int		ret;
 
 	if (!has_valid_extension(filepath, ".cub"))
-		error_exit("Map file must have a .cub extension");
+		exit_game("Map file must have a .cub extension", g);
 	fd = open(filepath, O_RDONLY);
 	if (fd == -1)
-		error_exit(filepath);
+		exit_game(filepath, g);
 	map = init_map();
-	ret = file_read_and_parse(fd, map);
+	if (!map)
+		(close(fd), exit_game("Map memory allocation", g));
+	file_read_and_parse(fd, map, g);
 	close(fd);
-	if (ret != EXIT_SUCCESS || !is_valid_metadata(map)
-		|| !is_valid_grid(map))
-		return (free_map(map), NULL);
+	check_metadata(map, g);
+	check_grid(map, g);
 	if (trim_empty_lines_after_grid(map) != EXIT_SUCCESS)
-		return (free_map(map), NULL);
+		exit_game(NULL, g);
 	if (uniformize_grid_margins(map) != EXIT_SUCCESS)
-		return (free_map(map), NULL);
+		exit_game(NULL, g);
 	if (!is_grid_closed(map))
-		return (free_map(map), NULL);
+		exit_game(NULL, g);
 	return (map);
 }

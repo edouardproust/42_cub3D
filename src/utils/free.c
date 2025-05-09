@@ -24,11 +24,10 @@ void	free_map(t_map *map)
 	free(map);
 }
 
-void	free_data(t_data **d)
+void	free_game(t_game *g)
 {
-	if (!d && !*d)
+	if (!g)
 		return ;
-	free_map((*d)->map);
-	free(*d);
-	*d = NULL;
+	free_map(g->map);
+	free(g);
 }

@@ -12,16 +12,15 @@
  *           - Grid allocation fails
  *           - Line duplication fails
  */
-static int	init_grid(t_map *map, char *line)
+static void	init_grid(t_map *map, char *line, t_game *g)
 {
 	map->grid = malloc(sizeof(char *));
 	if (!map->grid)
-		return (put_error2(E_FATAL_PARSING, "grid alloc"), EXIT_FAILURE);
+		exit_game2(E_FATAL_PARSING, "grid alloc", g);
 	map->grid[0] = ft_substr(line, 0, ft_strlen(line) - 1);
 	if (!map->grid[0])
-		return (put_error2(E_FATAL_PARSING, "line alloc"), EXIT_FAILURE);
+		exit_game2(E_FATAL_PARSING, "line alloc", g);
 	map->grid_rows = 1;
-	return (EXIT_SUCCESS);
 }
 
 /**
@@ -36,20 +35,19 @@ static int	init_grid(t_map *map, char *line)
  *           - Grid reallocation fails
  *           - Line duplication fails
  */
-static int	add_line_to_grid(t_map *map, char *line)
+static void	add_line_to_grid(t_map *map, char *line, t_game *g)
 {
 	char	**new_grid;
 
 	new_grid = ft_realloc(map->grid, sizeof(char *) * (map->grid_rows),
 			sizeof(char *) * (map->grid_rows + 1));
 	if (!new_grid)
-		return (put_error2(E_FATAL_PARSING, "grid realloc"), EXIT_FAILURE);
+		exit_game2(E_FATAL_PARSING, "grid realloc", g);
 	map->grid = new_grid;
 	map->grid[map->grid_rows] = ft_substr(line, 0, ft_strlen(line) - 1);
 	if (!map->grid[map->grid_rows])
-		return (put_error2(E_FATAL_PARSING, "grid line alloc"), EXIT_FAILURE);
+		exit_game2(E_FATAL_PARSING, "grid line alloc", g);
 	map->grid_rows++;
-	return (EXIT_SUCCESS);
 }
 
 /**
@@ -69,19 +67,16 @@ static int	add_line_to_grid(t_map *map, char *line)
  * @TODO #1:
  * I parse also empty lines (i check them later on in the validation).
  * I do this to allow empty lines after the grid.
- * But: ARE EMPTY LINE SAFTER THE GRID ALLOWED? If not, then we need to 
- * add the condition here to check if line is empty, and stop parsing as soon 
+ * But: ARE EMPTY LINE SAFTER THE GRID ALLOWED? If not, then we need to
+ * add the condition here to check if line is empty, and stop parsing as soon
  * as we encounter an empty line.
  */
-int	parse_line_to_grid(char *line, t_map *map, int ret)
+void	parse_line_to_grid(char *line, t_map *map, t_game *g)
 {
-	if (ret != EXIT_SUCCESS)
-		return (ret);
 	if (!map->grid && is_blank_str(line))
-		return (ret);
+		return ;
 	if (!map->grid && !is_blank_str(line))
-		ret = init_grid(map, line);
+		init_grid(map, line, g);
 	else if (map->grid) // TODO #1
-		ret = add_line_to_grid(map, line);
-	return (ret);
+		add_line_to_grid(map, line, g);
 }

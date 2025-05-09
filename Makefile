@@ -62,7 +62,7 @@ LIBFT_DIR = $(LIBS_DIR)/libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = $(LIBS_DIR)/mlx42
+MLX_DIR = $(LIBS_DIR)/MLX42
 
 MLX = $(MLX_DIR)/build/libmlx42.a
 

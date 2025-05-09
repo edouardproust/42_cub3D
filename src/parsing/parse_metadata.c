@@ -14,21 +14,20 @@ bool	is_metadata_parsed(t_map *map)
  *
  * @note Skip spaces between id and value. //TODO verify if ok with subject
  */
-static int	parse_metadata(char *id, char *line, char **map_tx)
+static void	parse_metadata(char *id, char *line, char **map_tx, t_game *g)
 {
 	int	start;
 	int	end;
 	int	line_len;
 
 	if (*map_tx != NULL)
-		return (put_error3(E_PARSING, id, "double definition"), EXIT_FAILURE);
+		exit_game3(E_PARSING, id, "double definition", g);
 	line_len = ft_strlen(line);
 	start = count_space_chars(line, 0, line_len, false);
 	end = count_space_chars(line, 0, line_len - 1, true);
 	*map_tx = ft_substr(line, start, line_len - start - end - 1);
 	if (!*map_tx)
-		return (put_error3(E_PARSING, id, "map metadata"), EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+		exit_game3(E_PARSING, id, "map metadata", g);
 }
 
 /**
@@ -46,26 +45,22 @@ static int	parse_metadata(char *id, char *line, char **map_tx)
  *           - Previous error (ret != EXIT_SUCCESS)
  *           - Metadata parsing fails
  */
-int	parse_line_to_metadata(char *line, t_map *map, int ret)
+void	parse_line_to_metadata(char *line, t_map *map, t_game *g)
 {
-	if (ret != EXIT_SUCCESS)
-		return (ret);
 	while (ft_isspace(*line))
 		line++;
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		ret = parse_metadata("NO", line + 2, &map->texture_no);
+		parse_metadata("NO", line + 2, &map->texture_no, g);
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-		ret = parse_metadata("SO", line + 2, &map->texture_so);
+		parse_metadata("SO", line + 2, &map->texture_so, g);
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-		ret = parse_metadata("EA", line + 2, &map->texture_ea);
+		parse_metadata("EA", line + 2, &map->texture_ea, g);
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-		ret = parse_metadata("WE", line + 2, &map->texture_we);
+		parse_metadata("WE", line + 2, &map->texture_we, g);
 	else if (ft_strncmp(line, "F ", 2) == 0)
-		ret = parse_metadata("F", line + 1, &map->color_f);
+		parse_metadata("F", line + 1, &map->color_f, g);
 	else if (ft_strncmp(line, "C ", 2) == 0)
-		ret = parse_metadata("C", line + 1, &map->color_c);
+		parse_metadata("C", line + 1, &map->color_c, g);
 	else if (line[0] != '\0')
-		return (put_error3(E_PARSING, line, "invalid metadata line"),
-			EXIT_FAILURE);
-	return (ret);
+		exit_game3(E_PARSING, line, "invalid metadata line", g);
 }

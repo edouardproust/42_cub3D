@@ -16,33 +16,30 @@
 
 #include "cub3d.h"
 
-static bool	is_valid_grid_line(char *line, bool *player_found,
-	bool *is_empty_line)
+static void	check_grid_line(char *line, bool *player_found,
+	bool *is_empty_line, t_game *g)
 {
 	while (*line)
 	{
 		if (!is_grid_char(*line))
-			return (put_error2(E_PARSING,
-					"grid can contains only chars: 1, 0, N, S, E, W"), false);
+			exit_game2(E_PARSING, "grid can contains only chars: 1, 0, N, S, E, W", g);
 		if (*is_empty_line && !ft_isspace(*line))
 			*is_empty_line = false;
 		if (is_grid_player_char(*line))
 		{
 			if (*player_found)
-				return (put_error2(E_PARSING,
-						"grid contains several player locations"), false);
+				exit_game2(E_PARSING, "grid contains several player locations", g);
 			*player_found = true;
 		}
 		line++;
 	}
-	return (true);
 }
 
 /**
  * @note This functions accepts empty lines after the grid, if they only
  *  contain spaces. //TODO verify with Ava that this is conform to subject
  */
-bool	is_valid_grid(t_map *map)
+void	check_grid(t_map *map, t_game *g)
 {
 	int		i;
 	bool	player_found;
@@ -55,18 +52,15 @@ bool	is_valid_grid(t_map *map)
 	while (i < map->grid_rows)
 	{
 		is_empty_line = true;
-		if (!is_valid_grid_line(map->grid[i], &player_found, &is_empty_line))
-			return (false);
+		check_grid_line(map->grid[i], &player_found, &is_empty_line, g);
 		if (!empty_line_found && is_empty_line)
 			empty_line_found = true;
 		if (empty_line_found && !is_empty_line)
-			return (put_error2(E_PARSING, "grid contains an empty line"),
-				false);
+			exit_game2(E_PARSING, "grid contains an empty line", g);
 		i++;
 	}
 	if (!player_found)
-		return (put_error2(E_PARSING, "no player location in grid"), false);
-	return (true);
+		exit_game2(E_PARSING, "no player location in grid", g);
 }
 
 static bool	check_surrounding_chars(t_map *map, int y, int x)

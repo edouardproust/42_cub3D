@@ -43,22 +43,22 @@ typedef struct s_map
 	char		player_dir;
 }	t_map;
 
-typedef struct t_data
+typedef struct s_game
 {
 	t_map	*map;
-}	t_data;
+}	t_game;
 
 /****************************************/
 /* Functions                            */
 /****************************************/
 
 /* Parsing */
-t_map		*map_parse_and_validate(char *filepath);
+t_map		*map_parse_and_validate(char *filepath, t_game *g);
 bool		is_metadata_parsed(t_map *map);
-int			parse_line_to_metadata(char *line, t_map *map, int ret);
-int			parse_line_to_grid(char *line, t_map *map, int ret);
-bool		is_valid_metadata(t_map *map);
-bool		is_valid_grid(t_map *map);
+void		parse_line_to_metadata(char *line, t_map *map, t_game *g);
+void		parse_line_to_grid(char *line, t_map *map, t_game *g);
+void		check_metadata(t_map *map, t_game *g);
+void		check_grid(t_map *map, t_game *g);
 bool		is_grid_closed(t_map *map);
 bool		has_valid_extension(char *path, char *ext);
 bool		has_more_than_one_word(char *str);
@@ -72,10 +72,12 @@ void		put_error(char *str);
 void		put_error2(char *s1, char *s2);
 void		put_error3(char *s1, char *s2, char *s3);
 /* Exit */
-void		error_exit(char *msg);
+void		exit_game(char *msg, t_game *g);
+void		exit_game2(char *msg1, char *msg2, t_game *g);
+void		exit_game3(char *msg1, char *msg2, char *msg3, t_game *g);
 /* Free */
 void		free_map(t_map *map);
-void		free_data(t_data **d);
+void		free_game(t_game *g);
 /* String */
 int			putstrnl_fd(char *str, int fd);
 bool		is_blank_str(char *str);

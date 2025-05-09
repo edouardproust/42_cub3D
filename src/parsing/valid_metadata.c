@@ -20,19 +20,16 @@
 
 #include "cub3d.h"
 
-static bool	is_valid_texture(char *id, char *filepath, bool ret)
+static void	check_texture(char *id, char *filepath, t_game *g)
 {
 	int	fd;
 
-	if (!ret)
-		return (ret);
 	if (filepath[0] == 0)
-		return (put_error2(id, "No texture path provided"), false);
+		exit_game2(id, "No texture path provided", g);
 	fd = open(filepath, O_RDONLY);
 	if (fd == -1)
-		return (put_error2(id, filepath), false);
+		exit_game2(id, filepath, g);
 	close(fd);
-	return (true);
 }
 
 /**
@@ -63,45 +60,36 @@ static bool	is_valid_color_part(char *part)
  * - String is made of 3 parts and is not ending with ','
  * - `is_valid_color_part` returns `true` for each part of the color code
  */
-static bool	is_valid_color(char *id, char *color, bool ret)
+static void	check_color(char *id, char *color, t_game *g)
 {
 	char	**parts;
 	int		i;
 
-	if (!ret)
-		return (ret);
 	if (color[0] == 0)
-		return (put_error2(id, "No color code provided"), false);
+		exit_game2(id, "No color code provided", g);
 	if (has_more_than_one_word(color))
-		return (put_error2(id, "Invalid color code"), false);
+		exit_game2(id, "Invalid color code", g);
 	parts = ft_split(color, ',');
 	if (!parts)
-		return (put_error2(E_FATAL_PARSING, "color allocation"), false);
+		exit_game2(E_FATAL_PARSING, "color allocation", g);
 	if (ft_matrix_size(parts) != 3 || color[ft_strlen(color)-1] == ',')
-		return (ft_free_split(&parts), put_error2(id, "Invalid color code"),
-			false);
+		(ft_free_split(&parts), exit_game2(id, "Invalid color code", g));
 	i = 0;
 	while (parts[i])
 	{
 		if (!is_valid_color_part(parts[i]))
-			return (ft_free_split(&parts), put_error2(id, "Invalid color code"),
-				false);
+			(ft_free_split(&parts), exit_game2(id, "Invalid color code", g));
 		i++;
 	}
 	ft_free_split(&parts);
-	return (true);
 }
 
-bool	is_valid_metadata(t_map *map)
+void	check_metadata(t_map *map, t_game *g)
 {
-	int	ret;
-
-	ret = true;
-	ret = is_valid_texture("NO", map->texture_no, ret);
-	ret = is_valid_texture("SO", map->texture_so, ret);
-	ret = is_valid_texture("EA", map->texture_ea, ret);
-	ret = is_valid_texture("WE", map->texture_we, ret);
-	ret = is_valid_color("C", map->color_c, ret);
-	ret = is_valid_color("F", map->color_f, ret);
-	return (ret);
+	check_texture("NO", map->texture_no, g);
+	check_texture("SO", map->texture_so, g);
+	check_texture("EA", map->texture_ea, g);
+	check_texture("WE", map->texture_we, g);
+	check_color("C", map->color_c, g);
+	check_color("F", map->color_f, g);
 }
