@@ -7,7 +7,7 @@
 - **Validation:** June 2025
 - **Team:** [Skoteini-42](https://github.com/Skoteini-42), [edouardproust](https://github.com/edouardproust)
 
-![Cub3D 42 Barcelona](test/screenshots/cub3d-42-demo.gif "Cub3D project at 42 school in Barcelona using minilibX")
+![Cub3D 42 Barcelona](test/screenshots/cub3d-42-demo.gif "Cub3D project at 42 school in Barcelona using mlx42")
 
 ## How to Use
 
