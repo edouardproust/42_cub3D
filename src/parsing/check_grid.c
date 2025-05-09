@@ -22,13 +22,15 @@ static void	check_grid_line(char *line, bool *player_found,
 	while (*line)
 	{
 		if (!is_grid_char(*line))
-			exit_game2(E_PARSING, "grid can contains only chars: 1, 0, N, S, E, W", g);
+			exit_game2(E_PARSING,
+				"grid can contains only chars: 1, 0, N, S, E, W", g);
 		if (*is_empty_line && !ft_isspace(*line))
 			*is_empty_line = false;
 		if (is_grid_player_char(*line))
 		{
 			if (*player_found)
-				exit_game2(E_PARSING, "grid contains several player locations", g);
+				exit_game2(E_PARSING,
+					"grid contains several player locations", g);
 			*player_found = true;
 		}
 		line++;
@@ -39,7 +41,7 @@ static void	check_grid_line(char *line, bool *player_found,
  * @note This functions accepts empty lines after the grid, if they only
  *  contain spaces. //TODO verify with Ava that this is conform to subject
  */
-void	check_grid(t_map *map, t_game *g)
+void	check_grid_lines(t_game *g)
 {
 	int		i;
 	bool	player_found;
@@ -49,10 +51,10 @@ void	check_grid(t_map *map, t_game *g)
 	player_found = false;
 	empty_line_found = false;
 	i = 0;
-	while (i < map->grid_rows)
+	while (i < g->map->grid_rows)
 	{
 		is_empty_line = true;
-		check_grid_line(map->grid[i], &player_found, &is_empty_line, g);
+		check_grid_line(g->map->grid[i], &player_found, &is_empty_line, g);
 		if (!empty_line_found && is_empty_line)
 			empty_line_found = true;
 		if (empty_line_found && !is_empty_line)
@@ -89,28 +91,27 @@ static bool	check_surrounding_chars(t_map *map, int y, int x)
 	return (true);
 }
 
-bool	is_grid_closed(t_map *map)
+void	check_grid_is_closed(t_game *g)
 {
 	int	c;
 	int	y;
 	int	x;
 
 	y = 0;
-	while (y < map->grid_rows)
+	while (y < g->map->grid_rows)
 	{
 		x = 0;
-		while (x < map->grid_cols)
+		while (x < g->map->grid_cols)
 		{
-			c = map->grid[y][x];
-			set_map_player(map, x, y, c);
+			c = g->map->grid[y][x];
+			set_map_player(g->map, x, y, c);
 			if (c == '0' || is_grid_player_char(c))
 			{
-				if (!check_surrounding_chars(map, y, x))
-					return (put_error2(E_PARSING, "Grid is not closed"), false);
+				if (!check_surrounding_chars(g->map, y, x))
+					exit_game2(E_PARSING, "Grid is not closed", g);
 			}
 			x++;
 		}
 		y++;
 	}
-	return (true);
 }

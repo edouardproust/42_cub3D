@@ -44,7 +44,8 @@ bool	is_blank_str(char *str)
 }
 
 /**
- * Counts the number of space characters ' ' in a string segment.
+ * Counts the number of space characters (based on ft_isspace)
+ * in a string segment.
  * Can operate either left-to-right (LTR) or right-to-left (RTL).
  *
  * @param str The input string to analyze
@@ -68,12 +69,12 @@ int	count_space_chars(char *str, int start, int end, bool rtl)
 	if (!rtl)
 	{
 		while (start + count < end && str[start + count]
-			&& ' ' == str[start + count])
+			&& ft_isspace(str[start + count]))
 			count++;
 	}
 	else
 	{
-		while (end - count > start && ' ' == str[end - count - 1])
+		while (end - count > start && ft_isspace(str[end - count - 1]))
 			count++;
 	}
 	return (count);

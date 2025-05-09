@@ -2,7 +2,8 @@
 
 void	exit_game(char *msg, t_game *g)
 {
-	put_error(msg);
+	if (msg)
+		put_error(msg);
 	free_game(g);
 	exit(EXIT_FAILURE);
 }

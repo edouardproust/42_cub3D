@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static t_map	*init_map(void)
+t_map	*init_map(void)
 {
 	t_map	*map;
 
@@ -29,61 +29,40 @@ static t_map	*init_map(void)
  * - Finish reading the file but stop parsing as soon as an error
  * is encountered: `ret == false`
  */
-void	file_read_and_parse(int fd, t_map *map, t_game *g)
+static void	file_read_and_parse(char *filepath, t_game *g)
 {
+	int		fd;
 	char	*line;
+	int		ret;
 
+	fd = open(filepath, O_RDONLY);
+	if (fd == -1)
+		exit_game(filepath, g);
+	ret = EXIT_SUCCESS;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (!is_metadata_parsed(map))
-			parse_line_to_metadata(line, map, g);
+		if (!is_metadata_parsed(g->map))
+			ret = parse_line_to_metadata(line, g->map, ret);
 		else
-			parse_line_to_grid(line, map, g);
+			ret = parse_line_to_grid(line, g->map, ret);
 		free(line);
 	}
+	close(fd);
+	if (ret == EXIT_FAILURE)
+		exit_game(NULL, g);
 }
 
-/**
- * Parses and validates a .cub map file.
- * Handles file opening/closing, metadata parsing, grid parsing,
- * and final validation of the complete map structure.
- *
- * @param filepath Path to the .cub map file to parse
- *
- * @return Pointer to fully parsed and validated t_map structure,
- *         or exits with error if:
- *           - Invalid file extension
- *           - File cannot be opened
- *           - Memory allocation fails
- *           - Metadata is incomplete/invalid
- *           - Grid is invalid (not surrounded by walls, etc.)
- * @note Caller is responsible for freeing the returned map.
- */
-t_map	*map_parse_and_validate(char *filepath, t_game *g)
+void	map_parse_and_check(char *filepath, t_game *g)
 {
-	int		fd;
-	t_map	*map;
-
 	if (!has_valid_extension(filepath, ".cub"))
 		exit_game("Map file must have a .cub extension", g);
-	fd = open(filepath, O_RDONLY);
-	if (fd == -1)
-		exit_game(filepath, g);
-	map = init_map();
-	if (!map)
-		(close(fd), exit_game("Map memory allocation", g));
-	file_read_and_parse(fd, map, g);
-	close(fd);
-	check_metadata(map, g);
-	check_grid(map, g);
-	if (trim_empty_lines_after_grid(map) != EXIT_SUCCESS)
-		exit_game(NULL, g);
-	if (uniformize_grid_margins(map) != EXIT_SUCCESS)
-		exit_game(NULL, g);
-	if (!is_grid_closed(map))
-		exit_game(NULL, g);
-	return (map);
+	file_read_and_parse(filepath, g);
+	check_metadata_lines(g);
+	check_grid_lines(g);
+	trim_empty_lines_after_grid(g);
+	uniformize_grid_margins(g);
+	check_grid_is_closed(g);
 }

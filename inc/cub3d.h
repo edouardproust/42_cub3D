@@ -53,17 +53,18 @@ typedef struct s_game
 /****************************************/
 
 /* Parsing */
-t_map		*map_parse_and_validate(char *filepath, t_game *g);
+t_map		*init_map(void);
+void		map_parse_and_check(char *filepath, t_game *g);
 bool		is_metadata_parsed(t_map *map);
-void		parse_line_to_metadata(char *line, t_map *map, t_game *g);
-void		parse_line_to_grid(char *line, t_map *map, t_game *g);
-void		check_metadata(t_map *map, t_game *g);
-void		check_grid(t_map *map, t_game *g);
-bool		is_grid_closed(t_map *map);
+int			parse_line_to_metadata(char *line, t_map *map, int ret);
+int			parse_line_to_grid(char *line, t_map *map, int ret);
+void		check_metadata_lines(t_game *g);
+void		check_grid_lines(t_game *g);
+void		check_grid_is_closed(t_game *g);
 bool		has_valid_extension(char *path, char *ext);
 bool		has_more_than_one_word(char *str);
-int			trim_empty_lines_after_grid(t_map *map);
-int			uniformize_grid_margins(t_map *map);
+void		trim_empty_lines_after_grid(t_game *g);
+void		uniformize_grid_margins(t_game *g);
 void		set_map_player(t_map *map, int x, int y, char dir);
 
 /******** Utils ********/

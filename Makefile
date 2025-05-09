@@ -14,8 +14,8 @@ C_FILES = debug.c\
 	parsing/parse_metadata.c \
 	parsing/trim_grid.c \
 	parsing/utils.c \
-	parsing/valid_grid.c \
-	parsing/valid_metadata.c \
+	parsing/check_grid.c \
+	parsing/check_metadata.c \
 	utils/char.c \
 	utils/error.c \
 	utils/exit.c \

@@ -7,10 +7,10 @@ static t_game	*init_game(char **argv)
 	g = malloc(sizeof(t_game));
 	if (!g)
 		exit_game("Data memory allocation", NULL); //TODO
-	g->map = NULL;
-	g->map = map_parse_and_validate(argv[1], g);
+	g->map = init_map();
 	if (!g->map)
-		exit_game(NULL, g);
+		exit_game("Map memory allocation", g);
+	map_parse_and_check(argv[1], g);
 	debug_parsed_map(g->map); //DEBUG
 	return (g);
 }

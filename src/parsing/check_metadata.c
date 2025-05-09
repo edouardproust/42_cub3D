@@ -24,11 +24,11 @@ static void	check_texture(char *id, char *filepath, t_game *g)
 {
 	int	fd;
 
-	if (filepath[0] == 0)
-		exit_game2(id, "No texture path provided", g);
+	if (is_blank_str(filepath))
+		exit_game3(E_PARSING, id, "No texture path provided", g);
 	fd = open(filepath, O_RDONLY);
 	if (fd == -1)
-		exit_game2(id, filepath, g);
+		exit_game2(E_PARSING, filepath, g);
 	close(fd);
 }
 
@@ -64,32 +64,34 @@ static void	check_color(char *id, char *color, t_game *g)
 {
 	char	**parts;
 	int		i;
+	char	*glob_err;
 
-	if (color[0] == 0)
-		exit_game2(id, "No color code provided", g);
+	glob_err = "Invalid color code";
+	if (is_blank_str(color))
+		exit_game3(E_PARSING, id, "No color code provided", g);
 	if (has_more_than_one_word(color))
-		exit_game2(id, "Invalid color code", g);
+		exit_game3(E_PARSING, id, glob_err, g);
 	parts = ft_split(color, ',');
 	if (!parts)
 		exit_game2(E_FATAL_PARSING, "color allocation", g);
 	if (ft_matrix_size(parts) != 3 || color[ft_strlen(color)-1] == ',')
-		(ft_free_split(&parts), exit_game2(id, "Invalid color code", g));
+		(ft_free_split(&parts), exit_game3(E_PARSING, id, glob_err, g));
 	i = 0;
 	while (parts[i])
 	{
 		if (!is_valid_color_part(parts[i]))
-			(ft_free_split(&parts), exit_game2(id, "Invalid color code", g));
+			(ft_free_split(&parts), exit_game3(E_PARSING, id, glob_err, g));
 		i++;
 	}
 	ft_free_split(&parts);
 }
 
-void	check_metadata(t_map *map, t_game *g)
+void	check_metadata_lines(t_game *g)
 {
-	check_texture("NO", map->texture_no, g);
-	check_texture("SO", map->texture_so, g);
-	check_texture("EA", map->texture_ea, g);
-	check_texture("WE", map->texture_we, g);
-	check_color("C", map->color_c, g);
-	check_color("F", map->color_f, g);
+	check_texture("NO", g->map->texture_no, g);
+	check_texture("SO", g->map->texture_so, g);
+	check_texture("EA", g->map->texture_ea, g);
+	check_texture("WE", g->map->texture_we, g);
+	check_color("C", g->map->color_c, g);
+	check_color("F", g->map->color_f, g);
 }
