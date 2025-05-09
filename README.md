@@ -11,14 +11,6 @@
 
 ## How to Use
 
-### Requirements
-
-- Unix-based system (Linux or macOS)
-- gcc or clang
-- make
-- MiniLibX (included or installed via system package)
-- X11 libraries (Linux) or an appropriate graphics environment (macOS)
-
 ### Installation
 
 1. #### Install dependencies
@@ -57,9 +49,9 @@ Once compiled, launch the program with a map file:
 
 ### Controls
 
-- W / A / S / D – Move forward, left, backward, and right
-- ← / → – Rotate view left and right
-- ESC – Exit the game
+- `W`, `A`, `S`, `D`: Move forward, left, backward, and right
+- `←`, `→`: Rotate view left and right
+- `ESC`: Exit the game
 
 ### Use compatible maps
 
