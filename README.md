@@ -21,16 +21,29 @@
 
 ### Installation
 
-1. Install dependencies (`make`, `gcc`, `libx11-dev`, `libxext-dev` and `libbsd-dev`):
+1. #### Install dependencies
+
+	Cub3D relies on library [MLX42](https://github.com/codam-coding-college/MLX42) for the 3D rendering aspect. MLX42 is using [GLFW](https://www.glfw.org/) for window and input handling, and [CMake](https://cmake.org/) for the build process.
+
+	**On Linux (Debian/Ubuntu):**
 	```
-	sudo apt update && sudo apt install -y make gcc libx11-dev libxext-dev libbsd-dev
+	sudo apt update && sudo apt install -y make gcc cmake libglfw3-dev libdl-dev libpthread-stubs0-dev
 	```
-2. Clone the repository:
+
+	**On macOS (using Homebrew):**
+	```
+	brew install glfw cmake
+	```
+
+2. #### Clone the repository:
+
 	```bash
 	git clone https://github.com/your-username/cub3d.git
 	cd cub3d
 	```
-2. Compile the project:
+
+3. #### Compile the project:
+
 	```
 	make
 	```
@@ -39,7 +52,7 @@
 
 Once compiled, launch the program with a map file:
 ```
-./cub3D maps/example.cub
+./cub3D assets/maps/example.cub
 ```
 
 ### Controls

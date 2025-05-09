@@ -62,25 +62,25 @@ LIBFT_DIR = $(LIBS_DIR)/libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = $(LIBS_DIR)/minilibx
+MLX_DIR = $(LIBS_DIR)/mlx42
 
-MLX = $(MLX_DIR)/libmlx_Linux.a
+MLX = $(MLX_DIR)/build/libmlx42.a
 
-LIBS = $(LIBFT) -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lbsd -lm
+LIBS = $(LIBFT) $(MLX) -ldl -lglfw -pthread -lm
 
 
 # ************************************
 # Includes                           *
 # ************************************
 
-INCLUDES = -I$(H_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+INCLUDES = -I$(H_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)/include/MLX42
 
 
 # ************************************
 # Rules                              *
 # ************************************
 
-all: libft mlx $(NAME)
+all: libft libmlx $(NAME)
 
 $(O_DIR)/%.o: $(C_DIR)/%.c Makefile $(HEADERS)
 	@mkdir -p $(@D)
@@ -90,9 +90,9 @@ $(NAME): $(OBJS) $(LIBFT)
 	cc -o $@ $^ $(LIBS)
 
 clean:
-	rm -rf $(O_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
-	$(MAKE) -C $(MLX_DIR) clean
+	rm -rf $(O_DIR)
+	rm -rf $(MLX)/build
 
 fclean: clean
 	rm -rf $(NAME) $(LIBFT) $(MLX)
@@ -102,8 +102,10 @@ re: fclean all
 libft:
 	$(MAKE) -C $(LIBFT_DIR)
 
-mlx:
-	$(MAKE) -C $(MLX_DIR)
+libmlx:
+	cmake $(MLX_DIR) -B $(MLX_DIR)/build
+	$(MAKE) -C $(MLX_DIR)/build -j4
+
 
 valgrind:
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes $(NAME) assets/maps/_valgrind_test.cub
@@ -112,4 +114,4 @@ valgrind:
 # Phony                              *
 # ************************************
 
-.PHONY: all clean fclean re libft mlx valgrind
+.PHONY: all clean fclean re libft libmlx valgrind

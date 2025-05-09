@@ -2,7 +2,7 @@
 # define CUB3D_H
 
 # include "libft.h"
-# include "mlx.h"
+# include "MLX42.h"
 # include <stdio.h> // printf
 # include <stdbool.h> // bool, true, false
 # include <errno.h> // errno
