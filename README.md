@@ -91,7 +91,7 @@ C 225,30,0
 - `open`, `close`, `read`, `write`, `printf`, `malloc`, `free`, `perror`, `strerror`, `exit`, `gettimeofday`.
 - All functions of `libft` (the library developped by students along the 42 cursus)
 - All functions of the math library (link with `-lm`, see the list of functions [here](https://linux.die.net/man/3/math)).
-- All functions of the MinilibX library.
+- All functions of the MLX42 library.
 
 ## Features
 
