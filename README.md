@@ -101,7 +101,7 @@ C 225,30,0
 
 ### 🗺️ Custom Map Parsing
 - Supports custom `.cub` map files with textures, wall layout, player start position, and more.
-- Validates map integrity (closed walls, valid characters, texture paths).
+- Validates map integrity (closed walls, valid characters, texture paths, etc.).
 
 ### 🎮 Real-Time Player Movement
 - Smooth forward/backward/strafe movement and real-time rotation.
