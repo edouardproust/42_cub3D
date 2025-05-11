@@ -17,15 +17,16 @@
 #include "cub3d.h"
 
 static void	check_grid_line(char *line, bool *player_found,
-	bool *is_empty_line, t_game *g)
+	bool *is_blank_line, t_game *g)
 {
+	*is_blank_line = true;
 	while (*line)
 	{
 		if (!is_grid_char(*line))
 			exit_game2(E_PARSING,
 				"grid can contains only chars: 1, 0, N, S, E, W", g);
-		if (*is_empty_line && !ft_isspace(*line))
-			*is_empty_line = false;
+		if (*is_blank_line && !ft_isspace(*line))
+			*is_blank_line = false;
 		if (is_grid_player_char(*line))
 		{
 			if (*player_found)
@@ -46,21 +47,26 @@ void	check_grid_lines(t_game *g)
 	int		i;
 	bool	player_found;
 	bool	empty_line_found;
-	bool	is_empty_line;
+	bool	is_blank_line;
+	bool	is_blank_grid;
 
 	player_found = false;
 	empty_line_found = false;
+	is_blank_grid = true;
 	i = 0;
 	while (i < g->map->grid_rows)
 	{
-		is_empty_line = true;
-		check_grid_line(g->map->grid[i], &player_found, &is_empty_line, g);
-		if (!empty_line_found && is_empty_line)
+		check_grid_line(g->map->grid[i], &player_found, &is_blank_line, g);
+		if (!is_blank_line)
+			is_blank_grid = false;
+		if (!empty_line_found && is_blank_line)
 			empty_line_found = true;
-		if (empty_line_found && !is_empty_line)
+		if (empty_line_found && !is_blank_line)
 			exit_game2(E_PARSING, "grid contains an empty line", g);
 		i++;
 	}
+	if (is_blank_grid)
+		exit_game2(E_PARSING, "grid is empty", g);
 	if (!player_found)
 		exit_game2(E_PARSING, "no player location in grid", g);
 }
