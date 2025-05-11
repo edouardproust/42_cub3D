@@ -24,7 +24,7 @@ static void	check_grid_line(char *line, bool *player_found,
 	{
 		if (!is_grid_char(*line))
 			exit_game2(E_PARSING,
-				"grid can contain only chars 1, 0, N, S, E, W and spaces", g);
+				"grid can only contain chars 1, 0, N, S, E, W and spaces", g);
 		if (*is_blank_line && !ft_isspace(*line))
 			*is_blank_line = false;
 		if (is_grid_player_char(*line))
