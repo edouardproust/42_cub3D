@@ -1,65 +1,97 @@
-# Cube3D (42 Barcelona)
+# Cub3D (42 Barcelona)
 
-**Cube3D is a 3D graphical project based on the principles of raycasting, inspired by early FPS games like Wolfenstein 3D. The goal is to build a simple 3D game engine from scratch using C and a minimal graphics library (MiniLibX).**
+**Cub3D is a 3D graphical project based on the principles of raycasting, inspired by early FPS games like Wolfenstein 3D. The goal is to build a simple 3D game engine from scratch using C and a minimal graphics library (MiniLibX).**
 
 - **Subject:** [English](subject/en.subject.pdf) / [French](subject/fr.subject.pdf)
 - **Location:** 42 School Barcelona
 - **Validation:** June 2025
 - **Team:** [Skoteini-42](https://github.com/Skoteini-42), [edouardproust](https://github.com/edouardproust)
 
-![Cube3D 42 Barcelona](test/screenshots/cube3d-42-demo.gif "Cube4D project at 42 school in Barcelona using minilibX")
-
-## Skills
-
-This project is part of the 42 school curriculum and challenges students to implement core computer science concepts such as:
-
-- **Low-level graphics programming:** rendering walls, sprites, and textures using raycasting techniques.
-- **Mathematics and algorithms:** implementing vector math, player movement, collision detection, and field of view calculations.
-- **Memory management and optimization:** writing efficient C code without memory leaks or undefined behavior.
-- **Parsing and file handling:** loading and interpreting a custom map configuration from files.
-- **Event handling and user interaction:** managing keyboard inputs to control the player in real-time.
-
-Cube3D is a comprehensive exercise in systems programming and serves as an introduction to the fundamentals of game development, rendering pipelines, and engine architecture.
+![Cub3D 42 Barcelona](test/screenshots/cub3d-42-demo.gif "Cub3D project at 42 school in Barcelona using mlx42")
 
 ## How to Use
 
-### Requirements
-
-- Unix-based system (Linux or macOS)
-- gcc or clang
-- make
-- MiniLibX (included or installed via system package)
-- X11 libraries (Linux) or an appropriate graphics environment (macOS)
-
 ### Installation
 
-Clone the repository:
-```bash
-git clone https://github.com/your-username/cube3d.git
-cd cube3d
-```
-Compile the project:
-```
-make
-```
+1. #### Install dependencies
+
+	Cub3D relies on library [MLX42](https://github.com/codam-coding-college/MLX42) for the 3D rendering aspect. MLX42 is using [GLFW](https://www.glfw.org/) for window and input handling, and [CMake](https://cmake.org/) for the build process.
+
+	**On Linux (Debian/Ubuntu):**
+	```
+	sudo apt update && sudo apt install -y make gcc cmake libglfw3-dev libdl-dev libpthread-stubs0-dev
+	```
+
+	**On macOS (using Homebrew):**
+	```
+	brew install glfw cmake
+	```
+
+2. #### Clone the repository:
+
+	```bash
+	git clone https://github.com/your-username/cub3d.git
+	cd cub3d
+	```
+
+3. #### Compile the project:
+
+	```
+	make
+	```
 
 ### Running the Program
 
 Once compiled, launch the program with a map file:
 ```
-./cub3D maps/example.cub
+./cub3D assets/maps/example.cub
 ```
 
 ### Controls
 
-- W / A / S / D – Move forward, left, backward, and right
-- ← / → – Rotate view left and right
-- ESC – Exit the game
+- `W`, `A`, `S`, `D`: Move forward, left, backward, and right
+- `←`, `→`: Rotate view left and right
+- `ESC`: Exit the game
 
-### Notes
+### Use compatible maps
 
-- The .cub map file must follow the format specified in the subject PDF.
-- If you encounter errors with MiniLibX, ensure that all dependencies are correctly installed on your system (e.g., libmlx, X11, Xext on Linux).
+The `.cub` map file must follow the format specified in the [subject PDF](subject/en.subject.pdf) (pages 8 to 10).
+
+Here is an example of a compatible map:
+
+```
+NO ./path_to_the_north_texture
+SO ./path_to_the_south_texture
+WE ./path_to_the_west_texture
+EA ./path_to_the_east_texture
+
+F 220,100,0
+C 225,30,0
+
+        111111111111111111111
+        100000000011000000001
+        100100000000000000001
+11111111101100000111000000001
+10000000001100000111011111111
+1111011111111101110000001
+1100000011010101110010001
+100000000000000011001000111
+110000011101010111011110N01
+11111111 1111111 1111111111
+```
+
+- `F` defines the color of the floor
+- `C` defines the color of the ceiling
+- In the map, `N`, `S`, `W` or `E` indicate the location of the player and the corresponding direction of the point of view.
+
+## Constraints
+
+### Allowed functions:
+
+- `open`, `close`, `read`, `write`, `printf`, `malloc`, `free`, `perror`, `strerror`, `exit`, `gettimeofday`.
+- All functions of `libft` (the library developped by students along the 42 cursus)
+- All functions of the math library (link with `-lm`, see the list of functions [here](https://linux.die.net/man/3/math)).
+- All functions of the MLX42 library.
 
 ## Features
 
@@ -69,7 +101,7 @@ Once compiled, launch the program with a map file:
 
 ### 🗺️ Custom Map Parsing
 - Supports custom `.cub` map files with textures, wall layout, player start position, and more.
-- Validates map integrity (closed walls, valid characters, texture paths).
+- Validates map integrity (closed walls, valid characters, texture paths, etc.).
 
 ### 🎮 Real-Time Player Movement
 - Smooth forward/backward/strafe movement and real-time rotation.

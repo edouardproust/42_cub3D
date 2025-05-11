@@ -2,4 +2,7 @@
 *.swp
 *.out
 *.a
-cube3d
+*.o
+_obj
+cub3D
+.vscode
