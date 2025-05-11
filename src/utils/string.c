@@ -25,6 +25,20 @@ int	putstrnl_fd(char *str, int fd)
 	return (len);
 }
 
+char	*substr_trim_nl(char *str)
+{
+	char	*trimmed_str;
+	int		str_len;
+
+	str_len = ft_strlen(str);
+	if (str[str_len - 1] == '\n')
+		str_len -= 1;
+	trimmed_str = ft_substr(str, 0, str_len);
+	if (!trimmed_str)
+		return (NULL);
+	return (trimmed_str);
+}
+
 /**
  * Check if a string is empty or contains only space chars.
  *

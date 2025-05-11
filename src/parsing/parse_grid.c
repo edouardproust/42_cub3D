@@ -17,7 +17,7 @@ static int	init_grid(t_map *map, char *line)
 	map->grid = malloc(sizeof(char *));
 	if (!map->grid)
 		return (put_error2(E_FATAL_PARSING, "grid init alloc"), EXIT_FAILURE);
-	map->grid[0] = ft_substr(line, 0, ft_strlen(line) - 1);
+	map->grid[0] = substr_trim_nl(line);
 	if (!map->grid[0])
 		return (put_error2(E_FATAL_PARSING, "grid init line alloc"),
 			EXIT_FAILURE);
@@ -47,7 +47,7 @@ static int	add_line_to_grid(t_map *map, char *line)
 	if (!new_grid)
 		return (put_error2(E_FATAL_PARSING, "grid realloc"), EXIT_FAILURE);
 	map->grid = new_grid;
-	map->grid[map->grid_rows] = ft_substr(line, 0, ft_strlen(line) - 1);
+	map->grid[map->grid_rows] = substr_trim_nl(line);
 	if (!map->grid[map->grid_rows])
 		return (put_error2(E_FATAL_PARSING, "grid line alloc"), EXIT_FAILURE);
 	map->grid_rows++;

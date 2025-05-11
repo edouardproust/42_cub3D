@@ -81,6 +81,7 @@ void		free_map(t_map *map);
 void		free_game(t_game *g);
 /* String */
 int			putstrnl_fd(char *str, int fd);
+char		*substr_trim_nl(char *str);
 bool		is_blank_str(char *str);
 int			count_space_chars(char *str, int start, int end, bool rtl);
 /* Char */
