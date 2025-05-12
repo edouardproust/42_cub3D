@@ -22,11 +22,11 @@
 /* Structs and Typedefs                 */
 /****************************************/
 
-typedef struct s_point
+typedef struct s_vector
 {
-	int	x;
-	int	y;
-}	t_point;
+	double	x;
+	double	y;
+}	t_vector;
 
 typedef struct s_map
 {
@@ -39,8 +39,9 @@ typedef struct s_map
 	char		**grid;
 	int			grid_cols;
 	int			grid_rows;
-	t_point		player_pos;
-	char		player_dir;
+	t_vector	player_pos;
+	t_vector	player_dir;
+	t_vector	player_plane; //TODO
 }	t_map;
 
 typedef struct s_game
@@ -65,7 +66,7 @@ bool		has_valid_extension(char *path, char *ext);
 bool		has_more_than_one_word(char *str);
 void		trim_empty_lines_after_grid(t_game *g);
 void		uniformize_grid_margins(t_game *g);
-void		set_map_player(t_map *map, int x, int y, char dir);
+void		update_player(t_map *map, int x, int y, char dir);
 
 /******** Utils ********/
 /* Error */

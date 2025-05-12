@@ -49,12 +49,19 @@ bool	has_more_than_one_word(char *str)
 	return (false);
 }
 
-void	set_map_player(t_map *map, int x, int y, char dir)
+void	update_player(t_map *map, int x, int y, char dir)
 {
 	if (is_grid_player_char(dir))
 	{
-		map->player_pos.y = y;
-		map->player_pos.x = x;
-		map->player_dir = dir;
+		map->player_pos.y = y + 0.5;
+		map->player_pos.x = x + 0.5;
+		if (dir == 'N')
+			map->player_dir.y = -1;
+		else if (dir == 'S')
+			map->player_dir.y = 1;
+		else if (dir == 'E')
+			map->player_dir.x = 1;
+		else if (dir == 'W')
+			map->player_dir.x = -1;
 	}
 }

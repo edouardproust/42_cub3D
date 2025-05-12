@@ -110,7 +110,7 @@ void	check_grid_is_closed(t_game *g)
 		while (x < g->map->grid_cols)
 		{
 			c = g->map->grid[y][x];
-			set_map_player(g->map, x, y, c);
+			update_player(g->map, x, y, c);
 			if (c == '0' || is_grid_player_char(c))
 			{
 				if (!check_surrounding_chars(g->map, y, x))

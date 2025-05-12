@@ -46,7 +46,8 @@ void	debug_parsed_map(t_map *map)
 	print_grid(map);
 	printf("grid_rows: %d\n", map->grid_rows);
 	printf("grid_cols: %d\n", map->grid_cols);
-	printf("player_pos: [x:%d, y:%d]\n", map->player_pos.x, map->player_pos.y);
-	printf("player_dir: %c\n", map->player_dir);
+	printf("player:\n");
+	printf(" pos: [x:%.2f, y:%.2f]\n", map->player_pos.x, map->player_pos.y);
+	printf(" dir: [x:%.2f, y:%.2f]\n", map->player_dir.x, map->player_dir.y);
 	printf("\n");
 }
