@@ -46,6 +46,7 @@ OBJS = $(addprefix $(O_DIR)/,$(C_FILES:.c=.o))
 H_DIR = inc
 
 H_FILES = cub3d.h \
+	config.h
 
 HEADERS = $(addprefix $(H_DIR)/,$(H_FILES))
 

@@ -3,6 +3,7 @@
 
 # include "libft.h"
 # include "MLX42.h"
+# include "config.h"
 # include <stdio.h> // printf
 # include <stdbool.h> // bool, true, false
 # include <errno.h> // errno
@@ -18,13 +19,6 @@
 /* Errors prefix */
 # define E_PARSING "Parsing"
 # define E_FATAL_PARSING "Fatal: Parsing"
-
-/* Sizes */
-# define WIDTH 800
-# define HEIGHT	600
-# define MN_SCALE 20
-# define MN_X 10
-# define MN_Y 10
 
 /****************************************/
 /* Structs and Typedefs                 */
@@ -60,6 +54,7 @@ typedef struct s_game
 	int			minimap_scale;
 	double     	player_x;
 	double      player_y;
+	double		last_frame;
 	bool        key_w;
 	bool        key_a;
 	bool        key_s;
