@@ -7,9 +7,11 @@ void	draw_player_circle(t_game *game)
 	int	dx;
 	int	dy;
 	int	radius;
+	int	scale;
 
-	px = (int)(game->player_x * game->minimap_scale);
-	py = (int)(game->player_y * game->minimap_scale);
+	scale = MN_SCALE;
+	px = (int)(game->player_x * scale);
+	py = (int)(game->player_y * scale);
 	radius = PLAYER_RADIUS;
 	dy = -radius;
 	while (dy <= radius)

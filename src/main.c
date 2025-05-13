@@ -31,5 +31,6 @@ int	main(int argc, char **argv)
 	game = init_game(argv);
 	mlx_loop(game->mlx);
 	// TODO run game based on map
+	free_game(game);
 	return (EXIT_SUCCESS);
 }

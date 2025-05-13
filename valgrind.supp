@@ -1,0 +1,8 @@
+{
+  mlx_x11_errors
+  Memcheck:Param
+  writev(vector[...])
+  ...
+  obj:/usr/lib/x86_64-linux-gnu/libX11*
+  obj:/usr/lib/x86_64-linux-gnu/libGLX*
+}

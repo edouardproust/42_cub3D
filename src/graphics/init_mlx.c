@@ -38,7 +38,6 @@ static void	init_minimap(t_game *game)
 	int	mm_width;
 	int	mm_height;
 	
-	game->minimap_scale = MN_SCALE;
 	mm_width = game->map->grid_cols * MN_SCALE;
 	mm_height = game->map->grid_rows * MN_SCALE;
 	game->minimap = mlx_new_image(game->mlx, mm_width, mm_height);

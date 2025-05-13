@@ -45,20 +45,22 @@ typedef struct s_map
 	char		player_dir;
 }	t_map;
 
+typedef struct	s_keymap
+{
+	keys_t		mlx;
+	t_keys		value;
+}	t_keymap;
+
 typedef struct s_game
 {
 	t_map		*map;
 	mlx_t		*mlx;
 	mlx_image_t	*screen;
 	mlx_image_t	*minimap;
-	int			minimap_scale;
 	double     	player_x;
 	double      player_y;
 	double		last_frame;
-	bool        key_w;
-	bool        key_a;
-	bool        key_s;
-	bool        key_d;
+	bool        key_states[KEY_COUNT];
 }	t_game;
 
 /****************************************/
@@ -85,6 +87,9 @@ void		init_mlx(t_game *game);
 /* Hooks */
 void		key_hook(mlx_key_data_t keydata, void *param);
 void		close_hook(void *param);
+/* Keymapping */
+t_keys		mlx_key_to_enum(keys_t mlx_key);
+void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void		draw_minimap_grid(t_game *game);
 void		draw_player_circle(t_game *game);

@@ -16,6 +16,7 @@ C_FILES = debug.c\
 	parsing/check_grid.c \
 	parsing/check_metadata.c \
 	graphics/init_mlx.c \
+	graphics/keymapping.c \
 	graphics/hooks.c \
 	graphics/minimap/draw_grid.c \
 	graphics/minimap/draw_player.c \

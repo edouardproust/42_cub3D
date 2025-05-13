@@ -12,16 +12,11 @@ void	close_hook(void *param)
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
+	t_keys	mapped_key;
 
 	game = (t_game *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(game->mlx);
-	else if (keydata.key == MLX_KEY_W)
-		game->key_w = (keydata.action != MLX_RELEASE);
-	else if (keydata.key == MLX_KEY_S)
-		game->key_s = (keydata.action != MLX_RELEASE);
-	else if (keydata.key == MLX_KEY_A)
-		game->key_a = (keydata.action != MLX_RELEASE);
-	else if (keydata.key == MLX_KEY_D)
-		game->key_d = (keydata.action != MLX_RELEASE);
+	handle_special_keys(keydata, game);
+	mapped_key = mlx_key_to_enum(keydata.key);
+	if (mapped_key != KEY_COUNT)
+		game->key_states[mapped_key] = (keydata.action != MLX_RELEASE);
 }

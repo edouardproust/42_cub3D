@@ -13,13 +13,13 @@ static void	calculate_new_position(t_game *game, double move_speed,
 {
 	*new_x = game->player_x;
 	*new_y = game->player_y;
-	if (game->key_w)
+	if (game->key_states[KEY_W])
 		*new_y -= move_speed;
-	if (game->key_s)
+	if (game->key_states[KEY_S])
 		*new_y += move_speed;
-	if (game->key_a)
+	if (game->key_states[KEY_A])
 		*new_x -= move_speed;
-	if (game->key_d)
+	if (game->key_states[KEY_D])
 		*new_x += move_speed;
 }
 

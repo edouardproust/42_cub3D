@@ -6,7 +6,7 @@ static void	draw_minimap_cell(t_game *game, int x, int y, int color)
 	int	i;
 	int	j;
 
-	scale = game->minimap_scale;
+	scale = MN_SCALE;
 	i = 1;
 	while (i < scale - 1)
 	{
