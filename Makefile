@@ -1,6 +1,5 @@
 NAME = ./cub3D
-
-
+                       
 # ************************************
 # Sources                            *
 # ************************************
@@ -16,11 +15,17 @@ C_FILES = debug.c\
 	parsing/utils.c \
 	parsing/check_grid.c \
 	parsing/check_metadata.c \
+	graphics/init_mlx.c \
+	graphics/hooks.c \
+	graphics/minimap/draw_grid.c \
+	graphics/minimap/draw_player.c \
+	graphics/minimap/render.c \
+	player/movement.c \
 	utils/char.c \
 	utils/error.c \
 	utils/exit.c \
 	utils/free.c \
-	utils/string.c \
+	utils/string.c
 
 SRCS = $(addprefix $(C_DIR)/,$(C_FILES))
 

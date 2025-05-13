@@ -9,6 +9,7 @@
 # include <string.h> // strerror
 # include <fcntl.h> // open
 # include <limits.h> // INT_MAX
+# include <math.h>
 
 /****************************************/
 /* Macros and Enums                     */
@@ -17,6 +18,13 @@
 /* Errors prefix */
 # define E_PARSING "Parsing"
 # define E_FATAL_PARSING "Fatal: Parsing"
+
+/* Sizes */
+# define WIDTH 800
+# define HEIGHT	600
+# define MN_SCALE 20
+# define MN_X 10
+# define MN_Y 10
 
 /****************************************/
 /* Structs and Typedefs                 */
@@ -45,14 +53,24 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	t_map	*map;
+	t_map		*map;
+	mlx_t		*mlx;
+	mlx_image_t	*screen;
+	mlx_image_t	*minimap;
+	int			minimap_scale;
+	double     	player_x;
+	double      player_y;
+	bool        key_w;
+	bool        key_a;
+	bool        key_s;
+	bool        key_d;
 }	t_game;
 
 /****************************************/
 /* Functions                            */
 /****************************************/
 
-/* Parsing */
+/******** Parsing ********/
 t_map		*init_map(void);
 void		map_parse_and_check(char *filepath, t_game *g);
 bool		is_metadata_parsed(t_map *map);
@@ -66,6 +84,20 @@ bool		has_more_than_one_word(char *str);
 void		trim_empty_lines_after_grid(t_game *g);
 void		uniformize_grid_margins(t_game *g);
 void		set_map_player(t_map *map, int x, int y, char dir);
+
+/******** Graphics ********/
+void		init_mlx(t_game *game);
+/* Hooks */
+void		key_hook(mlx_key_data_t keydata, void *param);
+void		close_hook(void *param);
+/* Minimap */
+void		draw_minimap_grid(t_game *game);
+void		draw_player_circle(t_game *game);
+void		render_minimap(void *param);
+
+/******** Player ********/
+
+void		update_movement(t_game *game, double move_speed);
 
 /******** Utils ********/
 /* Error */
