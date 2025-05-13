@@ -53,15 +53,8 @@ void	update_player(t_map *map, int x, int y, char dir)
 {
 	if (is_grid_player_char(dir))
 	{
-		map->player_pos.y = y + 0.5;
-		map->player_pos.x = x + 0.5;
-		if (dir == 'N')
-			map->player_dir.y = -1;
-		else if (dir == 'S')
-			map->player_dir.y = 1;
-		else if (dir == 'E')
-			map->player_dir.x = 1;
-		else if (dir == 'W')
-			map->player_dir.x = -1;
+		map->start_pos.y = y + 0.5;
+		map->start_pos.x = x + 0.5;
+		map->start_dir = dir;
 	}
 }

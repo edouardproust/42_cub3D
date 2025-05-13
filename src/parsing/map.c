@@ -16,10 +16,9 @@ t_map	*init_map(void)
 	map->grid = NULL;
 	map->grid_rows = -1;
 	map->grid_cols = -1;
-	map->player_pos.x = -1;
-	map->player_pos.y = -1;
-	map->player_dir.x = 0;
-	map->player_dir.y = 0;
+	map->start_pos.x = -1;
+	map->start_pos.y = -1;
+	map->start_dir = 0;
 	return (map);
 }
 

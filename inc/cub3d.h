@@ -9,6 +9,7 @@
 # include <string.h> // strerror
 # include <fcntl.h> // open
 # include <limits.h> // INT_MAX
+# include <math.h> // INFINITY
 
 /****************************************/
 /* Macros and Enums                     */
@@ -18,35 +19,62 @@
 # define E_PARSING "Parsing"
 # define E_FATAL_PARSING "Fatal: Parsing"
 
+# define SCREEN_WIDTH_PX	640
+# define SCREEN_HEIGHT_PX 480
+# define FOV_FACTOR 0.66
+
+typedef enum s_side
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST,
+} t_side;
+
+
 /****************************************/
 /* Structs and Typedefs                 */
 /****************************************/
 
-typedef struct s_vector
+typedef struct s_point
 {
 	double	x;
 	double	y;
-}	t_vector;
+}	t_point;
+
+typedef struct s_ray_dist
+{
+	double	x;
+	double	y;
+}	t_ray_dist;
+
+typedef struct s_cell
+{
+	int	x;
+	int	y;
+}	t_cell;
 
 typedef struct s_map
 {
-	char		*texture_no;
-	char		*texture_so;
-	char		*texture_ea;
-	char		*texture_we;
-	char		*color_c;
-	char		*color_f;
-	char		**grid;
-	int			grid_cols;
-	int			grid_rows;
-	t_vector	player_pos;
-	t_vector	player_dir;
-	t_vector	player_plane; //TODO
+	char	*texture_no;
+	char	*texture_so;
+	char	*texture_ea;
+	char	*texture_we;
+	char	*color_c;
+	char	*color_f;
+	char	**grid;
+	int		grid_cols;
+	int		grid_rows;
+	t_point	start_pos;
+	char	start_dir;
 }	t_map;
 
 typedef struct s_game
 {
 	t_map	*map;
+	t_point	pos;
+	t_point	dir;
+	t_point	plane;
 }	t_game;
 
 /****************************************/
