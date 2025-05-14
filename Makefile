@@ -16,6 +16,8 @@ C_FILES = debug.c\
 	parsing/utils.c \
 	parsing/check_grid.c \
 	parsing/check_metadata.c \
+	raycasting/rays_loop.c \
+	raycasting/ray.c \
 	utils/char.c \
 	utils/error.c \
 	utils/exit.c \

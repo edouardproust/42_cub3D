@@ -22,13 +22,14 @@
 # define SCREEN_WIDTH_PX	640
 # define SCREEN_HEIGHT_PX 480
 # define FOV_FACTOR 0.66
+# define FISHEYE_EFFECT false
 
 typedef enum s_side
 {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST,
+	NO,
+	EA,
+	SO,
+	WE,
 } t_side;
 
 
@@ -36,23 +37,34 @@ typedef enum s_side
 /* Structs and Typedefs                 */
 /****************************************/
 
+// Stores floating-point coordinates (can be located anywhere within the grid)
 typedef struct s_point
 {
 	double	x;
 	double	y;
 }	t_point;
 
-typedef struct s_ray_dist
-{
-	double	x;
-	double	y;
-}	t_ray_dist;
-
+// Stores integer coordinates (representing positions on grid intersections)
 typedef struct s_cell
 {
 	int	x;
 	int	y;
 }	t_cell;
+
+// Stores the distances along the x and y axes for a ray's movement through the grid
+typedef struct s_ray
+{
+	t_point	dir; // Ray direction
+	t_side	side; // The side of the wall cube (NO, SO, EA, WE) the ray hit
+	double	length_x; // Distance traveled along the x-axis until a wall is hit
+	double	length_y; // Distance traveled along the y-axis until a wall is hit
+	double	len_step_x; // Distance to travel to cross one cell on the x-axis
+	double	len_step_y; // Distance to travel to cross one cell on the y-axis
+	t_cell	cell; // Cell in the grid that the ray is currently crossing
+	t_cell	cell_move; // Move to the next cell the ray will cross
+	bool	wall_hit; // Indicates if the ray hit a wall
+} t_ray;
+
 
 typedef struct s_map
 {
@@ -73,15 +85,15 @@ typedef struct s_game
 {
 	t_map	*map;
 	t_point	pos;
-	t_point	dir;
-	t_point	plane;
+	t_cell	dir;
+	t_point	camera_plane;
 }	t_game;
 
 /****************************************/
 /* Functions                            */
 /****************************************/
 
-/* Parsing */
+/******** Parsing ********/
 t_map		*init_map(void);
 void		map_parse_and_check(char *filepath, t_game *g);
 bool		is_metadata_parsed(t_map *map);
@@ -95,6 +107,10 @@ bool		has_more_than_one_word(char *str);
 void		trim_empty_lines_after_grid(t_game *g);
 void		uniformize_grid_margins(t_game *g);
 void		update_player(t_map *map, int x, int y, char dir);
+
+/******** Raycasting ********/
+void		cast_rays(t_game *g);
+double		get_ray_length(double screen_px_col, t_game *g);
 
 /******** Utils ********/
 /* Error */
