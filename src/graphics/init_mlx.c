@@ -1,5 +1,4 @@
 #include "cub3d.h"
-
 /**
  * Initializes MLX context and main window
  * @param game Pointer to game structure
@@ -19,6 +18,11 @@ static bool	init_mlx_context(t_game *game)
 /**
  * Creates and initializes main screen buffer
  * @param game Pointer to game structure
+ *
+ * Notes:
+ * - ft_memset sets all pixels to transparent (0x00000000) on creation.
+ *   (MLX images have uninitialized pixel data by default.)
+ * - sizeof(int32_t): Each pixel is a 4-byte RGBA value.
  */
 static void	init_main_screen(t_game *game)
 {

@@ -7,6 +7,7 @@
  * Key Notes:
  * - ft_memset sets all minimap pixels to transparent (0x00000000) on creation.
  *   (MLX images have uninitialized pixel data by default.)
+ * - sizeof(int32_t): Each pixel is a 4-byte RGBA value.
  */
 void	init_minimap(t_game *game)
 {
