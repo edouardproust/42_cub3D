@@ -2,11 +2,13 @@
 
 static t_keymap	*get_keymap(void)
 {
-	static	t_keymap keymap[] = {
+	static t_keymap	keymap[] = {
 	{MLX_KEY_W, KEY_W},
 	{MLX_KEY_A, KEY_A},
 	{MLX_KEY_S, KEY_S},
 	{MLX_KEY_D, KEY_D},
+	{MLX_KEY_LEFT, KEY_LEFT},
+	{MLX_KEY_RIGHT, KEY_RIGHT},
 	{MLX_KEY_ESCAPE, KEY_ESC},
 	{0, KEY_COUNT} 
 	};

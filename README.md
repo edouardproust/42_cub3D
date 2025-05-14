@@ -125,4 +125,7 @@ C 225,30,0
   - Doors or teleportation
   - Mini-map or UI elements
 
+### 📚 Resources
+- https://www.youtube.com/watch?v=gYRrGTC7GtA&list=PLCWsH9Tj9oWyDM4W43VMj5yo2PdyYMGst&ab_channel=3DSage
+- https://phet.colorado.edu/sims/html/trig-tour/latest/trig-tour_all.html
 

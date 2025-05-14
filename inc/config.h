@@ -11,19 +11,22 @@
 # define MN_Y 			10		/* Y offset from top window edge */
 
 /* Player Settings */
-# define MOVE_SPEED 	5.0		/* Base movement speed in world units/second */
+# define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
+# define ROT_SPEED		3.0		/* Rotation speed (radians/second)*/
 # define HITBOX 		0.3		/* Collision buf around player (0.3=30% cell) */
 # define PLAYER_RADIUS 	3		/* Visual radius of player in minimap pixels */
 
 /* Keyboard Settings */
 typedef enum e_keys
 {
-    KEY_W,
-    KEY_A,
-    KEY_S,
-    KEY_D,
-    KEY_ESC,
-    KEY_COUNT
+	KEY_W,
+	KEY_A,
+	KEY_S,
+	KEY_D,
+	KEY_ESC,
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_COUNT
 }	t_keys;
 
 #endif

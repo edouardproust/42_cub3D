@@ -2,18 +2,17 @@
 
 static void	draw_minimap_cell(t_game *game, int x, int y, int color)
 {
-	int	scale;
 	int	i;
 	int	j;
 
-	scale = MN_SCALE;
 	i = 1;
-	while (i < scale - 1)
+	while (i < MN_SCALE - 1)
 	{
 		j = 0;
-		while (j < scale - 1)
+		while (j < MN_SCALE - 1)
 		{
-			mlx_put_pixel(game->minimap, x * scale + i, y * scale + j, color);
+			mlx_put_pixel(game->minimap,
+				x * MN_SCALE + i, y * MN_SCALE + j, color);
 			j++;
 		}
 		i++;

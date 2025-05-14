@@ -1,5 +1,4 @@
 #include "cub3d.h"
-
 /**
  * Calculates potential new player position based on input keys
  * 
@@ -72,6 +71,7 @@ void	update_movement(t_game *game, double delta_time)
 	double	new_y;
 	double	frame_speed;
 
+	update_rotation(game, delta_time);
 	frame_speed = MOVE_SPEED * delta_time;
 	calculate_new_position(game, frame_speed, &new_x, &new_y);
 	if (is_valid_move(game, new_x, new_y))

@@ -10,7 +10,7 @@
 # include <string.h> // strerror
 # include <fcntl.h> // open
 # include <limits.h> // INT_MAX
-# include <math.h> // floor(),ceil(), sin, cos
+# include <math.h> // sin, cos, M_PI
 
 /****************************************/
 /* Macros and Enums                     */
@@ -61,6 +61,7 @@ typedef struct s_game
 	double      player_y;
 	double		last_frame;
 	bool        key_states[KEY_COUNT];
+	double		player_rot;
 }	t_game;
 
 /****************************************/
@@ -91,13 +92,15 @@ void		close_hook(void *param);
 t_keys		mlx_key_to_enum(keys_t mlx_key);
 void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
+void		init_minimap(t_game *game);
 void		draw_minimap_grid(t_game *game);
+void		draw_direction_line(t_game *game, int px, int py);
 void		draw_player_circle(t_game *game);
 void		render_minimap(void *param);
 
 /******** Player ********/
-
 void		update_movement(t_game *game, double move_speed);
+void		update_rotation(t_game *game, double delta_time);
 
 /******** Utils ********/
 /* Error */
