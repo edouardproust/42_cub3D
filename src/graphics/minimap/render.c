@@ -1,5 +1,16 @@
 #include "cub3d.h"
-
+/**
+ * Renders the minimap every frame. Responsible for:
+ * - Updating player movement
+ * - Clearing and redrawing the minimap
+ * 
+ * @param param Pointer to the game structure (t_game*).
+ * 
+ * Key Notes:
+ * - Uses ft_memset to clear the minimap's pixel buffer to transparent
+ *   (0x00000000) before redrawing. This prevents old frames lingering.
+ * - sizeof(int32_t): Each pixel is a 4-byte RGBA value.
+ */
 void	render_minimap(void *param)
 {
 	t_game	*game;

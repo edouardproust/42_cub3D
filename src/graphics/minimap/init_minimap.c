@@ -1,7 +1,12 @@
 #include "cub3d.h"
 /**
- * Initializes minimap image and positioning
- * @param game Pointer to game structure
+ * Initializes the minimap image and its pixel buffer.
+ * 
+ * @param game Pointer to the game structure.
+ * 
+ * Key Notes:
+ * - ft_memset sets all minimap pixels to transparent (0x00000000) on creation.
+ *   (MLX images have uninitialized pixel data by default.)
  */
 void	init_minimap(t_game *game)
 {
