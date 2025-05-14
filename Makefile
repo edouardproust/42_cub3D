@@ -113,9 +113,11 @@ libmlx:
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build
 	$(MAKE) -C $(MLX_DIR)/build -j4
 
+VALGRIND_SUPP = valgrind.supp
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes $(NAME) assets/maps/_valgrind_test.cub
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes --suppressions=$(VALGRIND_SUPP) $(NAME) assets/maps/_valgrind_test.cub
+
 
 # ************************************
 # Phony                              *

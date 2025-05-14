@@ -10,7 +10,7 @@
 # include <string.h> // strerror
 # include <fcntl.h> // open
 # include <limits.h> // INT_MAX
-# include <math.h>
+# include <math.h> // floor(),ceil(), sin, cos
 
 /****************************************/
 /* Macros and Enums                     */
