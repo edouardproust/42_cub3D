@@ -63,8 +63,8 @@ void	draw_player_circle(t_game *game)
 	int	dx;
 	int	dy;
 
-	px = (int)(game->player_x * MN_SCALE);
-	py = (int)(game->player_y * MN_SCALE);
+	px = (int)(game->pos.x * MN_SCALE);
+	py = (int)(game->pos.y * MN_SCALE);
 	dy = -PLAYER_RADIUS;
 	while (dy <= PLAYER_RADIUS)
 	{

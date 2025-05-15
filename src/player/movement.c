@@ -1,7 +1,7 @@
 #include "cub3d.h"
 /**
  * Calculates potential new player position based on input keys
- * 
+ *
  * @param game      Pointer to game structure containing player state
  * @param move_speed Movement speed multiplier
  * @param new_x     Pointer to store calculated X position
@@ -10,8 +10,8 @@
 static void	calculate_new_position(t_game *game, double move_speed,
 	double *new_x, double *new_y)
 {
-	*new_x = game->player_x;
-	*new_y = game->player_y;
+	*new_x = game->pos.x;
+	*new_y = game->pos.y;
 	if (game->key_states[KEY_W])
 		*new_y -= move_speed;
 	if (game->key_states[KEY_S])
@@ -24,9 +24,9 @@ static void	calculate_new_position(t_game *game, double move_speed,
 
 /**
  * Validates if a potential position is free of collisions
- * 
+ *
  * Checks 4 grid cells around the player (calculating a 0.3 hitbox)
- * 
+ *
  * @param game    Pointer to game structure
  * @param new_x   X position to validate
  * @param new_y   Y position to validate
@@ -56,12 +56,12 @@ static bool	is_valid_move(t_game *game, double new_x, double new_y)
 
 /**
  * Updates player position based on input and collision checks
- * 
+ *
  * Process:
  * 1. Calculate potential new position from input
  * 2. Validate against map collision
  * 3. Update actual position if validation passes
- * 
+ *
  * @param game       Pointer to game structure
  * @param move_speed Movement speed multiplier (delta-adjusted)
  */
@@ -76,7 +76,7 @@ void	update_movement(t_game *game, double delta_time)
 	calculate_new_position(game, frame_speed, &new_x, &new_y);
 	if (is_valid_move(game, new_x, new_y))
 	{
-		game->player_x = new_x;
-		game->player_y = new_y;
+		game->pos.x = new_x;
+		game->pos.y = new_y;
 	}
 }

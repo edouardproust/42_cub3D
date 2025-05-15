@@ -43,6 +43,8 @@ static t_game	*init_game(char **argv)
 	debug_parsed_map(g->map); //DEBUG
 	g->pos.x = g->map->start_pos.x + 0.5;
 	g->pos.y = g->map->start_pos.y + 0.5;
+	g->win_height = HEIGHT;
+	g->win_width = WIDTH;
 	init_game_vectors(g);
 	cast_rays(g);
 	init_mlx(g);

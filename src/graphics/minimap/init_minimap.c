@@ -23,5 +23,5 @@ void	init_minimap(t_game *game)
 	ft_memset(game->minimap->pixels, 0, mm_width * mm_height * sizeof(int32_t));
 	minimap_height = game->map->grid_rows * MN_SCALE;
 	mlx_image_to_window(game->mlx, game->minimap, MN_X,
-		HEIGHT - minimap_height - MN_Y);
+		game->win_height - minimap_height - MN_Y);
 }
