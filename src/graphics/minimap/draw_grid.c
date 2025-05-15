@@ -13,7 +13,7 @@ static void	draw_minimap_cell(t_game *game, int x, int y, bool is_wall)
 		while (j < MN_SCALE)
 		{
 			color = MN_COLOR_WALL;
-			if (i == 0 || j == 0 || i == MN_SCALE - 1 || j == MN_SCALE - 1)
+			if (i == 0 || j == 0)
 				color = MN_COLOR_GRID;
 			else if (!is_wall)
 				color = MN_COLOR_FLOOR;
