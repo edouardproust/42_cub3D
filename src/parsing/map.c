@@ -7,18 +7,11 @@ t_map	*init_map(void)
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
-	map->texture_no = NULL;
-	map->texture_so = NULL;
-	map->texture_ea = NULL;
-	map->texture_we = NULL;
-	map->color_c = NULL;
-	map->color_f = NULL;
-	map->grid = NULL;
+	ft_memset(map, 0, sizeof(t_map));
 	map->grid_rows = -1;
 	map->grid_cols = -1;
 	map->player_pos.x = -1;
 	map->player_pos.y = -1;
-	map->player_dir = 0;
 	return (map);
 }
 
