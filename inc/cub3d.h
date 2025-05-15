@@ -3,13 +3,14 @@
 
 # include "libft.h"
 # include "MLX42.h"
+# include "config.h"
 # include <stdio.h> // printf
 # include <stdbool.h> // bool, true, false
 # include <errno.h> // errno
 # include <string.h> // strerror
 # include <fcntl.h> // open
 # include <limits.h> // INT_MAX
-# include <math.h> // INFINITY
+# include <math.h> // INFINITY, sin, cos, M_PI
 
 /****************************************/
 /* Macros and Enums                     */
@@ -81,12 +82,26 @@ typedef struct s_map
 	char	start_dir;
 }	t_map;
 
+typedef struct	s_keymap
+{
+	keys_t		mlx;
+	t_keys		value;
+}	t_keymap;
+
 typedef struct s_game
 {
-	t_map	*map;
-	t_point	pos;
-	t_cell	dir;
-	t_point	camera_plane;
+	t_map		*map;
+	t_point		pos;
+	t_cell		dir;
+	t_point		camera_plane;
+	mlx_t		*mlx;
+	mlx_image_t	*screen;
+	mlx_image_t	*minimap;
+	double     	player_x; //TODO replace by pos
+	double      player_y; //TODO replace by pos
+	double		last_frame;
+	bool        key_states[KEY_COUNT];
+	double		player_rot;
 }	t_game;
 
 /****************************************/
@@ -111,6 +126,25 @@ void		update_player(t_map *map, int x, int y, char dir);
 /******** Raycasting ********/
 void		cast_rays(t_game *g);
 double		get_ray_length(double screen_px_col, t_game *g);
+
+/******** Graphics ********/
+void		init_mlx(t_game *game);
+/* Hooks */
+void		key_hook(mlx_key_data_t keydata, void *param);
+void		close_hook(void *param);
+/* Keymapping */
+t_keys		mlx_key_to_enum(keys_t mlx_key);
+void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
+/* Minimap */
+void		init_minimap(t_game *game);
+void		draw_minimap_grid(t_game *game);
+void		draw_direction_line(t_game *game, int px, int py);
+void		draw_player_circle(t_game *game);
+void		render_minimap(void *param);
+
+/******** Player ********/
+void		update_movement(t_game *game, double move_speed);
+void		update_rotation(t_game *game, double delta_time);
 
 /******** Utils ********/
 /* Error */

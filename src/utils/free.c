@@ -28,6 +28,14 @@ void	free_game(t_game *g)
 {
 	if (!g)
 		return ;
+	if (g->mlx)
+	{
+		if (g->screen)
+			mlx_delete_image(g->mlx, g->screen);
+		if (g->minimap)
+			mlx_delete_image(g->mlx, g->minimap);
+		mlx_terminate(g->mlx);
+	}
 	free_map(g->map);
 	free(g);
 }

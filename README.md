@@ -93,6 +93,104 @@ C 225,30,0
 - All functions of the math library (link with `-lm`, see the list of functions [here](https://linux.die.net/man/3/math)).
 - All functions of the MLX42 library.
 
+## MLX42 Library Usage
+
+1. mlx_init : Initializes the MLX context and creates a window.
+
+Usage:
+
+`game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);  `
+
+2.  mlx_new_image : Creates an image buffer for rendering. ( Used for the main screen and minimap rendering buffers.)
+
+Usage :
+
+```
+game->screen = mlx_new_image(game->mlx, WIDTH, HEIGHT);  
+game->minimap = mlx_new_image(game->mlx, mm_width, mm_height);  
+```
+3.  mlx_image_to_window : Attaches an image to the window at specified coordinates. (Positions the main screen and minimap images on the window.)
+
+Usage :
+
+```
+mlx_image_to_window(game->mlx, game->screen, 0, 0);  
+mlx_image_to_window(game->mlx, game->minimap, MN_X, MN_Y); 
+```
+
+4. mlx_put_pixel : Draws a single pixel on an image. (Used in draw_minimap_cell, draw_player_circle, and draw_direction_line for pixel-level rendering.)
+
+Usage :
+
+`mlx_put_pixel(game->minimap, x, y, color);  `
+
+5. mlx_loop : Starts the main rendering/event loop.
+
+Usage : 
+
+`mlx_loop(game->mlx); // In main()`
+
+6. mlx_key_hook : Registers a "trirgger" for key press/release events. (Handles keyboard input for movement (WASD), rotation (arrow keys), and exit (ESC).)
+
+Usage :
+
+`mlx_key_hook(game->mlx, key_hook, game);  `
+
+7. mlx_close_hook : Triggers window close events (e.g., clicking the X button).
+
+Usage :
+
+`mlx_close_hook(game->mlx, close_hook, game);  `
+
+8. MLX_RELEASE : Determines if a key is pressed or released (e.g., continous movement while holding W).
+
+Check key_hook() for reference in src/graphics/hooks.c
+
+9. Closes the window when ESC is pressed.
+
+```
+if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)  
+    mlx_close_window(game->mlx); 
+
+```
+10. mlx_get_time : Returns the time in seconds since MLX was initialized.
+
+Usage : 
+
+```
+double current_time = mlx_get_time();  
+double delta = current_time - game->last_frame; 
+```
+
+11. mlx_loop_hook : Registers a function to run every frame. (It's responsible for the game loop (rendering, movement, etc.).
+
+Usage :
+
+`mlx_loop_hook(game->mlx, render_minimap, game); `
+
+12. mlx_close_window : Closes the MLX window.
+
+Usage :
+
+`mlx_close_window(game->mlx);`
+
+13. mlx_delete_image : Removes an image from the MLX context and frees its pixel buffer memory
+
+Usage :
+
+```
+if (g->screen)  
+    mlx_delete_image(g->mlx, g->screen);  
+if (g->minimap)  
+    mlx_delete_image(g->mlx, g->minimap); 
+```
+
+14. mlx_terminate : Shuts down the MLX context, closes the window, and frees all remaining MLX resources.
+
+Usage :
+
+`mlx_terminate(g->mlx);`
+
 ## Features
 
 ### 🧱 Raycasting Engine
@@ -116,7 +214,7 @@ C 225,30,0
 - Cleans up all resources (graphics context, windows, file descriptors) on exit.
 
 ### ⚙️ Event-Driven Architecture
-- Uses MiniLibX to handle keyboard input and window events.
+- Uses MLX42 to handle keyboard input and window events.
 - Clean event loop for rendering and game state updates.
 
 ### 🔄 Expandability
@@ -125,4 +223,7 @@ C 225,30,0
   - Doors or teleportation
   - Mini-map or UI elements
 
+### 📚 Resources
+- https://www.youtube.com/watch?v=gYRrGTC7GtA&list=PLCWsH9Tj9oWyDM4W43VMj5yo2PdyYMGst&ab_channel=3DSage
+- https://phet.colorado.edu/sims/html/trig-tour/latest/trig-tour_all.html
 

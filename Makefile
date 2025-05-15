@@ -1,6 +1,5 @@
 NAME = ./cub3D
 
-
 # ************************************
 # Sources                            *
 # ************************************
@@ -18,11 +17,20 @@ C_FILES = debug.c\
 	parsing/check_metadata.c \
 	raycasting/rays_loop.c \
 	raycasting/ray.c \
+	graphics/init_mlx.c \
+	graphics/keymapping.c \
+	graphics/hooks.c \
+	graphics/minimap/init_minimap.c \
+	graphics/minimap/draw_grid.c \
+	graphics/minimap/draw_player.c \
+	graphics/minimap/render.c \
+	player/movement.c \
+	player/rotation.c \
 	utils/char.c \
 	utils/error.c \
 	utils/exit.c \
 	utils/free.c \
-	utils/string.c \
+	utils/string.c
 
 SRCS = $(addprefix $(C_DIR)/,$(C_FILES))
 
@@ -43,6 +51,7 @@ OBJS = $(addprefix $(O_DIR)/,$(C_FILES:.c=.o))
 H_DIR = inc
 
 H_FILES = cub3d.h \
+	config.h
 
 HEADERS = $(addprefix $(H_DIR)/,$(H_FILES))
 
@@ -108,9 +117,11 @@ libmlx:
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build
 	$(MAKE) -C $(MLX_DIR)/build -j4
 
+VALGRIND_SUPP = valgrind.supp
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes $(NAME) assets/maps/_valgrind_test.cub
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes --suppressions=$(VALGRIND_SUPP) $(NAME) assets/maps/_valgrind_test.cub
+
 
 # ************************************
 # Phony                              *
