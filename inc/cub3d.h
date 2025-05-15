@@ -20,11 +20,6 @@
 # define E_PARSING "Parsing"
 # define E_FATAL_PARSING "Fatal: Parsing"
 
-# define SCREEN_WIDTH_PX	640
-# define SCREEN_HEIGHT_PX 480
-# define FOV_FACTOR 0.66
-# define FISHEYE_EFFECT false
-
 typedef enum s_side
 {
 	NO,
@@ -55,6 +50,7 @@ typedef struct s_cell
 // Stores the distances along the x and y axes for a ray's movement through the grid
 typedef struct s_ray
 {
+	double	wall_dist; // Distance to the wall (euclydian if FISHEYE_EFFECT is true)
 	t_point	dir; // Ray direction
 	t_side	side; // The side of the wall cube (NO, SO, EA, WE) the ray hit
 	double	length_x; // Distance traveled along the x-axis until a wall is hit
@@ -125,7 +121,7 @@ void		update_player(t_map *map, int x, int y, char dir);
 
 /******** Raycasting ********/
 void		cast_rays(t_game *g);
-double		get_ray_length(double screen_px_col, t_game *g);
+void		cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
 
 /******** Graphics ********/
 void		init_mlx(t_game *game);
@@ -140,7 +136,6 @@ void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void		init_minimap(t_game *game);
 void		draw_minimap_grid(t_game *game);
-void		draw_direction_line(t_game *game, int px, int py);
 void		draw_player_circle(t_game *game);
 void		render_minimap(t_game *game);
 

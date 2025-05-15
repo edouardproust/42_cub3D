@@ -5,6 +5,15 @@
 # define WIDTH 			1024			/* Main window width in pixels */
 # define HEIGHT			640			/* Main window height in pixels */
 
+/* 3D Rendering Settings */
+# define COLOR_MODE		true
+# define FOV_FACTOR		0.66
+# define FISHEYE_EFFECT	false
+# define WALL_COLOR_NO	0xFF00FFFF	/* magenta */
+# define WALL_COLOR_SO	0x00FFFFFF	/* cyan */
+# define WALL_COLOR_EA	0xFFFF00FF	/* yellow */
+# define WALL_COLOR_WE	0x00FF00FF	/* green */
+
 /* Minimap Settings */
 # define MN_SCALE 		14			/* Pixels per grid cell in minimap */
 # define MN_X 			14			/* X offset from left window edge */

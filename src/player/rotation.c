@@ -1,13 +1,13 @@
 #include "cub3d.h"
 /**
  * Updates the player's rotation angle based on left/right key presses.
- * 
+ *
  * @param game         Pointer to the game structure.
  * @param delta_time   Time since the last frame (for smooth movement).
- * 
+ *
  * 1. Calculates rotation speed scaled by delta_time.
  * 2. Adjusts player_rot angle using ROT_SPEED (radians per second).
- * 
+ *
  * - Left arrow: Decreases angle (counter-clockwise).
  * - Right arrow: Increases angle (clockwise).
  */

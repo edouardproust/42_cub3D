@@ -15,14 +15,15 @@ C_FILES = debug.c\
 	parsing/utils.c \
 	parsing/check_grid.c \
 	parsing/check_metadata.c \
-	raycasting/rays_loop.c \
-	raycasting/ray.c \
+	raycaster/draw.c \
+	raycaster/ray.c \
 	graphics/init_mlx.c \
 	graphics/keymapping.c \
 	graphics/hooks.c \
 	graphics/minimap/init_minimap.c \
 	graphics/minimap/draw_grid.c \
 	graphics/minimap/draw_player.c \
+	graphics/minimap/draw_ray.c \
 	graphics/minimap/render.c \
 	player/movement.c \
 	player/rotation.c \

@@ -1,44 +1,58 @@
 #include "cub3d.h"
-/**
- * Draws a directional line from the player's position on the minimap, indicating
- * their facing direction.
- *
- * @param game   Pointer to the game structure.
- * @param px     Player's X position on the minimap.
- * @param py     Player's Y position on the minimap.
- *
- * 1. Calculates the endpoint using trigonometry:
- *  - cos(game->player_rot) for horizontal direction (X-axis).
- *  - sin(game->player_rot) for vertical direction (Y-axis).
- *  - Length: PLAYER_RADIUS * 2 (doubled for visibility).
- * 2. Adjusts dx and dy toward the endpoint, drawing pixels along the way.
- *
- * Notes:
- * - Uses cos/sin to convert rotation angle to direction.
- * - Y-axis is inverted (- sin(...)), as screen coordinates increase downward.
- */
-void	draw_direction_line(t_game *game, int px, int py)
-{
-	int	dx;
-	int	dy;
-	int	end_x;
-	int	end_y;
 
-	end_x = px + (int)(cos(game->player_rot) * (PLAYER_RADIUS * 2));
-	end_y = py - (int)(sin(game->player_rot) * (PLAYER_RADIUS * 2));
-	dx = px;
-	dy = py;
-	while (dx != end_x || dy != end_y)
+static t_cell	calc_step(t_point start, t_point end)
+{
+    t_cell step;
+
+	if (start.x < end.x)
+	step.x = 1;
+	else
+		step.x = -1;
+	if (start.y < end.y)
+		step.y = 1;
+	else
+		step.y = -1;
+	return (step);
+}
+
+/**
+ * Draws a directional line from player's position using Bresenham's algorithm
+ *
+ * @param g   Pointer to g structure
+ * @param px     Player's X position on minimap
+ * @param py     Player's Y position on minimap
+ */
+void draw_direction_line(t_game *g, t_point start)
+{
+ 	t_point end;	// Final coordinates of the line
+    int x;			// Current X position while drawing the line
+    int y;			// Current Y position while drawing the line
+    int dx;			// Absolute X distance between start and end points
+    int dy;			// Absolute (negative) Y distance between start and end points
+	t_cell step;	// Step direction {x, y}
+    int err;		// Error term used to determine next step
+    int e2;			// Temporary variable for error calculation
+
+	end.x = start.x + (int)(cos(g->player_rot) * (PLAYER_RADIUS * 5));
+	end.y = start.y - (int)(sin(g->player_rot) * (PLAYER_RADIUS * 5));
+	x = start.x;
+	y = start.y;
+	dx = fabs(end.x - start.x);
+	dy = -fabs(end.y - start.y);
+	step = calc_step(start, end);
+	err = dx + dy;
+	while (1)
 	{
-		mlx_put_pixel(game->minimap, dx, dy, MN_COLOR_DIR);
-		if (dx < end_x)
-			dx++;
-		else if (dx > end_x)
-			dx--;
-		if (dy < end_y)
-			dy++;
-		else if (dy > end_y)
-			dy--;
+		if (x >= 0 && x < (int)g->minimap->width &&
+			y >= 0 && y < (int)g->minimap->height)
+			mlx_put_pixel(g->minimap, x, y, MN_COLOR_DIR);
+		if (x == end.x && y == end.y)
+			break;
+		e2 = 2 * err;
+		if (e2 >= dy)
+			(err += dy, x += step.x);
+		if (e2 <= dx)
+			(err += dx, y += step.y);
 	}
 }
 
@@ -58,13 +72,12 @@ void	draw_direction_line(t_game *game, int px, int py)
  */
 void	draw_player_circle(t_game *game)
 {
-	int	px;
-	int	py;
+	t_point	start;
 	int	dx;
 	int	dy;
 
-	px = (int)(game->pos.x * MN_SCALE);
-	py = (int)(game->pos.y * MN_SCALE);
+	start.x = game->pos.x * MN_SCALE;
+	start.y = game->pos.y * MN_SCALE;
 	dy = -PLAYER_RADIUS;
 	while (dy <= PLAYER_RADIUS)
 	{
@@ -72,10 +85,10 @@ void	draw_player_circle(t_game *game)
 		while (dx <= PLAYER_RADIUS)
 		{
 			if (dx * dx + dy * dy <= PLAYER_RADIUS * PLAYER_RADIUS)
-				mlx_put_pixel(game->minimap, px + dx, py + dy, MN_COLOR_PLAYR);
+				mlx_put_pixel(game->minimap, start.x + dx, start.y + dy, MN_COLOR_PLAYR);
 			dx++;
 		}
 		dy++;
 	}
-	draw_direction_line(game, px, py);
+	draw_direction_line(game, start);
 }
