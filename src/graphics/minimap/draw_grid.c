@@ -1,18 +1,23 @@
 #include "cub3d.h"
 
-static void	draw_minimap_cell(t_game *game, int x, int y, int color)
+static void	draw_minimap_cell(t_game *game, int x, int y, bool is_wall)
 {
 	int	i;
 	int	j;
+	int	color;
 
-	i = 1;
-	while (i < MN_SCALE - 1)
+	i = 0;
+	while (i < MN_SCALE)
 	{
 		j = 0;
-		while (j < MN_SCALE - 1)
+		while (j < MN_SCALE)
 		{
-			mlx_put_pixel(game->minimap,
-				x * MN_SCALE + i, y * MN_SCALE + j, color);
+			color = MN_COLOR_WALL;
+			if (i == 0 || j == 0 || i == MN_SCALE - 1 || j == MN_SCALE - 1)
+				color = MN_COLOR_GRID;
+			else if (!is_wall)
+				color = MN_COLOR_FLOOR;
+			mlx_put_pixel(game->minimap, x * MN_SCALE + i, y * MN_SCALE + j, color);
 			j++;
 		}
 		i++;
@@ -30,10 +35,7 @@ void	draw_minimap_grid(t_game *game)
 		x = 0;
 		while (x < game->map->grid_cols)
 		{
-			if (game->map->grid[y][x] == '1')
-				draw_minimap_cell(game, x, y, 0xFFFFFFFF);
-			else
-				draw_minimap_cell(game, x, y, 0x00000000);
+			draw_minimap_cell(game, x, y, game->map->grid[y][x] == '1');
 			x++;
 		}
 		y++;

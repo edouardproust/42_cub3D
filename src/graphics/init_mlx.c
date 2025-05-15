@@ -2,17 +2,13 @@
 /**
  * Initializes MLX context and main window
  * @param game Pointer to game structure
- * @return true if successful, false otherwise
+ * @return void. Exits + frees program in case of failure
  */
-static bool	init_mlx_context(t_game *game)
+static void	init_mlx_context(t_game *game)
 {
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
 	if (!game->mlx)
-	{
 		exit_game("MLX init failed", game);
-		return (false);
-	}
-	return (true);
 }
 
 /**
@@ -47,7 +43,7 @@ static void	setup_hooks(t_game *game)
 /**
  * High-level initialization of MLX components
  * @param game Pointer to game structure
- * 
+ *
  * Manages the initialization sequence:
  * 1. MLX context creation
  * 2. Main screen setup
@@ -57,8 +53,7 @@ static void	setup_hooks(t_game *game)
  */
 void	init_mlx(t_game *game)
 {
-	if (!init_mlx_context(game))
-		return ;
+	init_mlx_context(game);
 	init_main_screen(game);
 	init_minimap(game);
 	setup_hooks(game);
