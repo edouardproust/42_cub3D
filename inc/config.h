@@ -18,11 +18,11 @@
 /* Player Settings */
 # define MOVE_SPEED 	5.0			/* Base movement speed (units/second) */
 # define ROT_SPEED		3.0			/* Rotation speed (radians/second)*/
-# define HITBOX 		0.1			/* Collision buf around player t_point (0.3=30% cell) */
+# define HITBOX 		0.2			/* Collision buf around player t_point (0.3=30% cell) */
 # define MM_PLAYER_IMG	"assets/minimap/player.png"
-# define MM_PLAYR_WIDTH	14
+# define MM_PLAYR_WIDTH	16
 # define MM_DIR_IMG		"assets/minimap/viewpoint.png"
-# define MM_DIR_WIDTH	7
+# define MM_DIR_WIDTH	6
 
 /* 3D Display Settings */
 # define FOV_FACTOR		0.66

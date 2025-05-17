@@ -41,7 +41,7 @@ static void	update_rotation(t_game *g, double delta_time)
 
 /**
  * Calculates potential new player position based on input keys
- * 
+ *
  * @param game      Pointer to game structure containing player state
  * @param move_speed Movement speed multiplier
  * @param new_x     Pointer to store calculated X position
