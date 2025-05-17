@@ -57,6 +57,7 @@ typedef struct s_game
 	mlx_t		*mlx;
 	mlx_image_t	*screen;
 	mlx_image_t	*minimap;
+	mlx_image_t	*mm_player;
 	double     	player_x;
 	double      player_y;
 	double		last_frame;
@@ -86,6 +87,7 @@ void		set_map_player(t_map *map, int x, int y, char dir);
 /******** Graphics ********/
 void		init_mlx(t_game *game);
 /* Hooks */
+void		loop_hook(void *param);
 void		key_hook(mlx_key_data_t keydata, void *param);
 void		close_hook(void *param);
 /* Keymapping */
@@ -93,10 +95,7 @@ t_keys		mlx_key_to_enum(keys_t mlx_key);
 void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void		init_minimap(t_game *game);
-void		draw_minimap_grid(t_game *game);
-void		draw_direction_line(t_game *game, int px, int py);
-void		draw_player_circle(t_game *game);
-void		render_minimap(void *param);
+void		refresh_minimap(t_game *game);
 
 /******** Player ********/
 void		update_movement(t_game *game, double move_speed);

@@ -36,7 +36,7 @@ static void	init_main_screen(t_game *game)
 static void	setup_hooks(t_game *game)
 {
 	mlx_key_hook(game->mlx, key_hook, game);
-	mlx_loop_hook(game->mlx, render_minimap, game);
+	mlx_loop_hook(game->mlx, loop_hook, game);
 	mlx_close_hook(game->mlx, close_hook, game);
 }
 

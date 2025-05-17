@@ -19,7 +19,7 @@
 # define MOVE_SPEED 	5.0			/* Base movement speed (units/second) */
 # define ROT_SPEED		3.0			/* Rotation speed (radians/second)*/
 # define HITBOX 		0.3			/* Collision buf around player (0.3=30% cell) */
-# define PLAYER_RADIUS 	5			/* Visual radius of player in minimap pixels */
+# define MM_TX_PLAYER	"assets/minimap/player.png"
 
 /* Keyboard Settings */
 typedef enum e_keys

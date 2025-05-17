@@ -1,5 +1,14 @@
 #include "cub3d.h"
 
+void	loop_hook(void *param)
+{
+	t_game	*game;
+
+	game = (void *)param;
+	refresh_minimap(game);
+}
+
+
 void	close_hook(void *param)
 {
 	t_game	*game;

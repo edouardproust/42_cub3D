@@ -1,4 +1,22 @@
 #include "cub3d.h"
+
+static void	init_player(t_game *g)
+{
+	t_point			pos_px;
+	mlx_texture_t	*tx;
+
+	pos_px.x = g->player_x * MN_SCALE + g->minimap->instances[0].x;
+	pos_px.y = g->player_y * MN_SCALE + g->minimap->instances[0].y;
+	tx = mlx_load_png(MM_TX_PLAYER);
+	if (!tx)
+		exit_game("MLX42: Invalid texture", g);
+	g->mm_player = mlx_texture_to_image(g->mlx, tx);
+	if (!g->mm_player)
+		exit_game("Minimap player creation failed", g);
+	mlx_resize_image(g->mm_player, g->mm_player->width / 3, g->mm_player->height / 3);
+	mlx_image_to_window(g->mlx, g->mm_player, pos_px.x, pos_px.y);
+}
+
 /**
  * Initializes the minimap image and its pixel buffer.
  *
@@ -24,4 +42,5 @@ void	init_minimap(t_game *game)
 	minimap_height = game->map->grid_rows * MN_SCALE;
 	mlx_image_to_window(game->mlx, game->minimap, MN_X,
 		HEIGHT - minimap_height - MN_Y);
+	init_player(game);
 }
