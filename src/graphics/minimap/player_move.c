@@ -1,4 +1,29 @@
 #include "cub3d.h"
+
+/**
+ * Updates the player's rotation angle based on left/right key presses.
+ * 
+ * @param game         Pointer to the game structure.
+ * @param delta_time   Time since the last frame (for smooth movement).
+ * 
+ * 1. Calculates rotation speed scaled by delta_time.
+ * 2. Adjusts player_rot angle using ROT_SPEED (radians per second).
+ * 
+ * - Left arrow: Decreases angle (counter-clockwise).
+ * - Right arrow: Increases angle (clockwise).
+ */
+static void	update_rotation(t_game *game, double delta_time)
+{
+	double	rot_speed;
+
+	rot_speed = ROT_SPEED * delta_time;
+	if (game->key_states[KEY_LEFT])
+		game->player_rot -= rot_speed;
+	if (game->key_states[KEY_RIGHT])
+		game->player_rot += rot_speed;
+}
+
+
 /**
  * Calculates potential new player position based on input keys
  * 
@@ -10,8 +35,8 @@
 static void	calculate_new_position(t_game *game, double move_speed,
 	double *new_x, double *new_y)
 {
-	*new_x = game->player_x;
-	*new_y = game->player_y;
+	*new_x = game->pos.x;
+	*new_y = game->pos.y;
 	if (game->key_states[KEY_W])
 		*new_y -= move_speed;
 	if (game->key_states[KEY_S])
@@ -37,10 +62,10 @@ static void	calculate_new_position(t_game *game, double move_speed,
  */
 static bool	is_valid_move(t_game *game, double new_x, double new_y)
 {
-	int	x1;
-	int	x2;
-	int	y1;
-	int	y2;
+	int		x1;
+	int		x2;
+	int		y1;
+	int		y2;
 
 	x1 = (int)(new_x - HITBOX);
 	x2 = (int)(new_x + HITBOX);
@@ -61,22 +86,27 @@ static bool	is_valid_move(t_game *game, double new_x, double new_y)
  * 1. Calculate potential new position from input
  * 2. Validate against map collision
  * 3. Update actual position if validation passes
- * 
+ *
  * @param game       Pointer to game structure
  * @param move_speed Movement speed multiplier (delta-adjusted)
  */
-void	update_movement(t_game *game, double delta_time)
+void	update_movement(t_game *g, double delta_time)
 {
 	double	new_x;
 	double	new_y;
 	double	frame_speed;
+	t_point	pos_px;
 
-	update_rotation(game, delta_time);
+	update_rotation(g, delta_time);
 	frame_speed = MOVE_SPEED * delta_time;
-	calculate_new_position(game, frame_speed, &new_x, &new_y);
-	if (is_valid_move(game, new_x, new_y))
+	calculate_new_position(g, frame_speed, &new_x, &new_y);
+	if (is_valid_move(g, new_x, new_y))
 	{
-		game->player_x = new_x;
-		game->player_y = new_y;
+		g->pos.x = new_x;
+		g->pos.y = new_y;
 	}
+	pos_px.x = g->pos.x * MN_SCALE + g->minimap->instances[0].x;
+	pos_px.y = g->pos.y * MN_SCALE + g->minimap->instances[0].y;
+	g->mm_player->instances[0].x = pos_px.x - g->mm_player->width / 2;
+	g->mm_player->instances[0].y = pos_px.y - g->mm_player->height / 2;
 }

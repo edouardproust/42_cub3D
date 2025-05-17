@@ -18,7 +18,7 @@
 /* Player Settings */
 # define MOVE_SPEED 	5.0			/* Base movement speed (units/second) */
 # define ROT_SPEED		3.0			/* Rotation speed (radians/second)*/
-# define HITBOX 		0.3			/* Collision buf around player (0.3=30% cell) */
+# define HITBOX 		0.4			/* Collision buf around player t_point (0.3=30% cell) */
 # define MM_TX_PLAYER	"assets/minimap/player.png"
 
 /* Keyboard Settings */

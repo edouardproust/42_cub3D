@@ -18,11 +18,9 @@ C_FILES = debug.c\
 	graphics/init_mlx.c \
 	graphics/keymapping.c \
 	graphics/hooks.c \
-	graphics/minimap/init.c \
-	graphics/minimap/draw_minimap.c \
-	graphics/minimap/player/movement.c \
-	graphics/minimap/player/rotation.c \
-	graphics/minimap/player/draw.c \
+	graphics/minimap/init_minimap.c \
+	graphics/minimap/player_move.c \
+	utils/mlx.c \
 	utils/char.c \
 	utils/error.c \
 	utils/exit.c \

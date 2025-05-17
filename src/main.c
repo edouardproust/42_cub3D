@@ -13,8 +13,8 @@ static t_game	*init_game(char **argv)
 		exit_game("Map memory allocation", g);
 	map_parse_and_check(argv[1], g);
 	debug_parsed_map(g->map); //DEBUG
-	g->player_x = g->map->player_pos.x + 0.5;
-	g->player_y = g->map->player_pos.y + 0.5;
+	g->pos.x = g->map->player_pos.x + 0.5;
+	g->pos.y = g->map->player_pos.y + 0.5;
 	init_mlx(g);
 	return (g);
 }
