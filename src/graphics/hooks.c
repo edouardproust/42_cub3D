@@ -43,6 +43,7 @@ void	resize_hook(int32_t width, int32_t height, void* param)
 	game = (t_game *)param;
 	game->win_width = width;
 	game->win_height = height;
+	mlx_resize_image(game->screen, width, height);
 	minimap_height = game->map->grid_rows * MM_SCALE;
 	game->minimap->instances[0].y = game->win_height - minimap_height - MM_Y;
 }

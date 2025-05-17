@@ -48,14 +48,31 @@ static void	init_player(t_game *g)
 
 	pos_px.x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
 	pos_px.y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
-	tx = mlx_load_png(MM_TX_PLAYER);
+	tx = mlx_load_png(MM_PLAYER_IMG);
 	if (!tx)
 		exit_game("MLX42: Invalid texture", g);
 	g->mm_player = mlx_texture_to_image(g->mlx, tx);
 	if (!g->mm_player)
 		exit_game("Minimap player creation failed", g);
-	mlx_resize_image(g->mm_player, MM_PLAYER_W, g->mm_player->height * MM_PLAYER_W / g->mm_player->width);
-	mlx_image_to_window(g->mlx, g->mm_player, pos_px.x, pos_px.y);
+	mlx_resize_image(g->mm_player, MM_PLAYR_WIDTH, g->mm_player->height * MM_PLAYR_WIDTH / g->mm_player->width);
+	mlx_image_to_window(g->mlx, g->mm_player, pos_px.x - g->mm_player->width/2, pos_px.y - g->mm_player->height/2);
+}
+
+static void	init_view_direction(t_game *g)
+{
+	t_point			pos_px;
+	mlx_texture_t	*tx;
+
+	pos_px.x = (g->pos.x + g->dir.x) * MM_SCALE + g->minimap->instances[0].x;
+	pos_px.y = (g->pos.y + g->dir.y) * MM_SCALE + g->minimap->instances[0].y;
+	tx = mlx_load_png(MM_DIR_IMG);
+	if (!tx)
+		exit_game("MLX42: Invalid texture", g);
+	g->mm_dir = mlx_texture_to_image(g->mlx, tx);
+	if (!g->mm_dir)
+		exit_game("Minimap viewpoint creation failed", g);
+	mlx_resize_image(g->mm_dir, MM_DIR_WIDTH, g->mm_dir->height * MM_DIR_WIDTH / g->mm_dir->width);
+	mlx_image_to_window(g->mlx, g->mm_dir, pos_px.x - g->mm_dir->width/2, pos_px.y - g->mm_dir->height/2);
 }
 
 /**
@@ -82,6 +99,5 @@ void	init_minimap(t_game *g)
 	mlx_image_to_window(g->mlx, g->minimap, MM_X, g->win_height - mm_height - MM_Y);
 	draw_minimap_grid(g);
 	init_player(g);
-	g->mm_dir = mlx_new_image(g->mlx, g->minimap->width, g->minimap->height);
-	mlx_image_to_window(g->mlx, g->mm_dir, MM_X, g->win_height - mm_height - MM_Y);
+	init_view_direction(g);
 }

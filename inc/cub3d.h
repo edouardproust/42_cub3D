@@ -47,8 +47,8 @@ typedef struct s_map
 	char		**grid;
 	int			grid_cols;
 	int			grid_rows;
-	t_cell		player_pos;
-	char		player_dir;
+	t_cell		start_pos;
+	char		start_dir;
 }	t_map;
 
 typedef struct	s_keymap
@@ -66,6 +66,8 @@ typedef struct s_game
 	mlx_image_t	*mm_player;
 	mlx_image_t	*mm_dir;
 	t_point		pos;
+	t_point		dir;
+	t_point		camera_plane;
 	double		last_frame;
 	bool        key_states[KEY_COUNT];
 	double		player_rot;
