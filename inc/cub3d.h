@@ -64,6 +64,7 @@ typedef struct s_game
 	mlx_image_t	*screen;
 	mlx_image_t	*minimap;
 	mlx_image_t	*mm_player;
+	mlx_image_t	*mm_dir;
 	t_point		pos;
 	double		last_frame;
 	bool        key_states[KEY_COUNT];

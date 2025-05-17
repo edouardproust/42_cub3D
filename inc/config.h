@@ -6,20 +6,21 @@
 # define HEIGHT			640			/* Main window height in pixels */
 
 /* Minimap Settings */
-# define MN_SCALE 		14			/* Pixels per grid cell in minimap */
-# define MN_X 			14			/* X offset from left window edge */
-# define MN_Y 			10			/* Y offset from top window edge */
-# define MN_COLOR_GRID	0x00000000	/* Color of the grid in minimap */
-# define MN_COLOR_WALL	0xFFFFF0FF	/* Color of the walls in minimap */
-# define MN_COLOR_FLOOR	0x0A1D37FF	/* Color of the walls in minimap */
-# define MN_COLOR_PLAYR	0xFFD700FF	/* Color of the player dot in minimap */
-# define MN_COLOR_DIR	0x00FF00FF	/* Color of the player direction line in minimap */
+# define MM_SCALE 		14			/* Pixels per grid cell in minimap */
+# define MM_X 			14			/* X offset from left window edge */
+# define MM_Y 			10			/* Y offset from top window edge */
+# define MM_COLOR_GRID	0x00000000	/* Color of the grid in minimap */
+# define MM_COLOR_WALL	0xFFFFF0FF	/* Color of the walls in minimap */
+# define MM_COLOR_FLOOR	0x0A1D37FF	/* Color of the walls in minimap */
+# define MM_COLOR_PLAYR	0xFFD700FF	/* Color of the player dot in minimap */
+# define MM_COLOR_DIR	0x00FF00FF	/* Color of the player direction line in minimap */
 
 /* Player Settings */
 # define MOVE_SPEED 	5.0			/* Base movement speed (units/second) */
 # define ROT_SPEED		3.0			/* Rotation speed (radians/second)*/
-# define HITBOX 		0.4			/* Collision buf around player t_point (0.3=30% cell) */
+# define HITBOX 		0.1			/* Collision buf around player t_point (0.3=30% cell) */
 # define MM_TX_PLAYER	"assets/minimap/player.png"
+# define MM_PLAYER_W	14
 
 /* Keyboard Settings */
 typedef enum e_keys

@@ -7,17 +7,17 @@ static void	draw_minimap_cell(t_game *game, int x, int y, bool is_wall)
 	int	color;
 
 	i = 0;
-	while (i < MN_SCALE)
+	while (i < MM_SCALE)
 	{
 		j = 0;
-		while (j < MN_SCALE)
+		while (j < MM_SCALE)
 		{
-			color = MN_COLOR_WALL;
+			color = MM_COLOR_WALL;
 			if (i == 0 || j == 0)
-				color = MN_COLOR_GRID;
+				color = MM_COLOR_GRID;
 			else if (!is_wall)
-				color = MN_COLOR_FLOOR;
-			mlx_put_pixel(game->minimap, x * MN_SCALE + i, y * MN_SCALE + j, color);
+				color = MM_COLOR_FLOOR;
+			mlx_put_pixel(game->minimap, x * MM_SCALE + i, y * MM_SCALE + j, color);
 			j++;
 		}
 		i++;
@@ -46,15 +46,15 @@ static void	init_player(t_game *g)
 	t_point			pos_px;
 	mlx_texture_t	*tx;
 
-	pos_px.x = g->pos.x * MN_SCALE + g->minimap->instances[0].x;
-	pos_px.y = g->pos.y * MN_SCALE + g->minimap->instances[0].y;
+	pos_px.x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
+	pos_px.y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
 	tx = mlx_load_png(MM_TX_PLAYER);
 	if (!tx)
 		exit_game("MLX42: Invalid texture", g);
 	g->mm_player = mlx_texture_to_image(g->mlx, tx);
 	if (!g->mm_player)
 		exit_game("Minimap player creation failed", g);
-	mlx_resize_image(g->mm_player, g->mm_player->width / 3, g->mm_player->height / 3);
+	mlx_resize_image(g->mm_player, MM_PLAYER_W, g->mm_player->height * MM_PLAYER_W / g->mm_player->width);
 	mlx_image_to_window(g->mlx, g->mm_player, pos_px.x, pos_px.y);
 }
 
@@ -73,13 +73,15 @@ void	init_minimap(t_game *g)
 	int	mm_width;
 	int	mm_height;
 
-	mm_width = g->map->grid_cols * MN_SCALE;
-	mm_height = g->map->grid_rows * MN_SCALE;
+	mm_width = g->map->grid_cols * MM_SCALE;
+	mm_height = g->map->grid_rows * MM_SCALE;
 	g->minimap = mlx_new_image(g->mlx, mm_width, mm_height);
 	if (!g->minimap)
 		exit_game("Minimap creation failed", g);
 	clear_image_pixels(g->minimap);
-	mlx_image_to_window(g->mlx, g->minimap, MN_X, g->win_height - mm_height - MN_Y);
+	mlx_image_to_window(g->mlx, g->minimap, MM_X, g->win_height - mm_height - MM_Y);
 	draw_minimap_grid(g);
 	init_player(g);
+	g->mm_dir = mlx_new_image(g->mlx, g->minimap->width, g->minimap->height);
+	mlx_image_to_window(g->mlx, g->mm_dir, MM_X, g->win_height - mm_height - MM_Y);
 }
