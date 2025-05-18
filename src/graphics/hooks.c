@@ -12,6 +12,7 @@ void	loop_hook(void *param)
 	game->last_frame = current_time;
 	move_player(game, delta);
 	rotate_player(game, delta);
+	cast_rays(game);
 }
 
 void	close_hook(void *param)

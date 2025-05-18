@@ -37,9 +37,10 @@ static void	check_texture(char *id, char *filepath, t_game *g)
  * - Only contains digits
  * - is a number in range [0,255]
  */
-static bool	is_valid_color_part(char *part)
+static int	get_color_part_rgb(char *part)
 {
 	int	i;
+	int	rgb;
 
 	i = 0;
 	while (part[i])
@@ -48,9 +49,10 @@ static bool	is_valid_color_part(char *part)
 			return (false);
 		i++;
 	}
-	if (ft_atoi(part) < 0 || ft_atoi(part) > 255)
-		return (false);
-	return (true);
+	rgb = ft_atoi(part);
+	if (rgb < 0 || rgb > 255)
+		return (-1);
+	return (rgb);
 }
 
 /**
@@ -60,29 +62,29 @@ static bool	is_valid_color_part(char *part)
  * - String is made of 3 parts and is not ending with ','
  * - `is_valid_color_part` returns `true` for each part of the color code
  */
-static void	check_color(char *id, char *color, t_game *g)
+static void	check_color(char *id, t_color *color, t_game *g)
 {
 	char	**parts;
 	int		i;
-	char	*glob_err;
+	int		rgb[3];
 
-	glob_err = "Invalid color code";
-	if (is_blank_str(color))
+	if (is_blank_str(color->str))
 		exit_game3(E_PARSING, id, "No color code provided", g);
-	if (has_more_than_one_word(color))
-		exit_game3(E_PARSING, id, glob_err, g);
-	parts = ft_split(color, ',');
+	if (has_more_than_one_word(color->str))
+		exit_game3(E_PARSING, id, "Invalid color format: expected R,G,B", g);
+	parts = ft_split(color->str, ',');
 	if (!parts)
-		exit_game2(E_FATAL_PARSING, "color allocation", g);
-	if (ft_matrix_size(parts) != 3 || color[ft_strlen(color)-1] == ',')
-		(ft_free_split(&parts), exit_game3(E_PARSING, id, glob_err, g));
-	i = 0;
-	while (parts[i])
+		exit_game2(E_FATAL_PARSING, "Memory allocation failed for color parsing", g);
+	if (ft_matrix_size(parts) != 3 || color->str[ft_strlen(color->str)-1] == ',')
+		(ft_free_split(&parts), exit_game3(E_PARSING, id, "Color must be in R,G,B format", g));
+	i = -1;
+	while (++i < 3)
 	{
-		if (!is_valid_color_part(parts[i]))
-			(ft_free_split(&parts), exit_game3(E_PARSING, id, glob_err, g));
-		i++;
+		rgb[i] = get_color_part_rgb(parts[i]);
+		if (rgb[i] == -1)
+			(ft_free_split(&parts), exit_game3(E_PARSING, id, "Color values must be 0-255", g));
 	}
+	color->rgb =  (rgb[0] << 24) | (rgb[1] << 16) | (rgb[2] << 8) | 0xFF;
 	ft_free_split(&parts);
 }
 
@@ -92,6 +94,6 @@ void	check_metadata_lines(t_game *g)
 	check_texture("SO", g->map->texture_so, g);
 	check_texture("EA", g->map->texture_ea, g);
 	check_texture("WE", g->map->texture_we, g);
-	check_color("C", g->map->color_c, g);
-	check_color("F", g->map->color_f, g);
+	check_color("C", &g->map->color_c, g);
+	check_color("F", &g->map->color_f, g);
 }

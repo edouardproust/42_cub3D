@@ -47,6 +47,7 @@ static t_game	*init_game(char **argv)
 	g->win_width = WIDTH;
 	init_game_vectors(g);
 	init_mlx(g);
+	cast_rays(g);
 	return (g);
 }
 

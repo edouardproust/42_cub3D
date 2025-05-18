@@ -20,6 +20,14 @@
 # define E_PARSING "Parsing"
 # define E_FATAL_PARSING "Fatal: Parsing"
 
+typedef enum s_side
+{
+	NO,
+	EA,
+	SO,
+	WE,
+} t_side;
+
 /****************************************/
 /* Structs and Typedefs                 */
 /****************************************/
@@ -36,19 +44,25 @@ typedef struct s_cell
 	int	y;
 }	t_cell;
 
+typedef struct color
+{
+	char 		*str;
+	uint32_t	rgb;
+}	t_color;
+
 typedef struct s_map
 {
-	char		*texture_no;
-	char		*texture_so;
-	char		*texture_ea;
-	char		*texture_we;
-	char		*color_c;
-	char		*color_f;
-	char		**grid;
-	int			grid_cols;
-	int			grid_rows;
-	t_cell		start_pos;
-	char		start_dir;
+	char			*texture_no;
+	char			*texture_so;
+	char			*texture_ea;
+	char			*texture_we;
+	t_color			color_c;
+	t_color			color_f;
+	char			**grid;
+	int				grid_cols;
+	int				grid_rows;
+	t_cell			start_pos;
+	char			start_dir;
 }	t_map;
 
 typedef struct s_keymap
@@ -74,6 +88,21 @@ typedef struct s_game
 	int32_t		win_width;
 	int32_t		win_height;
 }	t_game;
+
+// Stores the distances along the x and y axes for a ray's movement through the grid
+typedef struct s_ray
+{
+	double	wall_dist; // Distance to the wall (euclydian if FISHEYE_EFFECT is true)
+	t_point	dir; // Ray direction
+	t_side	side; // The side of the wall cube (NO, SO, EA, WE) the ray hit
+	double	length_x; // Distance traveled along the x-axis until a wall is hit
+	double	length_y; // Distance traveled along the y-axis until a wall is hit
+	double	len_step_x; // Distance to travel to cross one cell on the x-axis
+	double	len_step_y; // Distance to travel to cross one cell on the y-axis
+	t_cell	cell; // Cell in the grid that the ray is currently crossing
+	t_cell	cell_move; // Move to the next cell the ray will cross
+	bool	wall_hit; // Indicates if the ray hit a wall
+} t_ray;
 
 /****************************************/
 /* Functions                            */
@@ -107,6 +136,10 @@ t_keys		mlx_key_to_enum(keys_t mlx_key);
 void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void		draw_minimap(t_game *game);
+
+/* Raycasting */
+void		cast_rays(t_game *g);
+void		cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
 
 /******** Player ********/
 void		move_player(t_game *game, double move_speed);

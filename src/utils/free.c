@@ -18,8 +18,8 @@ void	free_map(t_map *map)
 	free(map->texture_so);
 	free(map->texture_ea);
 	free(map->texture_we);
-	free(map->color_c);
-	free(map->color_f);
+	free(map->color_c.str);
+	free(map->color_f.str);
 	free_grid(map->grid, map->grid_rows);
 	free(map);
 }

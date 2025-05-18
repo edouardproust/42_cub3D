@@ -22,8 +22,14 @@
 # define MM_DIR_IMG		"assets/minimap/viewpoint.png"
 # define MM_DIR_WIDTH	6
 
-/* 3D Display Settings */
+/* 3D Rendering Settings */
+# define COLOR_MODE		true
 # define FOV_FACTOR		0.66
+# define FISHEYE_EFFECT	false
+# define WALL_COLOR_NO	0xFF00FFFF	/* magenta */
+# define WALL_COLOR_SO	0x00FFFFFF	/* cyan */
+# define WALL_COLOR_EA	0xFFFF00FF	/* yellow */
+# define WALL_COLOR_WE	0x00FF00FF	/* green */
 
 /* Keyboard Settings */
 typedef enum e_keys

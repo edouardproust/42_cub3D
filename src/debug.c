@@ -41,8 +41,8 @@ void	debug_parsed_map(t_map *map)
 	printf("texture_so: '%s'\n", map->texture_so);
 	printf("texture_ea: '%s'\n", map->texture_ea);
 	printf("texture_we: '%s'\n", map->texture_we);
-	printf("color_c: '%s'\n", map->color_c);
-	printf("color_f: '%s'\n", map->color_f);
+	printf("color_c: '%s' (rgb: %u)\n", map->color_c.str, map->color_c.rgb);
+	printf("color_f: '%s' (rgb: %u)\n", map->color_f.str, map->color_f.rgb);
 	print_grid(map);
 	printf("grid_rows: %d\n", map->grid_rows);
 	printf("grid_cols: %d\n", map->grid_cols);

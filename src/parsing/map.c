@@ -8,6 +8,10 @@ t_map	*init_map(void)
 	if (!map)
 		return (NULL);
 	ft_memset(map, 0, sizeof(t_map));
+	map->color_c.str = NULL;
+	map->color_c.rgb = -1;
+	map->color_f.str = NULL;
+	map->color_f.rgb = -1;
 	map->grid_rows = -1;
 	map->grid_cols = -1;
 	map->start_pos.x = -1;
