@@ -51,7 +51,7 @@ typedef struct s_map
 	char		start_dir;
 }	t_map;
 
-typedef struct	s_keymap
+typedef struct s_keymap
 {
 	keys_t		mlx;
 	t_keys		value;
@@ -69,7 +69,7 @@ typedef struct s_game
 	t_point		dir;
 	t_point		camera_plane;
 	double		last_frame;
-	bool        key_states[KEY_COUNT];
+	bool		key_states[KEY_COUNT];
 	double		player_rot;
 	int32_t		win_width;
 	int32_t		win_height;
@@ -100,22 +100,23 @@ void		init_mlx(t_game *game);
 void		loop_hook(void *param);
 void		key_hook(mlx_key_data_t keydata, void *param);
 void		close_hook(void *param);
-void		resize_hook(int32_t width, int32_t height, void* param);
+void		resize_hook(int32_t width, int32_t height, void *param);
 
 /* Keymapping */
 t_keys		mlx_key_to_enum(keys_t mlx_key);
 void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
-void		init_minimap(t_game *game);
-void		refresh_minimap(t_game *game);
+void		draw_minimap(t_game *game);
 
 /******** Player ********/
-void		draw_player(t_game *game);
-void		update_movement(t_game *game, double move_speed);
+void		move_player(t_game *game, double move_speed);
+void		rotate_player(t_game *game, double delta_time);
 
 /******** Utils ********/
 /* MLX */
 void		clear_image_pixels(mlx_image_t *img);
+mlx_image_t	*texture_to_window(t_game *g, const char *img_path, int width,
+				t_point pos);
 /* Error */
 void		put_error(char *str);
 void		put_error2(char *s1, char *s2);

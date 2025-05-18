@@ -10,9 +10,9 @@ void	loop_hook(void *param)
 	current_time = mlx_get_time();
 	delta = current_time - game->last_frame;
 	game->last_frame = current_time;
-	update_movement(game, delta);
+	move_player(game, delta);
+	rotate_player(game, delta);
 }
-
 
 void	close_hook(void *param)
 {
@@ -35,7 +35,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		game->key_states[mapped_key] = (keydata.action != MLX_RELEASE);
 }
 
-void	resize_hook(int32_t width, int32_t height, void* param)
+void	resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;
 	int		minimap_height;

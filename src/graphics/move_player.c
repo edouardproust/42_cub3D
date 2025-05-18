@@ -1,42 +1,14 @@
 #include "cub3d.h"
 
-/**
- * Updates the player's rotation angle based on left/right key presses.
- * 
- * @param game         Pointer to the game structure.
- * @param delta_time   Time since the last frame (for smooth movement).
- * 
- * 1. Calculates rotation speed scaled by delta_time.
- * 2. Adjusts player_rot angle using ROT_SPEED (radians per second).
- * 
- * - Left arrow: Decreases angle (counter-clockwise).
- * - Right arrow: Increases angle (clockwise).
- */
-static void	update_rotation(t_game *g, double delta_time)
+static void	update_minimap_player_sprite(t_game *g)
 {
-	double	rot_speed;
-	double	old_dir_x;
-	t_point	pos_px;
+	int	x;
+	int	y;
 
-	rot_speed = ROT_SPEED * delta_time;
-	if (g->key_states[KEY_LEFT])
-	{
-		g->player_rot -= rot_speed;
-		old_dir_x = g->dir.x;
-		g->dir.x = g->dir.x * cos(rot_speed) - g->dir.y * sin(rot_speed);
-      	g->dir.y = old_dir_x * sin(rot_speed) + g->dir.y * cos(rot_speed);
-	}
-	if (g->key_states[KEY_RIGHT])
-	{
-		g->player_rot += rot_speed;
-		old_dir_x = g->dir.x;
-		g->dir.x = g->dir.x * cos(-rot_speed) - g->dir.y * sin(-rot_speed);
-		g->dir.y = old_dir_x * sin(-rot_speed) + g->dir.y * cos(-rot_speed);
-	}
-	pos_px.x = (g->pos.x + g->dir.x) * MM_SCALE + g->minimap->instances[0].x;
-	pos_px.y = (g->pos.y + g->dir.y) * MM_SCALE + g->minimap->instances[0].y;
-	g->mm_dir->instances[0].x = pos_px.x - g->mm_dir->width / 2;
-	g->mm_dir->instances[0].y = pos_px.y - g->mm_dir->height / 2;
+	x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
+	y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
+	g->mm_player->instances[0].x = x - g->mm_player->width / 2;
+	g->mm_player->instances[0].y = y - g->mm_player->height / 2;
 }
 
 /**
@@ -64,16 +36,11 @@ static void	calculate_new_position(t_game *game, double move_speed,
 
 /**
  * Validates if a potential position is free of collisions on Y-axis
- * 
- * Checks 2 grid cells around the player (calculating a 0.3 hitbox)
- * 
+ *
  * @param g    Pointer to game structure
- * @param new_x   X position to validate
  * @param new_y   Y position to validate
  * @return true   Position is valid (no wall collisions)
- * @return false  Position would result in collision
- * TODO : Check with Ed if we want to use floor() and ceil() for more
- *        collision accuracy
+ * @return false  Position would result in collision with a wall
  */
 static bool	is_valid_move_y(t_game *g, double new_y)
 {
@@ -89,16 +56,11 @@ static bool	is_valid_move_y(t_game *g, double new_y)
 
 /**
  * Validates if a potential position is free of collisions on X-axis
- * 
- * Checks 2 grid cells around the playe
- * 
+ *
  * @param g    Pointer to game structure
  * @param new_x   X position to validate
- * @param new_y   Y position to validate
  * @return true   Position is valid (no wall collisions)
- * @return false  Position would result in collision
- * TODO : Check with Ed if we want to use floor() and ceil() for more
- *        collision accuracy
+ * @return false  Position would result in collision with a wall
  */
 static bool	is_valid_move_x(t_game *g, double new_x)
 {
@@ -123,22 +85,17 @@ static bool	is_valid_move_x(t_game *g, double new_x)
  * @param game       Pointer to game structure
  * @param move_speed Movement speed multiplier (delta-adjusted)
  */
-void	update_movement(t_game *g, double delta_time)
+void	move_player(t_game *g, double delta_time)
 {
 	double	new_x;
 	double	new_y;
 	double	frame_speed;
-	t_point	pos_px;
 
-	update_rotation(g, delta_time);
 	frame_speed = MOVE_SPEED * delta_time;
 	calculate_new_position(g, frame_speed, &new_x, &new_y);
 	if (is_valid_move_x(g, new_x))
 		g->pos.x = new_x;
 	if (is_valid_move_y(g, new_y))
 		g->pos.y = new_y;
-	pos_px.x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
-	pos_px.y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
-	g->mm_player->instances[0].x = pos_px.x - g->mm_player->width / 2;
-	g->mm_player->instances[0].y = pos_px.y - g->mm_player->height / 2;
+	update_minimap_player_sprite(g);
 }
