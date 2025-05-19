@@ -115,7 +115,7 @@ Usage :
 
 ```
 mlx_image_to_window(game->mlx, game->screen, 0, 0);  
-mlx_image_to_window(game->mlx, game->minimap, MN_X, MN_Y); 
+mlx_image_to_window(game->mlx, game->minimap, MM_X, MM_Y); 
 ```
 
 4. mlx_put_pixel : Draws a single pixel on an image. (Used in draw_minimap_cell, draw_player_circle, and draw_direction_line for pixel-level rendering.)

@@ -24,7 +24,7 @@ Directional Line
 So the direction will be visual on the map by a green line I draw pixel by pixel, which starts from the player's current position to the endpoint of the line.
 How it's calculated :
 
-endpoint = player_pos + (directional current angle * fixed co-rods where we want the line to stop) -> in our case it's PLAYER_RADIUS x 2 just for visibility.
+endpoint = start_pos + (directional current angle * fixed co-rods where we want the line to stop) -> in our case it's PLAYER_RADIUS x 2 just for visibility.
 
 That translates more like this :
 

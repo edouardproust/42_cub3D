@@ -4,11 +4,13 @@
  * @param game Pointer to game structure
  * @return void. Exits + frees program in case of failure
  */
-static void	init_mlx_context(t_game *game)
+static void	init_mlx_context(t_game *g)
 {
-	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
-	if (!game->mlx)
-		exit_game("MLX init failed", game);
+	g->win_width = WIDTH;
+	g->win_height = HEIGHT;
+	g->mlx = mlx_init(g->win_width, g->win_height, "cub3D", true);
+	if (!g->mlx)
+		exit_game("MLX init failed", g);
 }
 
 /**
@@ -20,13 +22,13 @@ static void	init_mlx_context(t_game *game)
  *   (MLX images have uninitialized pixel data by default.)
  * - sizeof(int32_t): Each pixel is a 4-byte RGBA value.
  */
-static void	init_main_screen(t_game *game)
+static void	init_main_screen(t_game *g)
 {
-	game->screen = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	if (!game->screen)
-		exit_game("Screen buffer creation failed", game);
-	mlx_image_to_window(game->mlx, game->screen, 0, 0);
-	ft_memset(game->screen->pixels, 0, WIDTH * HEIGHT * sizeof(int32_t));
+	g->screen = mlx_new_image(g->mlx, WIDTH, HEIGHT);
+	if (!g->screen)
+		exit_game("Screen buffer creation failed", g);
+	mlx_image_to_window(g->mlx, g->screen, 0, 0);
+	clear_image_pixels(g->screen);
 }
 
 /**
@@ -36,8 +38,9 @@ static void	init_main_screen(t_game *game)
 static void	setup_hooks(t_game *game)
 {
 	mlx_key_hook(game->mlx, key_hook, game);
-	mlx_loop_hook(game->mlx, render_minimap, game);
+	mlx_loop_hook(game->mlx, loop_hook, game);
 	mlx_close_hook(game->mlx, close_hook, game);
+	mlx_resize_hook(game->mlx, resize_hook, game);
 }
 
 /**
@@ -55,7 +58,7 @@ void	init_mlx(t_game *game)
 {
 	init_mlx_context(game);
 	init_main_screen(game);
-	init_minimap(game);
+	draw_minimap(game);
 	setup_hooks(game);
 	game->last_frame = mlx_get_time();
 }

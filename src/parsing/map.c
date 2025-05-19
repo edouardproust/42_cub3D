@@ -10,8 +10,8 @@ t_map	*init_map(void)
 	ft_memset(map, 0, sizeof(t_map));
 	map->grid_rows = -1;
 	map->grid_cols = -1;
-	map->player_pos.x = -1;
-	map->player_pos.y = -1;
+	map->start_pos.x = -1;
+	map->start_pos.y = -1;
 	return (map);
 }
 

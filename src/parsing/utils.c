@@ -53,8 +53,8 @@ void	set_map_player(t_map *map, int x, int y, char dir)
 {
 	if (is_grid_player_char(dir))
 	{
-		map->player_pos.y = y;
-		map->player_pos.x = x;
-		map->player_dir = dir;
+		map->start_pos.y = y;
+		map->start_pos.x = x;
+		map->start_dir = dir;
 	}
 }
