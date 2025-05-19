@@ -23,5 +23,6 @@ mlx_image_t	*texture_to_window(t_game *g, const char *img_path, int width,
 	mlx_resize_image(img, width, img->height * width / img->width);
 	mlx_image_to_window(g->mlx, img, pos.x - img->width / 2,
 		pos.y - img->height / 2);
+	mlx_delete_texture(tx);
 	return (img);
 }
