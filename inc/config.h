@@ -17,14 +17,14 @@
 # define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
 # define ROT_SPEED		3.0		/* Rotation speed (radians/second)*/
 # define MM_PLAYER_IMG	"assets/minimap/player.png"
-# define MM_PLAYR_WIDTH	16
+# define MM_PLAYR_WIDTH	20
 # define MM_DIR_IMG		"assets/minimap/viewpoint.png"
-# define MM_DIR_WIDTH	6
+# define MM_DIR_WIDTH	8
 
 /* 3D Rendering Settings */
 # define COLOR_MODE		true
-# define FOV_FACTOR		0.66
 # define FISHEYE_EFFECT	false
+# define FOV_FACTOR		0.66
 # define WALL_COLOR_NO	0xFF00FFFF	/* magenta */
 # define WALL_COLOR_SO	0x00FFFFFF	/* cyan */
 # define WALL_COLOR_EA	0xFFFF00FF	/* yellow */
