@@ -31,14 +31,14 @@ void	rotate_player(t_game *g, double delta_time)
 	double	old_dir_x;
 
 	rot_speed = ROT_SPEED * delta_time;
-	if (g->key_states[KEY_LEFT])
+	if (g->key_states[KEY_RIGHT])
 	{
 		g->player_rot -= rot_speed;
 		old_dir_x = g->dir.x;
 		g->dir.x = g->dir.x * cos(rot_speed) - g->dir.y * sin(rot_speed);
 		g->dir.y = old_dir_x * sin(rot_speed) + g->dir.y * cos(rot_speed);
 	}
-	if (g->key_states[KEY_RIGHT])
+	if (g->key_states[KEY_LEFT])
 	{
 		g->player_rot += rot_speed;
 		old_dir_x = g->dir.x;

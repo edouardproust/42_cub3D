@@ -136,6 +136,7 @@ t_keys		mlx_key_to_enum(keys_t mlx_key);
 void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void		draw_minimap(t_game *game);
+void		update_minimap_player_sprite(t_game *g);
 
 /* Raycasting */
 void		cast_rays(t_game *g);
