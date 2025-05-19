@@ -24,7 +24,7 @@
 /* 3D Rendering Settings */
 # define COLOR_MODE		true
 # define FOV_FACTOR		0.66
-# define FISHEYE_EFFECT	true
+# define FISHEYE_EFFECT	false
 # define WALL_COLOR_NO	0xFF00FFFF	/* magenta */
 # define WALL_COLOR_SO	0x00FFFFFF	/* cyan */
 # define WALL_COLOR_EA	0xFFFF00FF	/* yellow */

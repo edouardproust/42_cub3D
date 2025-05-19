@@ -26,7 +26,7 @@ typedef enum s_side
 	EA,
 	SO,
 	WE,
-} t_side;
+}	t_side;
 
 /****************************************/
 /* Structs and Typedefs                 */
@@ -46,7 +46,7 @@ typedef struct s_cell
 
 typedef struct color
 {
-	char 		*str;
+	char		*str;
 	uint32_t	rgb;
 }	t_color;
 
@@ -81,18 +81,16 @@ typedef struct s_game
 	mlx_image_t	*mm_dir;
 	t_point		pos;
 	t_point		dir;
-	t_point		camera_plane;
+	t_point		cam_plane;
 	double		last_frame;
 	bool		key_states[KEY_COUNT];
-	double		player_rot;
 	int32_t		win_width;
 	int32_t		win_height;
 }	t_game;
 
-// Stores the distances along the x and y axes for a ray's movement through the grid
 typedef struct s_ray
 {
-	double	wall_dist; // Distance to the wall (euclydian if FISHEYE_EFFECT is true)
+	double	wall_dist; // Distance to the wall (euclydian if fisheye active)
 	t_point	dir; // Ray direction
 	t_side	side; // The side of the wall cube (NO, SO, EA, WE) the ray hit
 	double	length_x; // Distance traveled along the x-axis until a wall is hit
@@ -102,7 +100,7 @@ typedef struct s_ray
 	t_cell	cell; // Cell in the grid that the ray is currently crossing
 	t_cell	cell_move; // Move to the next cell the ray will cross
 	bool	wall_hit; // Indicates if the ray hit a wall
-} t_ray;
+}	t_ray;
 
 /****************************************/
 /* Functions                            */
@@ -139,8 +137,8 @@ void		draw_minimap(t_game *game);
 void		update_minimap_player_sprite(t_game *g);
 
 /* Raycasting */
-void		cast_rays(t_game *g);
 void		cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
+void		draw_view_on_screen(t_game *g);
 
 /******** Player ********/
 void		move_player(t_game *game, double move_speed);

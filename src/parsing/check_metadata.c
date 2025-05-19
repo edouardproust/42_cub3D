@@ -37,22 +37,32 @@ static void	check_texture(char *id, char *filepath, t_game *g)
  * - Only contains digits
  * - is a number in range [0,255]
  */
-static int	get_color_part_rgb(char *part)
+static uint32_t	check_color_and_parse_rgb(char **parts, char *id, t_game *g)
 {
 	int	i;
-	int	rgb;
+	int	j;
+	int	rgb[3];
 
-	i = 0;
-	while (part[i])
+	i = -1;
+	while (parts[++i])
 	{
-		if (!ft_isdigit(part[i]))
-			return (false);
-		i++;
+		j = -1;
+		while (parts[i][++j])
+		{
+			if (!ft_isdigit(parts[i][j]))
+			{
+				ft_free_split(&parts);
+				exit_game3(E_PARSING, id, "Color must be digits only", g);
+			}
+		}
+		rgb[i] = ft_atoi(parts[i]);
+		if (rgb[i] < 0 || rgb[i] > 255)
+		{
+			ft_free_split(&parts);
+			exit_game3(E_PARSING, id, "Color values must be 0-255", g);
+		}
 	}
-	rgb = ft_atoi(part);
-	if (rgb < 0 || rgb > 255)
-		return (-1);
-	return (rgb);
+	return ((rgb[0] << 24) | (rgb[1] << 16) | (rgb[2] << 8) | 0xFF);
 }
 
 /**
@@ -65,8 +75,6 @@ static int	get_color_part_rgb(char *part)
 static void	check_color(char *id, t_color *color, t_game *g)
 {
 	char	**parts;
-	int		i;
-	int		rgb[3];
 
 	if (is_blank_str(color->str))
 		exit_game3(E_PARSING, id, "No color code provided", g);
@@ -74,17 +82,14 @@ static void	check_color(char *id, t_color *color, t_game *g)
 		exit_game3(E_PARSING, id, "Invalid color format: expected R,G,B", g);
 	parts = ft_split(color->str, ',');
 	if (!parts)
-		exit_game2(E_FATAL_PARSING, "Memory allocation failed for color parsing", g);
-	if (ft_matrix_size(parts) != 3 || color->str[ft_strlen(color->str)-1] == ',')
-		(ft_free_split(&parts), exit_game3(E_PARSING, id, "Color must be in R,G,B format", g));
-	i = -1;
-	while (++i < 3)
+		exit_game2(E_FATAL_PARSING, "Malloc for color parsing", g);
+	if (ft_matrix_size(parts) != 3
+		|| color->str[ft_strlen(color->str) - 1] == ',')
 	{
-		rgb[i] = get_color_part_rgb(parts[i]);
-		if (rgb[i] == -1)
-			(ft_free_split(&parts), exit_game3(E_PARSING, id, "Color values must be 0-255", g));
+		ft_free_split(&parts);
+		exit_game3(E_PARSING, id, "Color must be in R,G,B format", g);
 	}
-	color->rgb =  (rgb[0] << 24) | (rgb[1] << 16) | (rgb[2] << 8) | 0xFF;
+	color->rgb = check_color_and_parse_rgb(parts, id, g);
 	ft_free_split(&parts);
 }
 

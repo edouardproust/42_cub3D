@@ -21,8 +21,8 @@ C_FILES = debug.c\
 	graphics/draw_minimap.c \
 	graphics/move_player.c \
 	graphics/rotate_player.c \
-	raycaster/draw.c \
-	raycaster/ray.c \
+	graphics/draw_screen.c \
+	graphics/raycasting.c \
 	utils/mlx.c \
 	utils/char.c \
 	utils/error.c \

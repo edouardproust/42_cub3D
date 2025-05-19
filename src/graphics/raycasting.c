@@ -7,7 +7,8 @@ static void	calc_ray_step_lengths(t_ray *ray)
 	else
 	{
 		if (FISHEYE_EFFECT)
-			ray->len_step_x = sqrt(1 + (ray->dir.y * ray->dir.y) / (ray->dir.x * ray->dir.x));
+			ray->len_step_x = sqrt(1 + (ray->dir.y * ray->dir.y)
+					/ (ray->dir.x * ray->dir.x));
 		else
 			ray->len_step_x = fabs(1 / ray->dir.x);
 	}
@@ -16,7 +17,8 @@ static void	calc_ray_step_lengths(t_ray *ray)
 	else
 	{
 		if (FISHEYE_EFFECT)
-			ray->len_step_y = sqrt(1 + (ray->dir.x * ray->dir.x) / (ray->dir.y * ray->dir.y));
+			ray->len_step_y = sqrt(1 + (ray->dir.x * ray->dir.x)
+					/ (ray->dir.y * ray->dir.y));
 		else
 			ray->len_step_y = fabs(1 / ray->dir.y);
 	}
@@ -25,7 +27,7 @@ static void	calc_ray_step_lengths(t_ray *ray)
 /**
  * Calculate initial length of ray (to the closest vert. or horiz. grid line)
  */
-static void calc_initial_ray_length(t_ray *ray, t_game *g)
+static void	calc_initial_ray_length(t_ray *ray, t_game *g)
 {
 	if (ray->dir.x < 0)
 		ray->length_x = (g->pos.x - ray->cell.x) * ray->len_step_x;
@@ -37,7 +39,7 @@ static void calc_initial_ray_length(t_ray *ray, t_game *g)
 		ray->length_y = (ray->cell.y + 1 - g->pos.y) * ray->len_step_y;
 }
 
-static void calc_initial_cell_move(t_ray *ray)
+static void	calc_initial_cell_move(t_ray *ray)
 {
 	if (ray->dir.x >= 0)
 		ray->cell_move.x = 1;
@@ -78,15 +80,16 @@ static void	perform_dda_algorythm(t_ray *ray, t_game *g)
 }
 
 /**
- * @param screen_px_col	Index of the column of pixel on the screen, starting form the left
+ * @param screen_px_col	Index of the column of pixel on the screen,
+ * starting form the left
  */
 void	cast_one_ray(t_ray *ray, double screen_px_col, t_game *g)
 {
 	double	ray_screen_factor;
 
 	ray_screen_factor = 2 * screen_px_col / g->win_width - 1;
-	ray->dir.x = g->dir.x + g->camera_plane.x * ray_screen_factor;
-	ray->dir.y = g->dir.y + g->camera_plane.y * ray_screen_factor;
+	ray->dir.x = g->dir.x + g->cam_plane.x * ray_screen_factor;
+	ray->dir.y = g->dir.y + g->cam_plane.y * ray_screen_factor;
 	ray->cell.x = (int)g->pos.x;
 	ray->cell.y = (int)g->pos.y;
 	calc_ray_step_lengths(ray);
