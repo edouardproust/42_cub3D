@@ -1,5 +1,10 @@
 #include "cub3d.h"
 
+/**
+ * Calculate the players's new position on the grid on key pressed UP,
+ * DOWN, LEFT or RIGHT.
+ * @return bool true if player has moved, false otherwise
+ */
 static bool	calc_new_player_pos(t_point	*new_pos, t_game *g, double move_speed)
 {
 	new_pos->x = g->pos.x;
@@ -38,18 +43,27 @@ void	update_minimap_player_sprite(t_game *g)
 	g->mm_player->instances[0].y = y - g->mm_player->height / 2;
 }
 
-void	move_player(t_game *g, double delta_time)
+/**
+ * Move player if keys UP, DOWN< LEFT or RIGHT is pressed.
+ * 
+ * @return bool true if has moved, false otherwise.
+ */
+bool	move_player(t_game *g, double delta_time)
 {
 	double	move_speed;
 	t_point	new_pos;
+	bool	has_moved;
 
 	move_speed = MOVE_SPEED * delta_time;
-	if (calc_new_player_pos(&new_pos, g, move_speed))
+	has_moved = calc_new_player_pos(&new_pos, g, move_speed);
+	if (has_moved)
 	{
 		if (g->map->grid[(int)g->pos.y][(int)new_pos.x] != '1')
 			g->pos.x = new_pos.x;
 		if (g->map->grid[(int)new_pos.y][(int)g->pos.x] != '1')
 			g->pos.y = new_pos.y;
 		update_minimap_player_sprite(g);
+		update_minimap_dir_sprite(g);
 	}
+	return (has_moved);
 }

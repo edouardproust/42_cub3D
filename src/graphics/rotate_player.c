@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	update_minimap_dir_sprite(t_game *g)
+void	update_minimap_dir_sprite(t_game *g)
 {
 	int	x;
 	int	y;
@@ -11,7 +11,7 @@ static void	update_minimap_dir_sprite(t_game *g)
 	g->mm_dir->instances[0].y = y - g->mm_dir->height / 2;
 }
 
-static void	update_vectors_on_rotate(t_game *g, double rot_speed)
+static bool	update_vectors_on_rotate(t_game *g, double rot_speed)
 {
 	double	old_dir_x;
 	double	old_plane_x;
@@ -24,6 +24,7 @@ static void	update_vectors_on_rotate(t_game *g, double rot_speed)
 		= g->cam_plane.x * cos(rot_speed) - g->cam_plane.y * sin(rot_speed);
 	g->cam_plane.y
 		= old_plane_x * sin(rot_speed) + g->cam_plane.y * cos(rot_speed);
+	return (true);
 }
 
 /**
@@ -39,12 +40,18 @@ static void	update_vectors_on_rotate(t_game *g, double rot_speed)
  *
  * - Left arrow: Decreases angle (counter-clockwise).
  * - Right arrow: Increases angle (clockwise).
+ * @return bool true is player has moved, false otherwise.
  */
-void	rotate_player(t_game *g, double delta_time)
+bool	rotate_player(t_game *g, double delta_time)
 {
+	bool	has_moved;
+
+	has_moved = false;
 	if (g->key_states[KEY_RIGHT])
-		update_vectors_on_rotate(g, ROT_SPEED * delta_time);
+		has_moved = update_vectors_on_rotate(g, ROT_SPEED * delta_time);
 	if (g->key_states[KEY_LEFT])
-		update_vectors_on_rotate(g, -ROT_SPEED * delta_time);
-	update_minimap_dir_sprite(g);
+		has_moved = update_vectors_on_rotate(g, -ROT_SPEED * delta_time);
+	if (has_moved)
+		update_minimap_dir_sprite(g);
+	return (has_moved);
 }

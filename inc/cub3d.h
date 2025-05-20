@@ -135,14 +135,15 @@ void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void		draw_minimap(t_game *game);
 void		update_minimap_player_sprite(t_game *g);
+void		update_minimap_dir_sprite(t_game *g);
 
 /* Raycasting */
 void		cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
 void		draw_view_on_screen(t_game *g);
 
 /******** Player ********/
-void		move_player(t_game *game, double move_speed);
-void		rotate_player(t_game *game, double delta_time);
+bool		move_player(t_game *game, double move_speed);
+bool		rotate_player(t_game *game, double delta_time);
 
 /******** Utils ********/
 /* MLX */
