@@ -1,6 +1,38 @@
 #include "cub3d.h"
 
-static void	update_minimap_player_sprite(t_game *g)
+/**
+ * Calculate the players's new position on the grid on key pressed UP,
+ * DOWN, LEFT or RIGHT.
+ * @return bool true if player has moved, false otherwise
+ */
+static bool	calc_new_player_pos(t_point	*new_pos, t_game *g, double move_speed)
+{
+	new_pos->x = g->pos.x;
+	new_pos->y = g->pos.y;
+	if (g->key_states[KEY_W] || g->key_states[KEY_UP])
+	{
+		new_pos->x = g->pos.x + g->dir.x * move_speed;
+		new_pos->y = g->pos.y + g->dir.y * move_speed;
+	}
+	if (g->key_states[KEY_S] || g->key_states[KEY_DOWN])
+	{
+		new_pos->x = g->pos.x - g->dir.x * move_speed;
+		new_pos->y = g->pos.y - g->dir.y * move_speed;
+	}
+	if (g->key_states[KEY_A])
+	{
+		new_pos->x = g->pos.x + g->dir.y * move_speed;
+		new_pos->y = g->pos.y - g->dir.x * move_speed;
+	}
+	if (g->key_states[KEY_D])
+	{
+		new_pos->x = g->pos.x - g->dir.y * move_speed;
+		new_pos->y = g->pos.y + g->dir.x * move_speed;
+	}
+	return ((new_pos->x != g->pos.x) || (new_pos->y != g->pos.y));
+}
+
+void	update_minimap_player_sprite(t_game *g)
 {
 	int	x;
 	int	y;
@@ -12,90 +44,26 @@ static void	update_minimap_player_sprite(t_game *g)
 }
 
 /**
- * Calculates potential new player position based on input keys
- *
- * @param game      Pointer to game structure containing player state
- * @param move_speed Movement speed multiplier
- * @param new_x     Pointer to store calculated X position
- * @param new_y     Pointer to store calculated Y position
+ * Move player if keys UP, DOWN< LEFT or RIGHT is pressed.
+ * 
+ * @return bool true if has moved, false otherwise.
  */
-static void	calculate_new_position(t_game *game, double move_speed,
-	double *new_x, double *new_y)
+bool	move_player(t_game *g, double delta_time)
 {
-	*new_x = game->pos.x;
-	*new_y = game->pos.y;
-	if (game->key_states[KEY_W])
-		*new_y -= move_speed;
-	if (game->key_states[KEY_S])
-		*new_y += move_speed;
-	if (game->key_states[KEY_A])
-		*new_x -= move_speed;
-	if (game->key_states[KEY_D])
-		*new_x += move_speed;
-}
+	double	move_speed;
+	t_point	new_pos;
+	bool	has_moved;
 
-/**
- * Validates if a potential position is free of collisions on Y-axis
- *
- * @param g    Pointer to game structure
- * @param new_y   Y position to validate
- * @return true   Position is valid (no wall collisions)
- * @return false  Position would result in collision with a wall
- */
-static bool	is_valid_move_y(t_game *g, double new_y)
-{
-	int		y1;
-	int		y2;
-
-	y1 = (int)(new_y - HITBOX);
-	y2 = (int)(new_y + HITBOX);
-	return (y1 >= 0 && y2 < g->map->grid_rows
-		&& g->map->grid[y1][(int)g->pos.x] != '1'
-		&& g->map->grid[y2][(int)g->pos.x] != '1');
-}
-
-/**
- * Validates if a potential position is free of collisions on X-axis
- *
- * @param g    Pointer to game structure
- * @param new_x   X position to validate
- * @return true   Position is valid (no wall collisions)
- * @return false  Position would result in collision with a wall
- */
-static bool	is_valid_move_x(t_game *g, double new_x)
-{
-	int		x1;
-	int		x2;
-
-	x1 = (int)(new_x - HITBOX);
-	x2 = (int)(new_x + HITBOX);
-	return (x1 >= 0 && x2 < g->map->grid_cols
-		&& g->map->grid[(int)g->pos.y][x1] != '1'
-		&& g->map->grid[(int)g->pos.y][x2] != '1');
-}
-
-/**
- * Updates player position based on input and collision checks
- *
- * Process:
- * 1. Calculate potential new position from input
- * 2. Validate against map collision
- * 3. Update actual position if validation passes
- *
- * @param game       Pointer to game structure
- * @param move_speed Movement speed multiplier (delta-adjusted)
- */
-void	move_player(t_game *g, double delta_time)
-{
-	double	new_x;
-	double	new_y;
-	double	frame_speed;
-
-	frame_speed = MOVE_SPEED * delta_time;
-	calculate_new_position(g, frame_speed, &new_x, &new_y);
-	if (is_valid_move_x(g, new_x))
-		g->pos.x = new_x;
-	if (is_valid_move_y(g, new_y))
-		g->pos.y = new_y;
-	update_minimap_player_sprite(g);
+	move_speed = MOVE_SPEED * delta_time;
+	has_moved = calc_new_player_pos(&new_pos, g, move_speed);
+	if (has_moved)
+	{
+		if (g->map->grid[(int)g->pos.y][(int)new_pos.x] != '1')
+			g->pos.x = new_pos.x;
+		if (g->map->grid[(int)new_pos.y][(int)g->pos.x] != '1')
+			g->pos.y = new_pos.y;
+		update_minimap_player_sprite(g);
+		update_minimap_dir_sprite(g);
+	}
+	return (has_moved);
 }

@@ -83,4 +83,5 @@ void	draw_minimap(t_game *g)
 		g->win_height - mm_height - MM_Y);
 	draw_minimap_grid(g);
 	draw_player(g);
+	draw_view_on_screen(g);
 }

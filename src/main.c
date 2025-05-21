@@ -4,27 +4,27 @@ static void	init_game_vectors(t_game *g)
 {
 	g->dir.x = 0;
 	g->dir.y = 0;
-	g->camera_plane.x = 0;
-	g->camera_plane.y = 0;
+	g->cam_plane.x = 0;
+	g->cam_plane.y = 0;
 	if (g->map->start_dir == 'N')
 	{
 		g->dir.y = -1;
-		g->camera_plane.x = FOV_FACTOR;
+		g->cam_plane.x = FOV_FACTOR;
 	}
 	else if (g->map->start_dir == 'S')
 	{
 		g->dir.y = 1;
-		g->camera_plane.x = -FOV_FACTOR;
+		g->cam_plane.x = -FOV_FACTOR;
 	}
 	else if (g->map->start_dir == 'W')
 	{
 		g->dir.x = -1;
-		g->camera_plane.y = -FOV_FACTOR;
+		g->cam_plane.y = -FOV_FACTOR;
 	}
 	else if (g->map->start_dir == 'E')
 	{
 		g->dir.x = 1;
-		g->camera_plane.y = FOV_FACTOR;
+		g->cam_plane.y = FOV_FACTOR;
 	}
 }
 

@@ -24,11 +24,10 @@ static void	init_mlx_context(t_game *g)
  */
 static void	init_main_screen(t_game *g)
 {
-	g->screen = mlx_new_image(g->mlx, WIDTH, HEIGHT);
+	g->screen = mlx_new_image(g->mlx, g->win_width, g->win_height);
 	if (!g->screen)
 		exit_game("Screen buffer creation failed", g);
 	mlx_image_to_window(g->mlx, g->screen, 0, 0);
-	clear_image_pixels(g->screen);
 }
 
 /**
