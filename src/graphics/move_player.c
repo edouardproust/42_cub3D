@@ -57,7 +57,7 @@ bool	move_player(t_game *g, double delta_time)
 	bool	has_moved;
 	char	cell_char;
 
-	move_speed = MOVE_SPEED * fmin(delta_time, 0.1);;
+	move_speed = MOVE_SPEED * fmin(delta_time, 0.1);
 	has_moved = calc_new_player_pos(&new_pos, g, move_speed);
 	if (has_moved)
 	{

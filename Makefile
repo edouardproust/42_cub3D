@@ -118,7 +118,7 @@ libmlx:
 VALGRIND_SUPP = valgrind.supp
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes $(NAME) assets/maps/_valgrind_test.cub
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes --suppressions=$(VALGRIND_SUPP) $(NAME) assets/maps/_valgrind_test.cub
 
 
 # ************************************
