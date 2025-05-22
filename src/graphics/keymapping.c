@@ -7,10 +7,12 @@ static t_keymap	*get_keymap(void)
 	{MLX_KEY_A, KEY_A},
 	{MLX_KEY_S, KEY_S},
 	{MLX_KEY_D, KEY_D},
+	{MLX_KEY_UP, KEY_UP},
+	{MLX_KEY_DOWN, KEY_DOWN},
 	{MLX_KEY_LEFT, KEY_LEFT},
 	{MLX_KEY_RIGHT, KEY_RIGHT},
 	{MLX_KEY_ESCAPE, KEY_ESC},
-	{0, KEY_COUNT} 
+	{0, KEY_COUNT}
 	};
 
 	return (keymap);

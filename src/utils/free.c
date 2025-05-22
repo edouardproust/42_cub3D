@@ -18,12 +18,16 @@ void	free_map(t_map *map)
 	free(map->texture_so);
 	free(map->texture_ea);
 	free(map->texture_we);
-	free(map->color_c);
-	free(map->color_f);
+	free(map->color_c.str);
+	free(map->color_f.str);
 	free_grid(map->grid, map->grid_rows);
 	free(map);
 }
 
+/**
+ * //TODO Lines with `mlx_delete_image() are useless because `mlx_temrinate()`
+ * //TODO is supposed to flush the whole library memory
+ */
 void	free_game(t_game *g)
 {
 	if (!g)
@@ -34,6 +38,10 @@ void	free_game(t_game *g)
 			mlx_delete_image(g->mlx, g->screen);
 		if (g->minimap)
 			mlx_delete_image(g->mlx, g->minimap);
+		if (g->mm_dir)
+			mlx_delete_image(g->mlx, g->mm_dir);
+		if (g->mm_player)
+			mlx_delete_image(g->mlx, g->mm_player);
 		mlx_terminate(g->mlx);
 	}
 	free_map(g->map);

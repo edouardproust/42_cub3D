@@ -1,17 +1,25 @@
 #include "cub3d.h"
 
+/**
+ * @note redraw the 3D view on 30fps (instead of 60)
+ */
 void	loop_hook(void *param)
 {
-	t_game	*game;
-	double	current_time;
-	double	delta;
+	static int	frame_count = 0;
+	t_game		*game;
+	double		current_time;
+	double		delta;
+	bool		has_moved;
 
 	game = (void *)param;
 	current_time = mlx_get_time();
 	delta = current_time - game->last_frame;
 	game->last_frame = current_time;
-	move_player(game, delta);
-	rotate_player(game, delta);
+	has_moved = move_player(game, delta);
+	has_moved |= rotate_player(game, delta);
+	frame_count++;
+	if (has_moved && frame_count % 2 == 0)
+		draw_view_on_screen(game);
 }
 
 void	close_hook(void *param)
@@ -46,4 +54,7 @@ void	resize_hook(int32_t width, int32_t height, void *param)
 	mlx_resize_image(game->screen, width, height);
 	minimap_height = game->map->grid_rows * MM_SCALE;
 	game->minimap->instances[0].y = game->win_height - minimap_height - MM_Y;
+	update_minimap_player_sprite(game);
+	update_minimap_dir_sprite(game);
+	draw_view_on_screen(game);
 }
