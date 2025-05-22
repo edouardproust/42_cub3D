@@ -45,22 +45,29 @@ void	update_minimap_player_sprite(t_game *g)
 
 /**
  * Move player if keys UP, DOWN< LEFT or RIGHT is pressed.
- * 
+ *
  * @return bool true if has moved, false otherwise.
+ * @note Cap on delta_time to 100ms, to prevnet jumps of the player
+ * out limits
  */
 bool	move_player(t_game *g, double delta_time)
 {
 	double	move_speed;
 	t_point	new_pos;
 	bool	has_moved;
+	char	cell_char;
 
-	move_speed = MOVE_SPEED * delta_time;
+	move_speed = MOVE_SPEED * fmin(delta_time, 0.1);;
 	has_moved = calc_new_player_pos(&new_pos, g, move_speed);
 	if (has_moved)
 	{
-		if (g->map->grid[(int)g->pos.y][(int)new_pos.x] != '1')
+		cell_char = g->map->grid[(int)g->pos.y][(int)new_pos.x];
+		if (new_pos.x > 0 && new_pos.x < g->map->grid_cols
+			&& cell_char != '1' && cell_char != ' ')
 			g->pos.x = new_pos.x;
-		if (g->map->grid[(int)new_pos.y][(int)g->pos.x] != '1')
+		cell_char = g->map->grid[(int)new_pos.y][(int)g->pos.x];
+		if (new_pos.y > 0 && new_pos.y < g->map->grid_rows
+			&& cell_char != '1' && cell_char != ' ')
 			g->pos.y = new_pos.y;
 		update_minimap_player_sprite(g);
 		update_minimap_dir_sprite(g);
