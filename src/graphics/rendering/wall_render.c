@@ -1,13 +1,31 @@
 #include "cub3d.h"
-
+/**
+ * Calculates vertical scaling parameters for perspective correction.
+ * 
+ * @param ray Ray data with screen Y boundaries
+ * @param tex Texture being rendered
+ * @param step Output: Vertical step per screen pixel (texture/screen ratio)
+ * @param tex_pos Output: Initial texture Y position
+ */
 static void	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
 		double *step, double *tex_pos)
 {
-	*step = 1.0 * tex->height / (ray->bottom_px - ray->top_px);
-	*tex_pos = (ray->top_px - HEIGHT / 2 +
-		(ray->bottom_px - ray->top_px) / 2) * (*step);
+	int	line_height;
+
+	line_height = ray->bottom_px - ray->top_px;
+	*step = (double)tex->height / line_height;
+	*tex_pos = (ray->top_px - HEIGHT / 2 + line_height / 2) * *step;
 }
 
+/**
+ * Renders vertical texture part to screen column.
+ * 
+ * @param x Screen column to draw to
+ * @param ray Ray data with wall dimensions
+ * @param g Game structure with screen buffer
+ * @param tex Texture to get from
+ * @param tex_x Texture column to render
+ */
 static void	draw_textured_pixels(int x, t_ray *ray, t_game *g, 
 		mlx_texture_t *tex, int tex_x)
 {
@@ -19,16 +37,30 @@ static void	draw_textured_pixels(int x, t_ray *ray, t_game *g,
 
 	calc_vertical_scale(ray, tex, &step, &tex_pos);
 	y = ray->top_px;
-	while (y++ < ray->bottom_px)
+	while (y <= ray->bottom_px)
 	{
-		tex_y = (int)tex_pos & (tex->height - 1);
+		tex_y = (int)tex_pos % tex->height;
+		if (tex_y < 0)
+			tex_y += tex->height;
 		pixel = &tex->pixels[(tex_y * tex->width + tex_x) * 4];
-		mlx_put_pixel(g->screen, x, y, 
+		mlx_put_pixel(g->screen, x, y,
 			pixel[0] << 24 | pixel[1] << 16 | pixel[2] << 8 | 0xFF);
 		tex_pos += step;
+		y++;
 	}
 }
 
+/**
+ * Main wall rendering function. Coordinates:
+ * 1. Texture selection
+ * 2. Wall hit position calculation
+ * 3. Texture coordinate mapping
+ * 4. Pixel-by-pixel rendering
+ * 
+ * @param ray Raycast results for current screen column
+ * @param x Screen column to render
+ * @param g Game structure with textures and render target
+ */
 void	render_textured_wall(t_ray *ray, int x, t_game *g)
 {
 	mlx_texture_t	*tex;
