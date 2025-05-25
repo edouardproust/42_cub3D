@@ -41,6 +41,7 @@ static t_game	*init_game(char **argv)
 		exit_game("Map memory allocation", g);
 	map_parse_and_check(argv[1], g);
 	debug_parsed_map(g->map); //DEBUG
+	load_textures(g);
 	g->pos.x = g->map->start_pos.x + 0.5;
 	g->pos.y = g->map->start_pos.y + 0.5;
 	g->win_height = HEIGHT;

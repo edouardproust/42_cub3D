@@ -24,6 +24,18 @@ void	free_map(t_map *map)
 	free(map);
 }
 
+static void	free_textures(t_game *g)
+{
+	if (g->tex_no)
+		mlx_delete_texture(g->tex_no);
+	if (g->tex_so)
+		mlx_delete_texture(g->tex_so);
+	if (g->tex_ea)
+		mlx_delete_texture(g->tex_ea);
+	if (g->tex_we)
+		mlx_delete_texture(g->tex_we);
+}
+
 /**
  * //TODO Lines with `mlx_delete_image() are useless because `mlx_temrinate()`
  * //TODO is supposed to flush the whole library memory
@@ -42,6 +54,7 @@ void	free_game(t_game *g)
 			mlx_delete_image(g->mlx, g->mm_dir);
 		if (g->mm_player)
 			mlx_delete_image(g->mlx, g->mm_player);
+		free_textures(g);
 		mlx_terminate(g->mlx);
 	}
 	free_map(g->map);

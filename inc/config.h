@@ -22,7 +22,7 @@
 # define MM_DIR_WIDTH	8
 
 /* 3D Rendering Settings */
-# define COLOR_MODE		true
+# define COLOR_MODE		false
 # define FISHEYE_EFFECT	false
 # define FOV_FACTOR		0.66
 # define WALL_COLOR_NO	0xFF00FFFF	/* magenta */
