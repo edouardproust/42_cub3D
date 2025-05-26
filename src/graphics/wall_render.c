@@ -1,7 +1,13 @@
 #include "cub3d.h"
 /**
- * Calculates vertical scaling parameters for perspective correction.
+ * Determines how much to stretch/compress the texture vertically 
+ * based on wall distance
  * 
+ * Key calculations:
+ * - line_height = HEIGHT / distance - Closer walls appear taller
+ * - step - How much to move in texture for each screen pixel
+ * - tex_pos - Starting position in texture (centers the texture vertically)
+ *
  * @param ray Ray data with screen Y boundaries
  * @param tex Texture being rendered
  * @param step Output: Vertical step per screen pixel (texture/screen ratio)
@@ -25,6 +31,10 @@ static void	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
 
 /**
  * Renders vertical texture part to screen column.
+ * For each vertical screen pixel:
+ * - Finds corresponding texture row (tex_y)
+ * - Gets RGBA color from texture
+ * - Paints the screen pixel
  * 
  * @param x Screen column to draw to
  * @param ray Ray data with wall dimensions
