@@ -1,6 +1,6 @@
 #include "cub3d.h"
 /**
- * Loads wall textures from paths specified in the map file into MLX textures.
+ * Loads all textures from paths specified in the map file into MLX textures.
  * Exits game on failure to load any texture.
  * 
  * @param g Game structure containing map texture paths
@@ -22,7 +22,7 @@ void	load_textures(t_game *g)
  * @param g Game structure with loaded textures
  * @return mlx_texture_t* Pointer to selected texture
  */
-mlx_texture_t *get_wall_texture(t_side side, t_game *g)
+mlx_texture_t	*get_wall_texture(t_side side, t_game *g)
 {
 	if (side == NO)
 		return (g->tex_no);
@@ -48,7 +48,7 @@ double	calc_wall_hit_position(t_ray *ray, t_game *g)
 	if (ray->side == NO || ray->side == SO)
 		wall_x = g->pos.x + ray->wall_dist * ray->dir.x;
 	else
-		 wall_x = g->pos.y + ray->wall_dist * ray->dir.y;
+		wall_x = g->pos.y + ray->wall_dist * ray->dir.y;
 	wall_x = wall_x - floor(wall_x);
 	return (wall_x);
 }

@@ -15,7 +15,7 @@
 
 /* Player Settings */
 # define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
-# define ROT_SPEED		3.0		/* Rotation speed (radians/second)*/
+# define ROT_SPEED		3.0		/* Rotation speed (radians/second) */
 # define MM_PLAYER_IMG	"assets/minimap/player.png"
 # define MM_PLAYR_WIDTH	20
 # define MM_DIR_IMG		"assets/minimap/viewpoint.png"
@@ -42,6 +42,7 @@ typedef enum e_keys
 	KEY_DOWN,
 	KEY_LEFT,
 	KEY_RIGHT,
+	KEY_M,
 	KEY_COUNT
 }	t_keys;
 

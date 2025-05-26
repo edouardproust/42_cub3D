@@ -26,15 +26,15 @@ static void	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
  * @param tex Texture to get from
  * @param tex_x Texture column to render
  */
-static void	draw_textured_pixels(int x, t_ray *ray, t_game *g, 
-		mlx_texture_t *tex, int tex_x)
+static void	draw_textured_pixels(int x, t_ray *ray, t_game *g, int tex_x)
 {
-	double	step;
-	double	tex_pos;
-	int		y;
-	int		tex_y;
-	uint8_t	*pixel;
+	mlx_texture_t	*tex;
+	double			step;
+	double			tex_pos;
+	int				y;
+	int				tex_y;
 
+	tex = get_wall_texture(ray->side, g);
 	calc_vertical_scale(ray, tex, &step, &tex_pos);
 	y = ray->top_px;
 	while (y <= ray->bottom_px)
@@ -42,9 +42,10 @@ static void	draw_textured_pixels(int x, t_ray *ray, t_game *g,
 		tex_y = (int)tex_pos % tex->height;
 		if (tex_y < 0)
 			tex_y += tex->height;
-		pixel = &tex->pixels[(tex_y * tex->width + tex_x) * 4];
 		mlx_put_pixel(g->screen, x, y,
-			pixel[0] << 24 | pixel[1] << 16 | pixel[2] << 8 | 0xFF);
+			tex->pixels[(tex_y * tex->width + tex_x) * 4 + 0] << 24
+			| tex->pixels[(tex_y * tex->width + tex_x) * 4 + 1] << 16
+			| tex->pixels[(tex_y * tex->width + tex_x) * 4 + 2] << 8 | 0xFF);
 		tex_pos += step;
 		y++;
 	}
@@ -70,5 +71,5 @@ void	render_textured_wall(t_ray *ray, int x, t_game *g)
 	tex = get_wall_texture(ray->side, g);
 	wall_x = calc_wall_hit_position(ray, g);
 	tex_x = get_texture_horizontal(tex, ray, wall_x);
-	draw_textured_pixels(x, ray, g, tex, tex_x);
+	draw_textured_pixels(x, ray, g, tex_x);
 }
