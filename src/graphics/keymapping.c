@@ -35,8 +35,24 @@ t_keys	mlx_key_to_enum(keys_t mlx_key)
 	return (KEY_COUNT);
 }
 
+/*void	handle_special_keys(mlx_key_data_t keydata, t_game *game)
+{
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(game->mlx);
+}*/
+
 void	handle_special_keys(mlx_key_data_t keydata, t_game *game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
+	if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
+	{
+		game->minimap_visible = !game->minimap_visible;
+		if (game->minimap)
+			game->minimap->instances[0].enabled = game->minimap_visible;
+		if (game->mm_player)
+			game->mm_player->instances[0].enabled = game->minimap_visible;
+		if (game->mm_dir)
+			game->mm_dir->instances[0].enabled = game->minimap_visible;
+	}
 }

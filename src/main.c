@@ -46,7 +46,6 @@ static t_game	*init_game(char **argv)
 	g->pos.y = g->map->start_pos.y + 0.5;
 	g->win_height = HEIGHT;
 	g->win_width = WIDTH;
-	g->minimap_visible = true;
 	init_game_vectors(g);
 	init_mlx(g);
 	return (g);

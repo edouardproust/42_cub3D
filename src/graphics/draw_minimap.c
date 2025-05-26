@@ -46,16 +46,23 @@ static void	draw_minimap_grid(t_game *game)
 /**
  * Display the player and the direction dot as images on the minimap.
  */
-static void	draw_player(t_game *g)
+void	draw_player(t_game *g)
 {
 	t_point			pos_px;
 
-	pos_px.x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
-	pos_px.y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
-	g->mm_player = texture_to_window(g, MM_PLAYER_IMG, MM_PLAYR_WIDTH, pos_px);
-	pos_px.x = (g->pos.x + g->dir.x) * MM_SCALE + g->minimap->instances[0].x;
-	pos_px.y = (g->pos.y + g->dir.y) * MM_SCALE + g->minimap->instances[0].y;
-	g->mm_dir = texture_to_window(g, MM_DIR_IMG, MM_DIR_WIDTH, pos_px);
+	if (!g->mm_player)
+	{
+		pos_px.x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
+		pos_px.y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
+		g->mm_player = texture_to_window(g, MM_PLAYER_IMG, MM_PLAYR_WIDTH, pos_px);
+	}
+	if (!g->mm_dir)
+	{
+		pos_px.x = (g->pos.x + g->dir.x) * MM_SCALE + g->minimap->instances[0].x;
+		pos_px.y = (g->pos.y + g->dir.y) * MM_SCALE + g->minimap->instances[0].y;
+		g->mm_dir = texture_to_window(g, MM_DIR_IMG, MM_DIR_WIDTH, pos_px);
+	}
+	update_minimap_player_sprite(g);
 }
 
 /**
@@ -73,15 +80,17 @@ void	draw_minimap(t_game *g)
 	int	mm_width;
 	int	mm_height;
 
-	mm_width = g->map->grid_cols * MM_SCALE;
-	mm_height = g->map->grid_rows * MM_SCALE;
-	g->minimap = mlx_new_image(g->mlx, mm_width, mm_height);
 	if (!g->minimap)
-		exit_game("Minimap creation failed", g);
-	clear_image_pixels(g->minimap);
-	mlx_image_to_window(g->mlx, g->minimap, MM_X,
-		g->win_height - mm_height - MM_Y);
-	draw_minimap_grid(g);
+	{
+		mm_width = g->map->grid_cols * MM_SCALE;
+		mm_height = g->map->grid_rows * MM_SCALE;
+		g->minimap = mlx_new_image(g->mlx, mm_width, mm_height);
+		if (!g->minimap)
+			exit_game("Minimap creation failed", g);
+		clear_image_pixels(g->minimap);
+		mlx_image_to_window(g->mlx, g->minimap, MM_X,
+			g->win_height - mm_height - MM_Y);
+		draw_minimap_grid(g);
+	}
 	draw_player(g);
-	draw_view_on_screen(g);
 }

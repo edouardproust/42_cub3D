@@ -18,8 +18,10 @@ void	loop_hook(void *param)
 	has_moved = move_player(game, delta);
 	has_moved |= rotate_player(game, delta);
 	frame_count++;
-	if (has_moved && frame_count % 2 == 0)
+	if ((has_moved && frame_count % 2 == 0) || frame_count == 1)
 		draw_view_on_screen(game);
+	if (has_moved && game->minimap_visible)
+		draw_player(game);
 }
 
 void	close_hook(void *param)
@@ -52,9 +54,12 @@ void	resize_hook(int32_t width, int32_t height, void *param)
 	game->win_width = width;
 	game->win_height = height;
 	mlx_resize_image(game->screen, width, height);
-	minimap_height = game->map->grid_rows * MM_SCALE;
-	game->minimap->instances[0].y = game->win_height - minimap_height - MM_Y;
-	update_minimap_player_sprite(game);
-	update_minimap_dir_sprite(game);
+	if (game->minimap)
+	{
+		minimap_height = game->map->grid_rows * MM_SCALE;
+		game->minimap->instances[0].y = game->win_height - minimap_height - MM_Y;
+		update_minimap_player_sprite(game);
+		update_minimap_dir_sprite(game);
+	}
 	draw_view_on_screen(game);
 }

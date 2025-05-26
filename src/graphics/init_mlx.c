@@ -57,6 +57,7 @@ void	init_mlx(t_game *game)
 {
 	init_mlx_context(game);
 	init_main_screen(game);
+	game->minimap_visible = true;
 	draw_minimap(game);
 	setup_hooks(game);
 	game->last_frame = mlx_get_time();
