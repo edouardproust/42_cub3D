@@ -10,9 +10,15 @@
 static void	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
 		double *step, double *tex_pos)
 {
-	int	line_height;
+	int		line_height;
 
-	line_height = ray->bottom_px - ray->top_px;
+	line_height = (int)(HEIGHT / ray->wall_dist);
+	ray->top_px = -line_height / 2 + HEIGHT / 2;
+	if (ray->top_px < 0)
+		ray->top_px = 0;
+	ray->bottom_px = line_height / 2 + HEIGHT / 2;
+	if (ray->bottom_px >= HEIGHT)
+		ray->bottom_px = HEIGHT - 1;
 	*step = (double)tex->height / line_height;
 	*tex_pos = (ray->top_px - HEIGHT / 2 + line_height / 2) * *step;
 }
