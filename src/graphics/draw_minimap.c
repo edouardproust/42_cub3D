@@ -54,12 +54,15 @@ void	draw_player(t_game *g)
 	{
 		pos_px.x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
 		pos_px.y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
-		g->mm_player = texture_to_window(g, MM_PLAYER_IMG, MM_PLAYR_WIDTH, pos_px);
+		g->mm_player
+			= texture_to_window(g, MM_PLAYER_IMG, MM_PLAYR_WIDTH, pos_px);
 	}
 	if (!g->mm_dir)
 	{
-		pos_px.x = (g->pos.x + g->dir.x) * MM_SCALE + g->minimap->instances[0].x;
-		pos_px.y = (g->pos.y + g->dir.y) * MM_SCALE + g->minimap->instances[0].y;
+		pos_px.x = (g->pos.x + g->dir.x)
+			* MM_SCALE + g->minimap->instances[0].x;
+		pos_px.y = (g->pos.y + g->dir.y)
+			* MM_SCALE + g->minimap->instances[0].y;
 		g->mm_dir = texture_to_window(g, MM_DIR_IMG, MM_DIR_WIDTH, pos_px);
 	}
 	update_minimap_player_sprite(g);
