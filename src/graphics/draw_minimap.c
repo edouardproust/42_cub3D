@@ -12,11 +12,12 @@ static void	draw_minimap_cell(t_game *game, int x, int y, char cell)
 		j = 0;
 		while (j < MM_SCALE)
 		{
-			color = MM_COLOR_WALL;
-			if (cell == '0')
-				color = MM_COLOR_FLOOR;
+			if (cell == '1')
+				color = MM_COLOR_WALL;
 			else if (cell == ' ')
 				color = 0x00000000;
+			else
+				color = MM_COLOR_FLOOR;
 			mlx_put_pixel(game->minimap, x * MM_SCALE + i, y * MM_SCALE + j,
 				color);
 			j++;
