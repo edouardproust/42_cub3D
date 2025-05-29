@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void	draw_minimap_cell(t_game *game, int x, int y, bool is_wall)
+static void	draw_minimap_cell(t_game *game, int x, int y, char cell)
 {
 	int	i;
 	int	j;
@@ -13,10 +13,10 @@ static void	draw_minimap_cell(t_game *game, int x, int y, bool is_wall)
 		while (j < MM_SCALE)
 		{
 			color = MM_COLOR_WALL;
-			if (i == 0 || j == 0)
-				color = MM_COLOR_GRID;
-			else if (!is_wall)
+			if (cell == '0')
 				color = MM_COLOR_FLOOR;
+			else if (cell == ' ')
+				color = 0x00000000;
 			mlx_put_pixel(game->minimap, x * MM_SCALE + i, y * MM_SCALE + j,
 				color);
 			j++;
@@ -36,7 +36,7 @@ static void	draw_minimap_grid(t_game *game)
 		x = 0;
 		while (x < game->map->grid_cols)
 		{
-			draw_minimap_cell(game, x, y, game->map->grid[y][x] == '1');
+			draw_minimap_cell(game, x, y, game->map->grid[y][x]);
 			x++;
 		}
 		y++;
@@ -78,7 +78,7 @@ void	draw_player(t_game *g)
  *   (MLX images have uninitialized pixel data by default.)
  * - sizeof(int32_t): Each pixel is a 4-byte RGBA value.
  */
-void	draw_minimap(t_game *g)
+void	display_minimap(t_game *g)
 {
 	int	mm_width;
 	int	mm_height;

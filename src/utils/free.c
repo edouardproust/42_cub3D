@@ -36,10 +36,6 @@ static void	free_textures(t_game *g)
 		mlx_delete_texture(g->tex_we);
 }
 
-/**
- * //TODO Lines with `mlx_delete_image() are useless because `mlx_temrinate()`
- * //TODO is supposed to flush the whole library memory
- */
 void	free_game(t_game *g)
 {
 	if (!g)

@@ -129,18 +129,16 @@ void			uniformize_grid_margins(t_game *g);
 void			set_map_player(t_map *map, int x, int y, char dir);
 
 /******** Graphics ********/
-void			init_mlx(t_game *game);
+void			display_game(t_game *game);
+
 /* Hooks */
-void			loop_hook(void *param);
-void			key_hook(mlx_key_data_t keydata, void *param);
-void			close_hook(void *param);
-void			resize_hook(int32_t width, int32_t height, void *param);
+void			setup_hooks(t_game *game);
 
 /* Keymapping */
 t_keys			mlx_key_to_enum(keys_t mlx_key);
 void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
-void			draw_minimap(t_game *game);
+void			display_minimap(t_game *game);
 void			draw_player(t_game *g);
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);
@@ -153,8 +151,7 @@ void			draw_view_on_screen(t_game *g);
 void			load_textures(t_game *g);
 mlx_texture_t	*get_wall_texture(t_side side, t_game *g);
 double			calc_wall_hit_position(t_ray *ray, t_game *g);
-int				get_texture_horizontal(mlx_texture_t *tex, t_ray *ray,
-					double wall_x);
+int				get_texture_horizontal(mlx_texture_t *tex, double wall_x);
 void			render_textured_wall(t_ray *ray, int x, t_game *g);
 
 /******** Player ********/

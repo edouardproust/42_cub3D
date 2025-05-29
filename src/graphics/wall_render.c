@@ -1,4 +1,5 @@
 #include "cub3d.h"
+
 /**
  * Determines how much to stretch/compress the texture vertically 
  * based on wall distance
@@ -13,20 +14,22 @@
  * @param step Output: Vertical step per screen pixel (texture/screen ratio)
  * @param tex_pos Output: Initial texture Y position
  */
-static void	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
-		double *step, double *tex_pos)
+static double	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
+		double *step, t_game *g)
 {
 	int		line_height;
+	double	tex_pos;
 
-	line_height = (int)(HEIGHT / ray->wall_dist);
-	ray->top_px = -line_height / 2 + HEIGHT / 2;
+	line_height = (int)(g->win_height / ray->wall_dist);
+	ray->top_px = -line_height / 2 + g->win_height / 2;
 	if (ray->top_px < 0)
 		ray->top_px = 0;
-	ray->bottom_px = line_height / 2 + HEIGHT / 2;
-	if (ray->bottom_px >= HEIGHT)
-		ray->bottom_px = HEIGHT - 1;
+	ray->bottom_px = line_height / 2 + g->win_height / 2;
+	if (ray->bottom_px >= g->win_height)
+		ray->bottom_px = g->win_height - 1;
 	*step = (double)tex->height / line_height;
-	*tex_pos = (ray->top_px - HEIGHT / 2 + line_height / 2) * *step;
+	tex_pos = (ray->top_px - g->win_height / 2 + line_height / 2) * *step;
+	return (tex_pos);
 }
 
 /**
@@ -51,7 +54,7 @@ static void	draw_textured_pixels(int x, t_ray *ray, t_game *g, int tex_x)
 	int				tex_y;
 
 	tex = get_wall_texture(ray->side, g);
-	calc_vertical_scale(ray, tex, &step, &tex_pos);
+	tex_pos = calc_vertical_scale(ray, tex, &step, g);
 	y = ray->top_px;
 	while (y <= ray->bottom_px)
 	{
@@ -86,6 +89,6 @@ void	render_textured_wall(t_ray *ray, int x, t_game *g)
 
 	tex = get_wall_texture(ray->side, g);
 	wall_x = calc_wall_hit_position(ray, g);
-	tex_x = get_texture_horizontal(tex, ray, wall_x);
+	tex_x = get_texture_horizontal(tex, wall_x);
 	draw_textured_pixels(x, ray, g, tex_x);
 }

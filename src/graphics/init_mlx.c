@@ -31,18 +31,6 @@ static void	init_main_screen(t_game *g)
 }
 
 /**
- * Registers all MLX hooks and callbacks
- * @param game Pointer to game structure
- */
-static void	setup_hooks(t_game *game)
-{
-	mlx_key_hook(game->mlx, key_hook, game);
-	mlx_loop_hook(game->mlx, loop_hook, game);
-	mlx_close_hook(game->mlx, close_hook, game);
-	mlx_resize_hook(game->mlx, resize_hook, game);
-}
-
-/**
  * High-level initialization of MLX components
  * @param game Pointer to game structure
  *
@@ -53,12 +41,11 @@ static void	setup_hooks(t_game *game)
  * 4. Hook registration
  * 5. Time tracking initialization
  */
-void	init_mlx(t_game *game)
+void	display_game(t_game *game)
 {
 	init_mlx_context(game);
 	init_main_screen(game);
-	game->minimap_visible = true;
-	draw_minimap(game);
-	setup_hooks(game);
+	load_textures(game);
+	display_minimap(game);
 	game->last_frame = mlx_get_time();
 }

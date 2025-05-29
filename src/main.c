@@ -28,7 +28,7 @@ static void	init_game_vectors(t_game *g)
 	}
 }
 
-static t_game	*init_game(char **argv)
+static t_game	*init_game_data(char **argv)
 {
 	t_game	*g;
 
@@ -41,13 +41,12 @@ static t_game	*init_game(char **argv)
 		exit_game("Map memory allocation", g);
 	map_parse_and_check(argv[1], g);
 	debug_parsed_map(g->map); //DEBUG
-	load_textures(g);
 	g->pos.x = g->map->start_pos.x + 0.5;
 	g->pos.y = g->map->start_pos.y + 0.5;
 	g->win_height = HEIGHT;
 	g->win_width = WIDTH;
+	g->minimap_visible = true;
 	init_game_vectors(g);
-	init_mlx(g);
 	return (g);
 }
 
@@ -60,9 +59,10 @@ int	main(int argc, char **argv)
 		put_error("Wrong number of arguments. Usage: ./cub3D <map_file.cub>");
 		return (EXIT_FAILURE);
 	}
-	game = init_game(argv);
+	game = init_game_data(argv);
+	display_game(game);
+	setup_hooks(game);
 	mlx_loop(game->mlx);
-	// TODO run game based on map
 	free_game(game);
 	return (EXIT_SUCCESS);
 }

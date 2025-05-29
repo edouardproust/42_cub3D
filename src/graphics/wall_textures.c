@@ -2,7 +2,7 @@
 /**
  * Loads all textures from paths specified in the map file into MLX textures.
  * Exits game on failure to load any texture.
- * 
+ *
  * @param g Game structure containing map texture paths
  */
 void	load_textures(t_game *g)
@@ -17,7 +17,7 @@ void	load_textures(t_game *g)
 
 /**
  * Selects appropriate wall texture based on which side was hit.
- * 
+ *
  * @param side Wall side (NO/SO/EA/WE)
  * @param g Game structure with loaded textures
  * @return mlx_texture_t* Pointer to selected texture
@@ -55,14 +55,13 @@ double	calc_wall_hit_position(t_ray *ray, t_game *g)
 
 /**
  * Converts wall hit position to texture column index.
- * Handles texture flipping based on viewing direction.
  * 
  * @param tex Texture to get from
  * @param ray Ray data containing hit side and direction
  * @param wall_x Fractional wall position from calc_wall_hit_position()
  * @return int X-coordinate in texture pixels (0 to width-1)
  */
-int	get_texture_horizontal(mlx_texture_t *tex, t_ray *ray, double wall_x)
+int	get_texture_horizontal(mlx_texture_t *tex, double wall_x)
 {
 	int	tex_x;
 
@@ -71,9 +70,5 @@ int	get_texture_horizontal(mlx_texture_t *tex, t_ray *ray, double wall_x)
 		tex_x = 0;
 	else if (tex_x >= (int)tex->width)
 		tex_x = tex->width - 1;
-	if ((ray->side == NO || ray->side == SO) && ray->dir.x > 0)
-		tex_x = tex->width - tex_x - 1;
-	if ((ray->side == EA || ray->side == WE) && ray->dir.y < 0)
-		tex_x = tex->width - tex_x - 1;
 	return (tex_x);
 }

@@ -9,9 +9,8 @@
 # define MM_SCALE 		14		/* Pixels per grid cell in minimap */
 # define MM_X 			14		/* X offset from left window edge */
 # define MM_Y 			10		/* Y offset from top window edge */
-# define MM_COLOR_GRID	0x00000000	/* Color of the grid in minimap */
-# define MM_COLOR_WALL	0xFFFFF0FF	/* Color of the walls in minimap */
-# define MM_COLOR_FLOOR	0x0A1D37FF	/* Color of the walls in minimap */
+# define MM_COLOR_WALL	0x00000099	/* Color of the walls in minimap */
+# define MM_COLOR_FLOOR	0xFFFFF090	/* Color of the walls in minimap */
 
 /* Player Settings */
 # define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
