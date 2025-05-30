@@ -23,6 +23,8 @@ C_FILES = debug.c\
 	graphics/rotate_player.c \
 	graphics/draw_screen.c \
 	graphics/raycasting.c \
+	graphics/wall_textures.c \
+	graphics//wall_render.c \
 	utils/mlx.c \
 	utils/char.c \
 	utils/error.c \

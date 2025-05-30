@@ -73,19 +73,24 @@ typedef struct s_keymap
 
 typedef struct s_game
 {
-	t_map		*map;
-	mlx_t		*mlx;
-	mlx_image_t	*screen;
-	mlx_image_t	*minimap;
-	mlx_image_t	*mm_player;
-	mlx_image_t	*mm_dir;
-	t_point		pos;
-	t_point		dir;
-	t_point		cam_plane;
-	double		last_frame;
-	bool		key_states[KEY_COUNT];
-	int32_t		win_width;
-	int32_t		win_height;
+	t_map			*map;
+	mlx_t			*mlx;
+	mlx_image_t		*screen;
+	mlx_image_t		*minimap;
+	mlx_image_t		*mm_player;
+	mlx_image_t		*mm_dir;
+	t_point			pos;
+	t_point			dir;
+	t_point			cam_plane;
+	double			last_frame;
+	bool			key_states[KEY_COUNT];
+	bool			minimap_visible;
+	int32_t			win_width;
+	int32_t			win_height;
+	mlx_texture_t	*tex_no;
+	mlx_texture_t	*tex_so;
+	mlx_texture_t	*tex_ea;
+	mlx_texture_t	*tex_we;
 }	t_game;
 
 typedef struct s_ray
@@ -100,6 +105,8 @@ typedef struct s_ray
 	t_cell	cell; // Cell in the grid that the ray is currently crossing
 	t_cell	cell_move; // Move to the next cell the ray will cross
 	bool	wall_hit; // Indicates if the ray hit a wall
+	int		top_px;
+	int		bottom_px;
 }	t_ray;
 
 /****************************************/
@@ -107,70 +114,76 @@ typedef struct s_ray
 /****************************************/
 
 /******** Parsing ********/
-t_map		*init_map(void);
-void		map_parse_and_check(char *filepath, t_game *g);
-bool		is_metadata_parsed(t_map *map);
-int			parse_line_to_metadata(char *line, t_map *map, int ret);
-int			parse_line_to_grid(char *line, t_map *map, int ret);
-void		check_metadata_lines(t_game *g);
-void		check_grid_lines(t_game *g);
-void		check_grid_is_closed(t_game *g);
-bool		has_valid_extension(char *path, char *ext);
-bool		has_more_than_one_word(char *str);
-void		trim_empty_lines_after_grid(t_game *g);
-void		uniformize_grid_margins(t_game *g);
-void		set_map_player(t_map *map, int x, int y, char dir);
+t_map			*init_map(void);
+void			map_parse_and_check(char *filepath, t_game *g);
+bool			is_metadata_parsed(t_map *map);
+int				parse_line_to_metadata(char *line, t_map *map, int ret);
+int				parse_line_to_grid(char *line, t_map *map, int ret);
+void			check_metadata_lines(t_game *g);
+void			check_grid_lines(t_game *g);
+void			check_grid_is_closed(t_game *g);
+bool			has_valid_extension(char *path, char *ext);
+bool			has_more_than_one_word(char *str);
+void			trim_empty_lines_after_grid(t_game *g);
+void			uniformize_grid_margins(t_game *g);
+void			set_map_player(t_map *map, int x, int y, char dir);
 
 /******** Graphics ********/
-void		init_mlx(t_game *game);
+void			display_game(t_game *game);
+
 /* Hooks */
-void		loop_hook(void *param);
-void		key_hook(mlx_key_data_t keydata, void *param);
-void		close_hook(void *param);
-void		resize_hook(int32_t width, int32_t height, void *param);
+void			setup_hooks(t_game *game);
 
 /* Keymapping */
-t_keys		mlx_key_to_enum(keys_t mlx_key);
-void		handle_special_keys(mlx_key_data_t keydata, t_game *game);
+t_keys			mlx_key_to_enum(keys_t mlx_key);
+void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
-void		draw_minimap(t_game *game);
-void		update_minimap_player_sprite(t_game *g);
-void		update_minimap_dir_sprite(t_game *g);
+void			display_minimap(t_game *game);
+void			draw_player(t_game *g);
+void			update_minimap_player_sprite(t_game *g);
+void			update_minimap_dir_sprite(t_game *g);
 
 /* Raycasting */
-void		cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
-void		draw_view_on_screen(t_game *g);
+void			cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
+void			draw_view_on_screen(t_game *g);
+
+/* Textures */
+void			load_textures(t_game *g);
+mlx_texture_t	*get_wall_texture(t_side side, t_game *g);
+double			calc_wall_hit_position(t_ray *ray, t_game *g);
+int				get_texture_horizontal(mlx_texture_t *tex, double wall_x);
+void			render_textured_wall(t_ray *ray, int x, t_game *g);
 
 /******** Player ********/
-bool		move_player(t_game *game, double move_speed);
-bool		rotate_player(t_game *game, double delta_time);
+bool			move_player(t_game *game, double move_speed);
+bool			rotate_player(t_game *game, double delta_time);
 
 /******** Utils ********/
 /* MLX */
-void		clear_image_pixels(mlx_image_t *img);
-mlx_image_t	*texture_to_window(t_game *g, const char *img_path, int width,
-				t_point pos);
+void			clear_image_pixels(mlx_image_t *img);
+mlx_image_t		*texture_to_window(t_game *g, const char *img_path, int width,
+					t_point pos);
 /* Error */
-void		put_error(char *str);
-void		put_error2(char *s1, char *s2);
-void		put_error3(char *s1, char *s2, char *s3);
+void			put_error(char *str);
+void			put_error2(char *s1, char *s2);
+void			put_error3(char *s1, char *s2, char *s3);
 /* Exit */
-void		exit_game(char *msg, t_game *g);
-void		exit_game2(char *msg1, char *msg2, t_game *g);
-void		exit_game3(char *msg1, char *msg2, char *msg3, t_game *g);
+void			exit_game(char *msg, t_game *g);
+void			exit_game2(char *msg1, char *msg2, t_game *g);
+void			exit_game3(char *msg1, char *msg2, char *msg3, t_game *g);
 /* Free */
-void		free_map(t_map *map);
-void		free_game(t_game *g);
+void			free_map(t_map *map);
+void			free_game(t_game *g);
 /* String */
-int			putstrnl_fd(char *str, int fd);
-char		*substr_trim_nl(char *str);
-bool		is_blank_str(char *str);
-int			count_space_chars(char *str, int start, int end, bool rtl);
+int				putstrnl_fd(char *str, int fd);
+char			*substr_trim_nl(char *str);
+bool			is_blank_str(char *str);
+int				count_space_chars(char *str, int start, int end, bool rtl);
 /* Char */
-bool		is_grid_char(char c);
-bool		is_grid_player_char(char c);
+bool			is_grid_char(char c);
+bool			is_grid_player_char(char c);
 
 // DEBUG Remove functions below
-void		debug_parsed_map(t_map *map);
+void			debug_parsed_map(t_map *map);
 
 #endif

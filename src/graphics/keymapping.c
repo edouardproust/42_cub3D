@@ -12,6 +12,7 @@ static t_keymap	*get_keymap(void)
 	{MLX_KEY_LEFT, KEY_LEFT},
 	{MLX_KEY_RIGHT, KEY_RIGHT},
 	{MLX_KEY_ESCAPE, KEY_ESC},
+	{MLX_KEY_M, KEY_M},
 	{0, KEY_COUNT}
 	};
 
@@ -38,4 +39,14 @@ void	handle_special_keys(mlx_key_data_t keydata, t_game *game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
+	if (keydata.key == MLX_KEY_M && keydata.action == MLX_PRESS)
+	{
+		game->minimap_visible = !game->minimap_visible;
+		if (game->minimap)
+			game->minimap->instances[0].enabled = game->minimap_visible;
+		if (game->mm_player)
+			game->mm_player->instances[0].enabled = game->minimap_visible;
+		if (game->mm_dir)
+			game->mm_dir->instances[0].enabled = game->minimap_visible;
+	}
 }

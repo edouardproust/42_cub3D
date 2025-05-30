@@ -1,18 +1,12 @@
 
    
 WE   ./assets/textures/bricks.png
-   		NO ./assets/textures/concrete.png      
-
-				
-
-	
-EA       ./assets/textures/wood_blue_old.png   
+NO ./assets/textures/skulls.png
+EA ./assets/textures/wood_white.png    
 SO ./assets/textures/skulls.png
    
-    
-F 139,131,255   
-  
-	C 225,162,162
+F 35,79,30
+C 186,224,243
 
             1111111111111111111
             1000000000110000001       

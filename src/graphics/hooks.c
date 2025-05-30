@@ -3,7 +3,7 @@
 /**
  * @note redraw the 3D view on 30fps (instead of 60)
  */
-void	loop_hook(void *param)
+static void	loop_hook(void *param)
 {
 	static int	frame_count = 0;
 	t_game		*game;
@@ -18,11 +18,13 @@ void	loop_hook(void *param)
 	has_moved = move_player(game, delta);
 	has_moved |= rotate_player(game, delta);
 	frame_count++;
-	if (has_moved && frame_count % 2 == 0)
+	if ((has_moved && frame_count % 2 == 0) || frame_count == 1)
 		draw_view_on_screen(game);
+	if (has_moved && game->minimap_visible)
+		draw_player(game);
 }
 
-void	close_hook(void *param)
+static void	close_hook(void *param)
 {
 	t_game	*game;
 
@@ -31,7 +33,7 @@ void	close_hook(void *param)
 	exit(EXIT_SUCCESS);
 }
 
-void	key_hook(mlx_key_data_t keydata, void *param)
+static void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
 	t_keys	mapped_key;
@@ -43,7 +45,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		game->key_states[mapped_key] = (keydata.action != MLX_RELEASE);
 }
 
-void	resize_hook(int32_t width, int32_t height, void *param)
+static void	resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;
 	int		minimap_height;
@@ -52,9 +54,25 @@ void	resize_hook(int32_t width, int32_t height, void *param)
 	game->win_width = width;
 	game->win_height = height;
 	mlx_resize_image(game->screen, width, height);
-	minimap_height = game->map->grid_rows * MM_SCALE;
-	game->minimap->instances[0].y = game->win_height - minimap_height - MM_Y;
-	update_minimap_player_sprite(game);
-	update_minimap_dir_sprite(game);
+	if (game->minimap)
+	{
+		minimap_height = game->map->grid_rows * MM_SCALE;
+		game->minimap->instances[0].y
+			= game->win_height - minimap_height - MM_Y;
+		update_minimap_player_sprite(game);
+		update_minimap_dir_sprite(game);
+	}
 	draw_view_on_screen(game);
+}
+
+/**
+ * Registers all MLX hooks and callbacks
+ * @param game Pointer to game structure
+ */
+void	setup_hooks(t_game *game)
+{
+	mlx_key_hook(game->mlx, key_hook, game);
+	mlx_loop_hook(game->mlx, loop_hook, game);
+	mlx_close_hook(game->mlx, close_hook, game);
+	mlx_resize_hook(game->mlx, resize_hook, game);
 }
