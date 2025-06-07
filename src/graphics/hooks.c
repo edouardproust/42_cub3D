@@ -17,6 +17,7 @@ static void	loop_hook(void *param)
 	game->last_frame = current_time;
 	has_moved = move_player(game, delta);
 	has_moved |= rotate_player(game, delta);
+	has_moved |= handle_mouse_rotation(game, delta);
 	frame_count++;
 	if ((has_moved && frame_count % 2 == 0) || frame_count == 1)
 		draw_view_on_screen(game);
@@ -53,6 +54,7 @@ static void	resize_hook(int32_t width, int32_t height, void *param)
 	game = (t_game *)param;
 	game->win_width = width;
 	game->win_height = height;
+	mlx_set_mouse_pos(game->mlx, width / 2, height / 2);
 	mlx_resize_image(game->screen, width, height);
 	if (game->minimap)
 	{
@@ -75,4 +77,5 @@ void	setup_hooks(t_game *game)
 	mlx_loop_hook(game->mlx, loop_hook, game);
 	mlx_close_hook(game->mlx, close_hook, game);
 	mlx_resize_hook(game->mlx, resize_hook, game);
+	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
 }

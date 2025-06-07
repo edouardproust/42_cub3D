@@ -20,7 +20,7 @@
 # define E_PARSING "Parsing"
 # define E_FATAL_PARSING "Fatal: Parsing"
 
-typedef enum s_side
+typedef enum e_side
 {
 	NO,
 	EA,
@@ -157,6 +157,7 @@ void			render_textured_wall(t_ray *ray, int x, t_game *g);
 /******** Player ********/
 bool			move_player(t_game *game, double move_speed);
 bool			rotate_player(t_game *game, double delta_time);
+bool			handle_mouse_rotation(t_game *g, double delta_time);
 
 /******** Utils ********/
 /* MLX */
