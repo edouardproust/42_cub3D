@@ -19,6 +19,7 @@
 # define MM_PLAYR_WIDTH	20
 # define MM_DIR_IMG		"assets/minimap/viewpoint.png"
 # define MM_DIR_WIDTH	8
+# define M_SENSITIVITY	0.5
 
 /* 3D Rendering Settings */
 # define COLOR_MODE		false
@@ -42,6 +43,7 @@ typedef enum e_keys
 	KEY_LEFT,
 	KEY_RIGHT,
 	KEY_M,
+	KEY_TAB,
 	KEY_COUNT
 }	t_keys;
 

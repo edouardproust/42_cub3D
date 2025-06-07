@@ -85,6 +85,7 @@ typedef struct s_game
 	double			last_frame;
 	bool			key_states[KEY_COUNT];
 	bool			minimap_visible;
+	bool			mouse_captured;
 	int32_t			win_width;
 	int32_t			win_height;
 	mlx_texture_t	*tex_no;

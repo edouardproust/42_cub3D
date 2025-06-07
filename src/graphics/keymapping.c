@@ -13,6 +13,7 @@ static t_keymap	*get_keymap(void)
 	{MLX_KEY_RIGHT, KEY_RIGHT},
 	{MLX_KEY_ESCAPE, KEY_ESC},
 	{MLX_KEY_M, KEY_M},
+	{MLX_KEY_TAB, KEY_TAB},
 	{0, KEY_COUNT}
 	};
 
@@ -48,5 +49,13 @@ void	handle_special_keys(mlx_key_data_t keydata, t_game *game)
 			game->mm_player->instances[0].enabled = game->minimap_visible;
 		if (game->mm_dir)
 			game->mm_dir->instances[0].enabled = game->minimap_visible;
+	}
+	if (keydata.key == MLX_KEY_TAB && keydata.action == MLX_PRESS)
+	{
+		game->mouse_captured = !game->mouse_captured;
+		if (game->mouse_captured)
+			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_DISABLED);
+		else
+			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
 	}
 }

@@ -63,9 +63,11 @@ bool	handle_mouse_rotation(t_game *g, double delta_time)
 	double	delta_x;
 	bool	rotated;
 
+	if (!g->mouse_captured)
+		return (false);
 	rotated = false;
 	mlx_get_mouse_pos(g->mlx, &mouse_x, &mouse_y);
-	delta_x = (mouse_x - g->win_width / 2) * delta_time * 3.0;
+	delta_x = (mouse_x - g->win_width / 2) * delta_time * M_SENSITIVITY;
 	if (fabs(delta_x) > 0.001)
 	{
 		update_vectors_on_rotate(g, delta_x);
