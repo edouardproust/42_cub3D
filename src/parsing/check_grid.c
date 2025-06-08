@@ -97,6 +97,10 @@ static bool	check_surrounding_chars(t_map *map, int y, int x)
 	return (true);
 }
 
+/*
+ * TODO: Improve door logic with flood-fill to detect doors leading into
+ * dead-end or disconnected rooms. Currently only direct neighbours are checked.
+ */
 static void	check_doors(t_game *g, int y, int x)
 {
 	char	**grid;
@@ -108,6 +112,16 @@ static void	check_doors(t_game *g, int y, int x)
 	if (!((grid[y][x - 1] == '1' && grid[y][x + 1] == '1')
 			|| (grid[y - 1][x] == '1' && grid[y + 1][x] == '1')))
 		exit_game2(E_PARSING, "Doors must be placed between walls", g);
+	if ((grid[y][x - 1] == '1' && grid[y][x + 1] == '1')
+		&& !(grid[y - 1][x] == '0' || grid[y + 1][x] == '0'
+			|| is_grid_player_char(grid[y - 1][x])
+			|| is_grid_player_char(grid[y + 1][x])))
+		exit_game2(E_PARSING, "Door must open into path", g);
+	else if ((grid[y - 1][x] == '1' && grid[y + 1][x] == '1')
+		&& !(grid[y][x - 1] == '0' || grid[y][x + 1] == '0'
+			|| is_grid_player_char(grid[y][x - 1])
+			|| is_grid_player_char(grid[y][x + 1])))
+		exit_game2(E_PARSING, "Door must open into path", g);
 }
 
 void	check_grid_is_closed(t_game *g)

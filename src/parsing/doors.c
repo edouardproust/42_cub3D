@@ -7,10 +7,10 @@ static void	populate_doors(t_map *map)
 	int	index;
 
 	y = 0;
+	index = 0;
 	while (y < map->grid_rows)
 	{
 		x = 0;
-		index = 0;
 		while (x < map->grid_cols)
 		{
 			if (map->grid[y][x] == 'D')
@@ -24,8 +24,6 @@ static void	populate_doors(t_map *map)
 		}
 		y++;
 	}
-	if (index != map->door_count)
-		put_error("Door count mismatch\n");
 }
 
 void	init_doors(t_game *g)
