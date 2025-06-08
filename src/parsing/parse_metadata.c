@@ -3,7 +3,8 @@
 bool	is_metadata_parsed(t_map *map)
 {
 	if (map->texture_no && map->texture_so && map->texture_ea
-		&& map->texture_we && map->color_c.str && map->color_f.str)
+		&& map->texture_we && map->color_c.str && map->color_f.str
+		&& map->texture_door)
 		return (true);
 	return (false);
 }

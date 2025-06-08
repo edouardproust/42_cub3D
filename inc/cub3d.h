@@ -76,9 +76,11 @@ typedef struct s_map
 	int				grid_cols;
 	int				grid_rows;
 	t_cell			start_pos;
+	char			start_dir;
 	t_door			*doors;
 	int				door_count;
-	char			start_dir;
+	int				reachable;
+	int				total_accessible;
 }	t_map;
 
 typedef struct s_keymap
@@ -145,6 +147,8 @@ bool			has_more_than_one_word(char *str);
 void			trim_empty_lines_after_grid(t_game *g);
 void			uniformize_grid_margins(t_game *g);
 void			set_map_player(t_map *map, int x, int y, char dir);
+bool			is_valid_door_position(t_map *map, int y, int x);
+void			check_map_accessibility(t_game *g);
 
 /******** Graphics ********/
 void			display_game(t_game *game);

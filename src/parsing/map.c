@@ -16,6 +16,9 @@ t_map	*init_map(void)
 	map->grid_cols = -1;
 	map->start_pos.x = -1;
 	map->start_pos.y = -1;
+	map->start_pos.y = -1;
+	map->reachable = 0;
+	map->total_accessible = 0;
 	return (map);
 }
 
@@ -63,4 +66,5 @@ void	map_parse_and_check(char *filepath, t_game *g)
 	uniformize_grid_margins(g);
 	check_grid_is_closed(g);
 	init_doors(g);
+	check_map_accessibility(g);
 }

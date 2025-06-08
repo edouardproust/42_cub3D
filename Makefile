@@ -15,6 +15,7 @@ C_FILES = debug.c\
 	parsing/utils.c \
 	parsing/check_grid.c \
 	parsing/check_metadata.c \
+	parsing/map_accessibility.c \
 	parsing/doors.c \
 	graphics/init_mlx.c \
 	graphics/keymapping.c \
