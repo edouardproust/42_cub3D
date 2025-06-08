@@ -62,4 +62,5 @@ void	map_parse_and_check(char *filepath, t_game *g)
 	trim_empty_lines_after_grid(g);
 	uniformize_grid_margins(g);
 	check_grid_is_closed(g);
+	init_doors(g);
 }

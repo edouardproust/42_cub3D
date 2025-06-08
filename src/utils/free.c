@@ -20,6 +20,8 @@ void	free_map(t_map *map)
 	free(map->texture_we);
 	free(map->color_c.str);
 	free(map->color_f.str);
+	free(map->texture_door);
+	free(map->doors);
 	free_grid(map->grid, map->grid_rows);
 	free(map);
 }

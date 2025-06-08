@@ -14,6 +14,7 @@ static t_keymap	*get_keymap(void)
 	{MLX_KEY_ESCAPE, KEY_ESC},
 	{MLX_KEY_M, KEY_M},
 	{MLX_KEY_TAB, KEY_TAB},
+	{MLX_KEY_F, KEY_F},
 	{0, KEY_COUNT}
 	};
 

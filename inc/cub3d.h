@@ -28,6 +28,12 @@ typedef enum e_side
 	WE,
 }	t_side;
 
+typedef enum e_door_state
+{
+	CLOSED,
+	OPEN
+}	t_door_state;
+
 /****************************************/
 /* Structs and Typedefs                 */
 /****************************************/
@@ -44,6 +50,13 @@ typedef struct s_cell
 	int	y;
 }	t_cell;
 
+typedef struct s_door
+{
+	int	x;
+	int	y;
+	int state;
+}	t_door;
+
 typedef struct color
 {
 	char		*str;
@@ -56,12 +69,15 @@ typedef struct s_map
 	char			*texture_so;
 	char			*texture_ea;
 	char			*texture_we;
+	char			*texture_door;
 	t_color			color_c;
 	t_color			color_f;
 	char			**grid;
 	int				grid_cols;
 	int				grid_rows;
 	t_cell			start_pos;
+	t_door			*doors;
+	int				door_count;
 	char			start_dir;
 }	t_map;
 
@@ -123,6 +139,7 @@ int				parse_line_to_grid(char *line, t_map *map, int ret);
 void			check_metadata_lines(t_game *g);
 void			check_grid_lines(t_game *g);
 void			check_grid_is_closed(t_game *g);
+void			init_doors(t_game *g);
 bool			has_valid_extension(char *path, char *ext);
 bool			has_more_than_one_word(char *str);
 void			trim_empty_lines_after_grid(t_game *g);
@@ -141,6 +158,7 @@ void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void			display_minimap(t_game *game);
 void			draw_player(t_game *g);
+void			draw_minimap_doors(t_game *g);
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);
 

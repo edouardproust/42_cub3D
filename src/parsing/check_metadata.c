@@ -99,6 +99,7 @@ void	check_metadata_lines(t_game *g)
 	check_texture("SO", g->map->texture_so, g);
 	check_texture("EA", g->map->texture_ea, g);
 	check_texture("WE", g->map->texture_we, g);
+	check_texture("DO", g->map->texture_door, g);
 	check_color("C", &g->map->color_c, g);
 	check_color("F", &g->map->color_f, g);
 }

@@ -6,11 +6,13 @@
 # define HEIGHT			640		/* Main window height in pixels */
 
 /* Minimap Settings */
-# define MM_SCALE 		14		/* Pixels per grid cell in minimap */
-# define MM_X 			14		/* X offset from left window edge */
-# define MM_Y 			10		/* Y offset from top window edge */
-# define MM_COLOR_WALL	0x00000099	/* Color of the walls in minimap */
-# define MM_COLOR_FLOOR	0xFFFFF090	/* Color of the walls in minimap */
+# define MM_SCALE 		 14		/* Pixels per grid cell in minimap */
+# define MM_X 			 14		/* X offset from left window edge */
+# define MM_Y 			 10		/* Y offset from top window edge */
+# define MM_COLOR_WALL	 0x00000099	/* Color of the walls in minimap */
+# define MM_COLOR_FLOOR	 0xFFFFF090	/* Color of the walls in minimap */
+# define MM_COLOR_OPEN	 0xFF0000FF	/* Color of the door if open in minimap */
+# define MM_COLOR_CLOSED 0x00FF00FF	/* Color of the door if closed in minimap */
 
 /* Player Settings */
 # define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
@@ -22,7 +24,7 @@
 # define M_SENSITIVITY	0.5
 
 /* 3D Rendering Settings */
-# define COLOR_MODE		false
+# define COLOR_MODE		true
 # define FISHEYE_EFFECT	false
 # define FOV_FACTOR		0.66
 # define WALL_COLOR_NO	0xFF00FFFF	/* magenta */
@@ -44,6 +46,7 @@ typedef enum e_keys
 	KEY_RIGHT,
 	KEY_M,
 	KEY_TAB,
+	KEY_F,
 	KEY_COUNT
 }	t_keys;
 

@@ -15,10 +15,12 @@ C_FILES = debug.c\
 	parsing/utils.c \
 	parsing/check_grid.c \
 	parsing/check_metadata.c \
+	parsing/doors.c \
 	graphics/init_mlx.c \
 	graphics/keymapping.c \
 	graphics/hooks.c \
 	graphics/draw_minimap.c \
+	graphics/draw_doors.c \
 	graphics/move_player.c \
 	graphics/rotate_player.c \
 	graphics/draw_screen.c \
