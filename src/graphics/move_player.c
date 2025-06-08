@@ -63,11 +63,11 @@ bool	move_player(t_game *g, double delta_time)
 	{
 		cell_char = g->map->grid[(int)g->pos.y][(int)new_pos.x];
 		if (new_pos.x > 0 && new_pos.x < g->map->grid_cols
-			&& cell_char != '1' && cell_char != ' ')
+			&& cell_char != '1' && cell_char != 'D' && cell_char != ' ')
 			g->pos.x = new_pos.x;
 		cell_char = g->map->grid[(int)new_pos.y][(int)g->pos.x];
 		if (new_pos.y > 0 && new_pos.y < g->map->grid_rows
-			&& cell_char != '1' && cell_char != ' ')
+			&& cell_char != '1' && cell_char != 'D' && cell_char != ' ')
 			g->pos.y = new_pos.y;
 		update_minimap_player_sprite(g);
 		update_minimap_dir_sprite(g);
