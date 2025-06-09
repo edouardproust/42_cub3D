@@ -76,15 +76,11 @@ typedef struct s_game
 	t_map			*map;
 	mlx_t			*mlx;
 	mlx_image_t		*screen;
-	mlx_image_t		*minimap;
-	mlx_image_t		*mm_player;
-	mlx_image_t		*mm_dir;
 	t_point			pos;
 	t_point			dir;
 	t_point			cam_plane;
 	double			last_frame;
 	bool			key_states[KEY_COUNT];
-	bool			minimap_visible;
 	int32_t			win_width;
 	int32_t			win_height;
 	mlx_texture_t	*tex_no;
@@ -137,9 +133,6 @@ void			setup_hooks(t_game *game);
 /* Keymapping */
 t_keys			mlx_key_to_enum(keys_t mlx_key);
 void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
-/* Minimap */
-void			update_minimap_player_sprite(t_game *g);
-void			update_minimap_dir_sprite(t_game *g);
 
 /* Raycasting */
 void			cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);

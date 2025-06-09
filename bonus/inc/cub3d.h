@@ -137,6 +137,7 @@ void			setup_hooks(t_game *game);
 /* Keymapping */
 t_keys			mlx_key_to_enum(keys_t mlx_key);
 void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
+
 /* Minimap */
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);

@@ -18,7 +18,6 @@ C_FILES = debug.c\
 	graphics/init_mlx.c \
 	graphics/keymapping.c \
 	graphics/hooks.c \
-	graphics/draw_minimap.c \
 	graphics/move_player.c \
 	graphics/rotate_player.c \
 	graphics/draw_screen.c \

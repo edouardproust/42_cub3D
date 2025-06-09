@@ -32,17 +32,6 @@ static bool	calc_new_player_pos(t_point	*new_pos, t_game *g, double move_speed)
 	return ((new_pos->x != g->pos.x) || (new_pos->y != g->pos.y));
 }
 
-void	update_minimap_player_sprite(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->pos.x * MM_SCALE + g->minimap->instances[0].x;
-	y = g->pos.y * MM_SCALE + g->minimap->instances[0].y;
-	g->mm_player->instances[0].x = x - g->mm_player->width / 2;
-	g->mm_player->instances[0].y = y - g->mm_player->height / 2;
-}
-
 /**
  * Move player if keys UP, DOWN< LEFT or RIGHT is pressed.
  *
@@ -69,8 +58,6 @@ bool	move_player(t_game *g, double delta_time)
 		if (new_pos.y > 0 && new_pos.y < g->map->grid_rows
 			&& cell_char != '1' && cell_char != ' ')
 			g->pos.y = new_pos.y;
-		update_minimap_player_sprite(g);
-		update_minimap_dir_sprite(g);
 	}
 	return (has_moved);
 }

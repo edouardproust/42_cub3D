@@ -46,6 +46,5 @@ void	display_game(t_game *game)
 	init_mlx_context(game);
 	init_main_screen(game);
 	load_textures(game);
-	display_minimap(game);
 	game->last_frame = mlx_get_time();
 }

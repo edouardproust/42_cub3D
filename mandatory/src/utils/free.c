@@ -44,12 +44,6 @@ void	free_game(t_game *g)
 	{
 		if (g->screen)
 			mlx_delete_image(g->mlx, g->screen);
-		if (g->minimap)
-			mlx_delete_image(g->mlx, g->minimap);
-		if (g->mm_dir)
-			mlx_delete_image(g->mlx, g->mm_dir);
-		if (g->mm_player)
-			mlx_delete_image(g->mlx, g->mm_player);
 		free_textures(g);
 		mlx_terminate(g->mlx);
 	}

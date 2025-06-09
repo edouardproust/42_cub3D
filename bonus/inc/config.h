@@ -11,14 +11,14 @@
 # define MM_Y 			10		/* Y offset from top window edge */
 # define MM_COLOR_WALL	0x00000099	/* Color of the walls in minimap */
 # define MM_COLOR_FLOOR	0xFFFFF090	/* Color of the walls in minimap */
-
-/* Player Settings */
-# define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
-# define ROT_SPEED		3.0		/* Rotation speed (radians/second) */
 # define MM_PLAYER_IMG	"mandatory/assets/minimap/player.png"
 # define MM_PLAYR_WIDTH	20
 # define MM_DIR_IMG		"mandatory/assets/minimap/viewpoint.png"
 # define MM_DIR_WIDTH	8
+
+/* Player Settings */
+# define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
+# define ROT_SPEED		3.0		/* Rotation speed (radians/second) */
 
 /* 3D Rendering Settings */
 # define COLOR_MODE		false
