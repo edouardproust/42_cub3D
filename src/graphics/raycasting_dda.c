@@ -40,10 +40,10 @@ void	perform_dda_algorythm(t_ray *ray, t_game *g)
 			{
 				if (door->state == OPEN)
 					continue ;
-			else
-				ray->side = DOOR_CLOSED;
+				else
+					ray->side = DOOR_CLOSED;
 			}
-			ray->wall_hit = true;	
+			ray->wall_hit = true;
 		}
 	}
 }
