@@ -59,4 +59,6 @@ void	handle_special_keys(mlx_key_data_t keydata, t_game *game)
 		else
 			mlx_set_cursor_mode(game->mlx, MLX_MOUSE_NORMAL);
 	}
+	if (keydata.key == MLX_KEY_F && keydata.action == MLX_PRESS)
+		toggle_doors(game);
 }

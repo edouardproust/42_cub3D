@@ -2,7 +2,7 @@
 
 static void	populate_doors(t_map *map)
 {
-	int x;
+	int	x;
 	int	y;
 	int	index;
 
@@ -26,35 +26,41 @@ static void	populate_doors(t_map *map)
 	}
 }
 
-void	init_doors(t_game *g)
+static int	count_doors(char **grid, int rows, int cols)
 {
-	t_map	*map;
-	int		count;
-	int		x;
-	int		y;
+	int	count;
+	int	x;
+	int	y;
 
-	map = g->map;
-	y = 0;
 	count = 0;
-	while (y < map->grid_rows)
+	y = 0;
+	while (y < rows)
 	{
 		x = 0;
-		while (x < map->grid_cols)
+		while (x < cols)
 		{
-			if (map->grid[y][x] == 'D')
+			if (grid[y][x] == 'D')
 				count++;
 			x++;
 		}
 		y++;
 	}
-	map->door_count = count;
-	if (count == 0)
+	return (count);
+}
+
+void	init_doors(t_game *g)
+{
+	t_map	*map;
+
+	map = g->map;
+	map->door_count = count_doors(map->grid, map->grid_rows, map->grid_cols);
+	if (map->door_count == 0)
 	{
 		map->doors = NULL;
 		return ;
 	}
-	map->doors = ft_calloc(count, sizeof(t_door));
+	map->doors = ft_calloc(map->door_count, sizeof(t_door));
 	if (!map->doors)
 		exit_game("Door allocation failed", g);
-	 populate_doors(map);
+	populate_doors(map);
 }

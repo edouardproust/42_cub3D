@@ -24,7 +24,7 @@ static void	check_grid_line(char *line, bool *player_found,
 	{
 		if (!is_grid_char(*line))
 			exit_game2(E_PARSING,
-				"grid can only contain chars 1, 0, D, N, S, E, W and spaces", g);
+				"grid can only contain 1, 0, D, N, S, E, W and spaces", g);
 		if (*is_blank_line && !ft_isspace(*line))
 			*is_blank_line = false;
 		if (is_grid_player_char(*line))
@@ -121,7 +121,7 @@ void	check_grid_is_closed(t_game *g)
 			{
 				if (!check_surrounding_chars(g->map, y, x))
 					exit_game2(E_PARSING, "Grid is not closed", g);
-			}	
+			}
 			else if (c == 'D')
 				check_doors(g, y, x);
 			x++;

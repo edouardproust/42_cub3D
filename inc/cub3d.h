@@ -54,7 +54,7 @@ typedef struct s_door
 {
 	int	x;
 	int	y;
-	int state;
+	int	state;
 }	t_door;
 
 typedef struct color
@@ -159,10 +159,12 @@ void			setup_hooks(t_game *game);
 /* Keymapping */
 t_keys			mlx_key_to_enum(keys_t mlx_key);
 void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
+
 /* Minimap */
 void			display_minimap(t_game *game);
 void			draw_player(t_game *g);
 void			draw_minimap_doors(t_game *g);
+void			toggle_doors(t_game *g);
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);
 

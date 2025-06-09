@@ -34,8 +34,8 @@ static void	draw_minimap_door_cell(t_game *g, int map_x, int map_y)
 		j = 0;
 		while (j < MM_SCALE)
 		{
-			mlx_put_pixel(g->minimap, map_x * MM_SCALE + i, map_y * MM_SCALE + j,
-				color);
+			mlx_put_pixel(g->minimap,
+				map_x * MM_SCALE + i, map_y * MM_SCALE + j, color);
 			j++;
 		}
 		i++;
@@ -58,5 +58,28 @@ void	draw_minimap_doors(t_game *g)
 			x++;
 		}
 		y++;
+	}
+}
+
+void	toggle_doors(t_game *g)
+{
+	int		i;
+	int		player_x;
+	int		player_y;
+	t_door	*door;
+
+	i = 0;
+	player_x = (int)g->pos.x;
+	player_y = (int)g->pos.y;
+	while (i < g->map->door_count)
+	{
+		door = &g->map->doors[i];
+		if (abs(door->x - player_x) <= 1 && abs(door->y - player_y) <= 1)
+		{
+			door->state = !door->state;
+			draw_minimap_door_cell(g, door->x, door->y);
+			return ;
+		}
+		i++;
 	}
 }

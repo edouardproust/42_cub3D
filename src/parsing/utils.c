@@ -68,12 +68,12 @@ bool	is_valid_door_position(t_map *map, int y, int x)
 	grid = map->grid;
 	if (y == 0 || y == map->grid_rows - 1 || x == 0 || x == map->grid_cols - 1)
 		return (false);
-	horizontal = (grid[y][x-1] == '1' && grid[y][x+1] == '1');
-	vertical = (grid[y-1][x] == '1' && grid[y+1][x] == '1');
+	horizontal = (grid[y][x - 1] == '1' && grid[y][x + 1] == '1');
+	vertical = (grid[y - 1][x] == '1' && grid[y + 1][x] == '1');
 	if (!(horizontal || vertical))
 		return (false);
 	if (horizontal)
-		return (grid[y-1][x] != '1' && grid[y+1][x] != '1');
+		return (grid[y - 1][x] != '1' && grid[y + 1][x] != '1');
 	else
-		return (grid[y][x-1] != '1' && grid[y][x+1] != '1');
+		return (grid[y][x - 1] != '1' && grid[y][x + 1] != '1');
 }
