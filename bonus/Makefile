@@ -6,8 +6,7 @@ NAME = ../cub3D_bonus
 
 C_DIR = src
 
-C_FILES = debug.c\
-	main.c \
+C_FILES = main.c \
 	parsing/map.c \
 	parsing/parse_grid.c \
 	parsing/parse_metadata.c \
