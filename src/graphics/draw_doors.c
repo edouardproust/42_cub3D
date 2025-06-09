@@ -64,18 +64,23 @@ void	draw_minimap_doors(t_game *g)
 void	toggle_doors(t_game *g)
 {
 	int		i;
-	int		player_x;
-	int		player_y;
+	int		p_x;
+	int		p_y;
 	t_door	*door;
 
 	i = 0;
-	player_x = (int)g->pos.x;
-	player_y = (int)g->pos.y;
+	p_x = (int)g->pos.x;
+	p_y = (int)g->pos.y;
 	while (i < g->map->door_count)
 	{
 		door = &g->map->doors[i];
-		if (abs(door->x - player_x) <= 1 && abs(door->y - player_y) <= 1)
+		if (abs(door->x - p_x) <= 1 && abs(door->y - p_y) <= 1)
 		{
+			if (door->state == OPEN && door->x == p_x && door->y == p_y)
+			{
+				i++;
+				continue ;
+			}
 			door->state = !door->state;
 			draw_minimap_door_cell(g, door->x, door->y);
 			return ;
