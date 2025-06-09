@@ -11,6 +11,18 @@ MANDATORY_DIR = mandatory
 
 BONUS_DIR = bonus
 
+# ************************************
+# OPTIONS                            *
+# ************************************
+
+VALGRIND_SUPP = valgrind.supp
+
+VALGRIND_FLAGS = --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes --suppressions=$(VALGRIND_SUPP)
+
+VALGRIND_MAP = $(MANDATORY_DIR)/maps/test.cub
+
+VALGRIND_MAP_BONUS = $(BONUS_DIR)/maps/test.cub
+
 
 # ************************************
 # Libraries                          *
@@ -57,9 +69,15 @@ fclean: clean
 
 re: fclean all
 
+valgrind:
+	valgrind $(VALGRIND_FLAGS) $(NAME) $(VALGRIND_MAP)
+
+valgrind_bonus:
+	valgrind $(VALGRIND_FLAGS) $(NAME_BONUS) $(VALGRIND_MAP_BONUS)
+
 
 # ************************************
 # Phony                              *
 # ************************************
 
-.PHONY: all clean fclean re libft libmlx
+.PHONY: all clean fclean re libft libmlx valgrind

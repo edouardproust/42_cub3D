@@ -5,4 +5,5 @@
 *.o
 _obj
 cub3D
+cub3D_bonus
 .vscode
