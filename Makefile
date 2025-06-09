@@ -1,66 +1,27 @@
 NAME = ./cub3D
 
-# ************************************
-# Sources                            *
-# ************************************
-
-C_DIR = src
-
-C_FILES = debug.c\
-	main.c \
-	parsing/map.c \
-	parsing/parse_grid.c \
-	parsing/parse_metadata.c \
-	parsing/trim_grid.c \
-	parsing/utils.c \
-	parsing/check_grid.c \
-	parsing/check_metadata.c \
-	graphics/init_mlx.c \
-	graphics/keymapping.c \
-	graphics/hooks.c \
-	graphics/draw_minimap.c \
-	graphics/move_player.c \
-	graphics/rotate_player.c \
-	graphics/draw_screen.c \
-	graphics/raycasting.c \
-	graphics/wall_textures.c \
-	graphics//wall_render.c \
-	utils/mlx.c \
-	utils/char.c \
-	utils/error.c \
-	utils/exit.c \
-	utils/free.c \
-	utils/string.c
-
-SRCS = $(addprefix $(C_DIR)/,$(C_FILES))
+NAME_BONUS = ./cub3D_bonus
 
 
 # ************************************
-# Objects                            *
+# Dirs                               *
 # ************************************
 
-O_DIR = src/_obj
+MANDATORY_DIR = mandatory
 
-OBJS = $(addprefix $(O_DIR)/,$(C_FILES:.c=.o))
-
-
-# ************************************
-# Headers                            *
-# ************************************
-
-H_DIR = inc
-
-H_FILES = cub3d.h \
-	config.h
-
-HEADERS = $(addprefix $(H_DIR)/,$(H_FILES))
-
+BONUS_DIR = bonus
 
 # ************************************
-# Flags                              *
+# OPTIONS                            *
 # ************************************
 
-CFLAGS = -Wall -Wextra -Werror
+VALGRIND_SUPP = valgrind.supp
+
+VALGRIND_FLAGS = --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes --suppressions=$(VALGRIND_SUPP)
+
+VALGRIND_MAP = $(MANDATORY_DIR)/assets/maps/test.cub
+
+VALGRIND_MAP_BONUS = $(BONUS_DIR)/assets/maps/test.cub
 
 
 # ************************************
@@ -81,34 +42,14 @@ LIBS = $(LIBFT) $(MLX) -ldl -lglfw -pthread -lm
 
 
 # ************************************
-# Includes                           *
-# ************************************
-
-INCLUDES = -I$(H_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)/include/MLX42
-
-
-# ************************************
 # Rules                              *
 # ************************************
 
-all: libft libmlx $(NAME)
+all: libft libmlx
+	$(MAKE) -C $(MANDATORY_DIR)
 
-$(O_DIR)/%.o: $(C_DIR)/%.c Makefile $(HEADERS)
-	@mkdir -p $(@D)
-	cc -c -o $@ $< $(INCLUDES) $(CFLAGS)
-
-$(NAME): $(OBJS) $(LIBFT)
-	cc -o $@ $^ $(LIBS)
-
-clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -rf $(O_DIR)
-	rm -rf $(MLX)/build
-
-fclean: clean
-	rm -rf $(NAME) $(LIBFT) $(MLX)
-
-re: fclean all
+bonus: libft libmlx
+	$(MAKE) -C $(BONUS_DIR)
 
 libft:
 	$(MAKE) -C $(LIBFT_DIR)
@@ -117,10 +58,22 @@ libmlx:
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build
 	$(MAKE) -C $(MLX_DIR)/build -j4
 
-VALGRIND_SUPP = valgrind.supp
+clean:
+	$(MAKE) -C $(MANDATORY_DIR) clean
+	$(MAKE) -C $(BONUS_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
+	rm -rf $(MLX)/build
+
+fclean: clean
+	rm -rf $(NAME) $(NAME_BONUS)
+
+re: fclean all
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes --suppressions=$(VALGRIND_SUPP) $(NAME) assets/maps/_valgrind_test.cub
+	valgrind $(VALGRIND_MAP) $(VALGRIND_FLAGS)
+
+valgrind_bonus:
+	valgrind $(VALGRIND_MAP_BONUS) $(VALGRIND_FLAGS)
 
 
 # ************************************
