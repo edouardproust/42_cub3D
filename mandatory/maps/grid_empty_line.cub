@@ -1,7 +1,7 @@
-WE ./mandatory/assets/textures/bricks.png
-NO ./mandatory/assets/textures/skulls.png
-EA ./mandatory/assets/textures/wood_white.png
-SO ./mandatory/assets/textures/skulls.png
+WE ./mandatory/assets/bricks.png
+NO ./mandatory/assets/skulls.png
+EA ./mandatory/assets/wood_white.png
+SO ./mandatory/assets/skulls.png
 
 F 220,100,0
 C 225,30,0

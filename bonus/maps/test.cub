@@ -1,9 +1,9 @@
 
    
-WE   ./mandatory/assets/textures/bricks.png
-NO ./mandatory/assets/textures/wood_white_old.png
-EA ./mandatory/assets/textures/skulls.png    
-SO ./mandatory/assets/textures/wood_white.png
+WE   ./bonus/assets/skulls.png
+NO ./bonus/assets/bricks.png
+EA ./bonus/assets/skulls.png    
+SO ./bonus/assets/bricks.png
    
 F 35,79,30
 C 186,224,243

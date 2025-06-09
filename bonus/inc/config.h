@@ -11,9 +11,9 @@
 # define MM_Y 			10		/* Y offset from top window edge */
 # define MM_COLOR_WALL	0x00000099	/* Color of the walls in minimap */
 # define MM_COLOR_FLOOR	0xFFFFF090	/* Color of the walls in minimap */
-# define MM_PLAYER_IMG	"mandatory/assets/minimap/player.png"
+# define MM_PLAYER_IMG	"bonus/assets/player.png"
 # define MM_PLAYR_WIDTH	20
-# define MM_DIR_IMG		"mandatory/assets/minimap/viewpoint.png"
+# define MM_DIR_IMG		"bonus/assets/viewpoint.png"
 # define MM_DIR_WIDTH	8
 
 /* Player Settings */
