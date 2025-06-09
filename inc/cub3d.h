@@ -26,12 +26,14 @@ typedef enum e_side
 	EA,
 	SO,
 	WE,
+	DOOR_OPEN,
+	DOOR_CLOSED
 }	t_side;
 
 typedef enum e_door_state
 {
 	CLOSED,
-	OPEN
+	OPEN,
 }	t_door_state;
 
 /****************************************/
@@ -79,8 +81,6 @@ typedef struct s_map
 	char			start_dir;
 	t_door			*doors;
 	int				door_count;
-	int				reachable;
-	int				total_accessible;
 }	t_map;
 
 typedef struct s_keymap
@@ -110,6 +110,7 @@ typedef struct s_game
 	mlx_texture_t	*tex_so;
 	mlx_texture_t	*tex_ea;
 	mlx_texture_t	*tex_we;
+	mlx_texture_t	*tex_door;
 }	t_game;
 
 typedef struct s_ray
@@ -148,7 +149,6 @@ void			trim_empty_lines_after_grid(t_game *g);
 void			uniformize_grid_margins(t_game *g);
 void			set_map_player(t_map *map, int x, int y, char dir);
 bool			is_valid_door_position(t_map *map, int y, int x);
-void			check_map_accessibility(t_game *g);
 
 /******** Graphics ********/
 void			display_game(t_game *game);
@@ -165,12 +165,14 @@ void			display_minimap(t_game *game);
 void			draw_player(t_game *g);
 void			draw_minimap_doors(t_game *g);
 void			toggle_doors(t_game *g);
+t_door			*get_door_pos(t_map *map, int x, int y);
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);
 
 /* Raycasting */
 void			cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
 void			draw_view_on_screen(t_game *g);
+void			perform_dda_algorythm(t_ray *ray, t_game *g);
 
 /* Textures */
 void			load_textures(t_game *g);

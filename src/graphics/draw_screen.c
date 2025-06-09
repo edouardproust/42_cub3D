@@ -19,13 +19,15 @@ static void	set_wall_screen_boundaries(t_ray *ray, double wall_dist,
 }
 
 static int	get_side_color(t_side side)
-{
+{	
 	if (side == NO)
 		return (WALL_COLOR_NO);
 	if (side == SO)
 		return (WALL_COLOR_SO);
 	if (side == EA)
 		return (WALL_COLOR_EA);
+	if (side == DOOR_CLOSED)
+		return (DOOR_COLOR_CLOSED);
 	return (WALL_COLOR_WE);
 }
 

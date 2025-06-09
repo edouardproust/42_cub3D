@@ -11,7 +11,9 @@ void	load_textures(t_game *g)
 	g->tex_so = mlx_load_png(g->map->texture_so);
 	g->tex_ea = mlx_load_png(g->map->texture_ea);
 	g->tex_we = mlx_load_png(g->map->texture_we);
-	if (!g->tex_no || !g->tex_so || !g->tex_ea || !g->tex_we)
+	g->tex_door = mlx_load_png(g->map->texture_door);
+	if (!g->tex_no || !g->tex_so || !g->tex_ea || !g->tex_we
+		|| !g->tex_door)
 		exit_game("Failed to load wall textures", g);
 }
 

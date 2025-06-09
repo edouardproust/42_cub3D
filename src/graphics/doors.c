@@ -88,3 +88,17 @@ void	toggle_doors(t_game *g)
 		i++;
 	}
 }
+
+t_door	*get_door_pos(t_map *map, int x, int y)
+{
+	int	i;
+	
+	i = 0;
+	while (i < map->door_count)
+	{
+		if (map->doors[i].x == x && map->doors[i].y == y)
+			return (&map->doors[i]);
+		i++;
+	}
+	return (NULL);
+}

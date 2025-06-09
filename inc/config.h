@@ -10,7 +10,7 @@
 # define MM_X 			 14		/* X offset from left window edge */
 # define MM_Y 			 10		/* Y offset from top window edge */
 # define MM_COLOR_WALL	 0x00000099	/* Color of the walls in minimap */
-# define MM_COLOR_FLOOR	 0xFFFFF090	/* Color of the walls in minimap */
+# define MM_COLOR_FLOOR	 0xFFFFF090	/* Color of the floor in minimap */
 # define MM_COLOR_OPEN	 0x00FF00FF	/* Color of the door if open in minimap */
 # define MM_COLOR_CLOSED 0xFF0000FF	/* Color of the door if closed in minimap */
 
@@ -30,8 +30,7 @@
 # define WALL_COLOR_NO		0xFF00FFFF	/* magenta */
 # define WALL_COLOR_SO		0x00FFFFFF	/* cyan */
 # define WALL_COLOR_EA		0xFFFF00FF	/* yellow */
-# define WALL_COLOR_WE		0x228B22FF	/* dark green */
-# define DOOR_COLOR_OPEN	0x00FF00FF	/* green */
+# define WALL_COLOR_WE		0x00FF00FF	/* green */
 # define DOOR_COLOR_CLOSED 	0xFF0000FF	/* red */
 
 /* Keyboard Settings */

@@ -15,16 +15,16 @@ C_FILES = debug.c\
 	parsing/utils.c \
 	parsing/check_grid.c \
 	parsing/check_metadata.c \
-	parsing/map_accessibility.c \
-	parsing/doors.c \
+	parsing/init_doors.c \
 	graphics/init_mlx.c \
 	graphics/keymapping.c \
 	graphics/hooks.c \
 	graphics/draw_minimap.c \
-	graphics/draw_doors.c \
+	graphics/doors.c \
 	graphics/move_player.c \
 	graphics/rotate_player.c \
 	graphics/draw_screen.c \
+	graphics/raycasting_dda.c \
 	graphics/raycasting.c \
 	graphics/wall_textures.c \
 	graphics//wall_render.c \
