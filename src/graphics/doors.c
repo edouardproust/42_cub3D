@@ -61,44 +61,40 @@ void	draw_minimap_doors(t_game *g)
 	}
 }
 
-void	toggle_doors(t_game *g)
+static bool	try_toggle_door(t_game *g, t_door *door, int px, int py)
 {
-	int		i;
-	int		p_x;
-	int		p_y;
-	t_door	*door;
-
-	i = 0;
-	p_x = (int)g->pos.x;
-	p_y = (int)g->pos.y;
-	while (i < g->map->door_count)
-	{
-		door = &g->map->doors[i];
-		if (abs(door->x - p_x) <= 1 && abs(door->y - p_y) <= 1)
-		{
-			if (door->state == OPEN && door->x == p_x && door->y == p_y)
-			{
-				i++;
-				continue ;
-			}
-			door->state = !door->state;
-			draw_minimap_door_cell(g, door->x, door->y);
-			return ;
-		}
-		i++;
-	}
+	if (abs(door->x - px) > 1 || abs(door->y - py) > 1)
+		return (false);
+	if (door->state == OPEN && door->x == px && door->y == py)
+		return (false);
+	door->state = !door->state;
+	draw_minimap_door_cell(g, door->x, door->y);
+	g->show_door_half = true;
+	g->door_half_pos = (t_point){door->x, door->y};
+	return (true);
 }
 
-t_door	*get_door_pos(t_map *map, int x, int y)
+void	toggle_doors(t_game *g)
 {
-	int	i;
-	
+	static double	last_toggle = 0;
+	int				i;
+	int				p_x;
+	int				p_y;
+	double			current_time;
+
 	i = 0;
-	while (i < map->door_count)
+	current_time = mlx_get_time();
+	p_x = (int)g->pos.x;
+	p_y = (int)g->pos.y;
+	if (current_time - last_toggle < 0.3)
+		return ;
+	while (i < g->map->door_count)
 	{
-		if (map->doors[i].x == x && map->doors[i].y == y)
-			return (&map->doors[i]);
-		i++;
+		if (try_toggle_door(g, &g->map->doors[i], p_x, p_y))
+		{
+			last_toggle = current_time;
+			return ;
+		}
 	}
-	return (NULL);
+	i++;
 }

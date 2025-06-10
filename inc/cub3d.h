@@ -27,7 +27,8 @@ typedef enum e_side
 	SO,
 	WE,
 	DOOR_OPEN,
-	DOOR_CLOSED
+	DOOR_CLOSED,
+	DOOR_HALF
 }	t_side;
 
 typedef enum e_door_state
@@ -72,6 +73,7 @@ typedef struct s_map
 	char			*texture_ea;
 	char			*texture_we;
 	char			*texture_door;
+	char			*texture_door_half;
 	t_color			color_c;
 	t_color			color_f;
 	char			**grid;
@@ -111,6 +113,9 @@ typedef struct s_game
 	mlx_texture_t	*tex_ea;
 	mlx_texture_t	*tex_we;
 	mlx_texture_t	*tex_door;
+	mlx_texture_t	*tex_door_half;
+	bool			show_door_half;
+	t_point			door_half_pos;
 }	t_game;
 
 typedef struct s_ray
@@ -165,7 +170,6 @@ void			display_minimap(t_game *game);
 void			draw_player(t_game *g);
 void			draw_minimap_doors(t_game *g);
 void			toggle_doors(t_game *g);
-t_door			*get_door_pos(t_map *map, int x, int y);
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);
 

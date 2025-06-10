@@ -8,7 +8,8 @@ EA       ./assets/textures/wood_blue_old.png
 SO ./assets/textures/skulls.png
    
    
-DO   ./assets/textures/metal.png
+DO   ./assets/textures/paint_red.png
+DO_HALF   ./assets/textures/paint_blue.png
 
 F 255,100,0
   

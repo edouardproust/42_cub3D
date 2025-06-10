@@ -20,6 +20,20 @@ static void	advance_ray_y(t_ray *ray)
 		ray->side = NO;
 }
 
+static t_door	*get_door_pos(t_map *map, int x, int y)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->door_count)
+	{
+		if (map->doors[i].x == x && map->doors[i].y == y)
+			return (&map->doors[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 void	perform_dda_algorythm(t_ray *ray, t_game *g)
 {
 	t_door	*door;
@@ -38,9 +52,10 @@ void	perform_dda_algorythm(t_ray *ray, t_game *g)
 			door = get_door_pos(g->map, ray->cell.x, ray->cell.y);
 			if (door)
 			{
-				if (door->state == OPEN)
-					continue ;
-				else
+				if (g->show_door_half && door->x == g->door_half_pos.x
+					&& door->y == g->door_half_pos.y)
+					ray->side = DOOR_HALF;
+				else if (door->state == CLOSED)
 					ray->side = DOOR_CLOSED;
 			}
 			ray->wall_hit = true;
