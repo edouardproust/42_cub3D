@@ -30,7 +30,6 @@ typedef enum e_keys
 	KEY_DOWN,
 	KEY_LEFT,
 	KEY_RIGHT,
-	KEY_M,
 	KEY_COUNT
 }	t_keys;
 
