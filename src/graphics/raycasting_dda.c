@@ -20,24 +20,33 @@ static void	advance_ray_y(t_ray *ray)
 		ray->side = NO;
 }
 
-static t_door	*get_door_pos(t_map *map, int x, int y)
+static bool	ray_cast_on_door(t_ray *ray, t_game *g)
 {
-	int	i;
+	t_door	*door;
 
-	i = 0;
-	while (i < map->door_count)
+	door = get_door_pos(g->map, ray->cell.x, ray->cell.y);
+	if (!door)
+		return (false);
+	if (door->state == OPEN)
+		return (false);
+	if (g->show_door_half && door->x == g->door_half_pos.x
+		&& door->y == g->door_half_pos.y)
 	{
-		if (map->doors[i].x == x && map->doors[i].y == y)
-			return (&map->doors[i]);
-		i++;
+		ray->side = DOOR_HALF;
+		ray->wall_hit = true;
+		return (true);
 	}
-	return (NULL);
+	else if (door->state == CLOSED)
+	{
+		ray->side = DOOR_CLOSED;
+		ray->wall_hit = true;
+		return (true);
+	}
+	return (false);
 }
 
 void	perform_dda_algorythm(t_ray *ray, t_game *g)
 {
-	t_door	*door;
-
 	ray->wall_hit = false;
 	while (!ray->wall_hit)
 	{
@@ -48,17 +57,6 @@ void	perform_dda_algorythm(t_ray *ray, t_game *g)
 		if (g->map->grid[ray->cell.y][ray->cell.x] == '1')
 			ray->wall_hit = true;
 		else if (g->map->grid[ray->cell.y][ray->cell.x] == 'D')
-		{
-			door = get_door_pos(g->map, ray->cell.x, ray->cell.y);
-			if (door)
-			{
-				if (g->show_door_half && door->x == g->door_half_pos.x
-					&& door->y == g->door_half_pos.y)
-					ray->side = DOOR_HALF;
-				else if (door->state == CLOSED)
-					ray->side = DOOR_CLOSED;
-			}
-			ray->wall_hit = true;
-		}
+			ray_cast_on_door(ray, g);
 	}
 }

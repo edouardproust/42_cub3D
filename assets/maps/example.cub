@@ -9,7 +9,6 @@ SO ./assets/textures/skulls.png
    
    
 DO   ./assets/textures/paint_red.png
-DO_HALF   ./assets/textures/paint_blue.png
 
 F 255,100,0
   
@@ -29,6 +28,7 @@ C 225,222,0
 1100000111110101110111010N011
 11110111 1110101 101100010001
 11111111 1111111 111111111111
+
 
                 
      

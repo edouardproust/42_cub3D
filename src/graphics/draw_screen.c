@@ -64,5 +64,4 @@ void	draw_view_on_screen(t_game *g)
 		draw_vertical_screen_line(&ray, x, g);
 		x++;
 	}
-	g->show_door_half = false;
 }

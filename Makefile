@@ -20,7 +20,8 @@ C_FILES = debug.c\
 	graphics/keymapping.c \
 	graphics/hooks.c \
 	graphics/draw_minimap.c \
-	graphics/doors.c \
+	graphics/draw_doors.c \
+	graphics/toggle_doors.c \
 	graphics/move_player.c \
 	graphics/rotate_player.c \
 	graphics/draw_screen.c \

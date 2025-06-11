@@ -67,8 +67,6 @@ int	parse_line_to_metadata(char *line, t_map *map, int ret)
 		ret = parse_metadata("C", line + 1, &map->color_c.str);
 	else if (ft_strncmp(line, "DO ", 3) == 0)
 		ret = parse_metadata("DO", line + 2, &map->texture_door);
-	else if (ft_strncmp(line, "DO_HALF ", 8) == 0)
-		ret = parse_metadata("DO_HALF", line + 7, &map->texture_door_half);
 	else if (line[0] != '\0')
 		return (put_error3(E_PARSING, line, "invalid metadata line"),
 			EXIT_FAILURE);

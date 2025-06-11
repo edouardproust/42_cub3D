@@ -73,7 +73,6 @@ typedef struct s_map
 	char			*texture_ea;
 	char			*texture_we;
 	char			*texture_door;
-	char			*texture_door_half;
 	t_color			color_c;
 	t_color			color_f;
 	char			**grid;
@@ -113,9 +112,9 @@ typedef struct s_game
 	mlx_texture_t	*tex_ea;
 	mlx_texture_t	*tex_we;
 	mlx_texture_t	*tex_door;
-	mlx_texture_t	*tex_door_half;
 	bool			show_door_half;
 	t_point			door_half_pos;
+	bool			force_redraw;
 }	t_game;
 
 typedef struct s_ray
@@ -168,8 +167,8 @@ void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
 /* Minimap */
 void			display_minimap(t_game *game);
 void			draw_player(t_game *g);
+void			draw_minimap_door_cell(t_game *g, int map_x, int map_y);
 void			draw_minimap_doors(t_game *g);
-void			toggle_doors(t_game *g);
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);
 
@@ -189,6 +188,10 @@ void			render_textured_wall(t_ray *ray, int x, t_game *g);
 bool			move_player(t_game *game, double move_speed);
 bool			rotate_player(t_game *game, double delta_time);
 bool			handle_mouse_rotation(t_game *g, double delta_time);
+
+/******** Doors ********/
+t_door			*get_door_pos(t_map *map, int x, int y);
+void			toggle_doors(t_game *g);
 
 /******** Utils ********/
 /* MLX */

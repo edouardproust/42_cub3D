@@ -18,6 +18,11 @@ static void	loop_hook(void *param)
 	has_moved = move_player(game, delta);
 	has_moved |= rotate_player(game, delta);
 	has_moved |= handle_mouse_rotation(game, delta);
+	if (game->force_redraw)
+	{
+		draw_view_on_screen(game);
+		game->force_redraw = false;
+	}
 	frame_count++;
 	if ((has_moved && frame_count % 2 == 0) || frame_count == 1)
 		draw_view_on_screen(game);

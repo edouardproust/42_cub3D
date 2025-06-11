@@ -47,6 +47,7 @@ static t_game	*init_game_data(char **argv)
 	g->win_width = WIDTH;
 	g->minimap_visible = true;
 	g->mouse_captured = true;
+	g->force_redraw = false;
 	init_game_vectors(g);
 	return (g);
 }
