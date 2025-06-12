@@ -1,0 +1,14 @@
+*.swo
+*.swp
+*.out
+*.a
+*.o
+_obj
+cub3D
+.vscode
+
+test
+subject
+.gitignore
+README.md
+valgrind.supp
