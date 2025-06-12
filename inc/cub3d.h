@@ -27,8 +27,7 @@ typedef enum e_side
 	SO,
 	WE,
 	DOOR_OPEN,
-	DOOR_CLOSED,
-	DOOR_HALF
+	DOOR_CLOSED
 }	t_side;
 
 typedef enum e_door_state
@@ -112,8 +111,6 @@ typedef struct s_game
 	mlx_texture_t	*tex_ea;
 	mlx_texture_t	*tex_we;
 	mlx_texture_t	*tex_door;
-	bool			show_door_half;
-	t_point			door_half_pos;
 	bool			force_redraw;
 }	t_game;
 

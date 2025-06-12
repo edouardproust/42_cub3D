@@ -32,22 +32,6 @@ static double	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
 	return (tex_pos);
 }
 
-static bool	skip_bottom_half(t_ray *ray, int *y, double *tex_pos, double step)
-{
-	int	mid_point;
-
-	if (ray->side != DOOR_HALF)
-		return (false);
-	mid_point = ray->top_px + (ray->bottom_px - ray->top_px) / 2;
-	if (*y > mid_point)
-	{
-		(*y)++;
-		*tex_pos += step;
-		return (true);
-	}
-	return (false);
-}
-
 /**
  * Renders vertical texture part to screen column.
  * For each vertical screen pixel:
@@ -74,8 +58,6 @@ static void	draw_textured_pixels(int x, t_ray *ray, t_game *g, int tex_x)
 	y = ray->top_px;
 	while (y <= ray->bottom_px)
 	{
-		if (skip_bottom_half(ray, &y, &tex_pos, step))
-			continue ;
 		tex_y = (int)tex_pos % tex->height;
 		if (tex_y < 0)
 			tex_y += tex->height;

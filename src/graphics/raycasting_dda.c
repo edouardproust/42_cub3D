@@ -29,14 +29,7 @@ static bool	ray_cast_on_door(t_ray *ray, t_game *g)
 		return (false);
 	if (door->state == OPEN)
 		return (false);
-	if (g->show_door_half && door->x == g->door_half_pos.x
-		&& door->y == g->door_half_pos.y)
-	{
-		ray->side = DOOR_HALF;
-		ray->wall_hit = true;
-		return (true);
-	}
-	else if (door->state == CLOSED)
+	if (door->state == CLOSED)
 	{
 		ray->side = DOOR_CLOSED;
 		ray->wall_hit = true;

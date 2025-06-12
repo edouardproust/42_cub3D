@@ -34,8 +34,7 @@ mlx_texture_t	*get_wall_texture(t_side side, t_game *g)
 		return (g->tex_ea);
 	if (side == WE)
 		return (g->tex_we);
-	if (side == DOOR_CLOSED || DOOR_HALF)
-		return (g->tex_door);
+	return (g->tex_door);
 }
 
 /**
