@@ -36,6 +36,8 @@ static void	free_textures(t_game *g)
 		mlx_delete_texture(g->tex_ea);
 	if (g->tex_we)
 		mlx_delete_texture(g->tex_we);
+	if (g->tex_door)
+		mlx_delete_texture(g->tex_door);
 }
 
 void	free_game(t_game *g)
