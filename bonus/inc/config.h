@@ -17,9 +17,9 @@
 /* Player Settings */
 # define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
 # define ROT_SPEED		3.0		/* Rotation speed (radians/second) */
-# define MM_PLAYER_IMG	"assets/minimap/player.png"
+# define MM_PLAYER_IMG	"bonus/assets/player.png"
 # define MM_PLAYR_WIDTH	20
-# define MM_DIR_IMG		"assets/minimap/viewpoint.png"
+# define MM_DIR_IMG		"bonus/assets/viewpoint.png"
 # define MM_DIR_WIDTH	8
 # define M_SENSITIVITY	0.5
 
