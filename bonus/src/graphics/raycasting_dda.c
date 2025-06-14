@@ -27,14 +27,12 @@ static bool	ray_cast_on_door(t_ray *ray, t_game *g)
 	t_door	*door;
 
 	door = get_door_pos(g->map, ray->cell.x, ray->cell.y);
-	if (!door)
-		return (false);
-	if (door->state == OPEN)
+	if (!door || door->state == OPEN)
 		return (false);
 	if (door->state == CLOSED)
 	{
-		ray->side = DOOR_CLOSED;
 		ray->wall_hit = true;
+		ray->door_hit = true;
 		return (true);
 	}
 	return (false);
@@ -43,6 +41,7 @@ static bool	ray_cast_on_door(t_ray *ray, t_game *g)
 void	perform_dda_algorythm(t_ray *ray, t_game *g)
 {
 	ray->wall_hit = false;
+	ray->door_hit = false;
 	while (!ray->wall_hit)
 	{
 		if (ray->length_x < ray->length_y)

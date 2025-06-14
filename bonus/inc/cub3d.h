@@ -126,6 +126,7 @@ typedef struct s_ray
 	t_cell	cell; // Cell in the grid that the ray is currently crossing
 	t_cell	cell_move; // Move to the next cell the ray will cross
 	bool	wall_hit; // Indicates if the ray hit a wall
+	bool	door_hit;
 	bool	is_vertical_hit;
 	int		top_px;
 	int		bottom_px;
@@ -177,7 +178,7 @@ void			perform_dda_algorythm(t_ray *ray, t_game *g);
 
 /* Textures */
 void			load_textures(t_game *g);
-mlx_texture_t	*get_wall_texture(t_side side, t_game *g);
+mlx_texture_t	*get_wall_texture(t_ray *ray, t_game *g);
 double			calc_wall_hit_position(t_ray *ray, t_game *g);
 int				get_texture_horizontal(mlx_texture_t *tex, double wall_x);
 void			render_textured_wall(t_ray *ray, int x, t_game *g);

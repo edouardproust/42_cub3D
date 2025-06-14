@@ -24,17 +24,19 @@ void	load_textures(t_game *g)
  * @param g Game structure with loaded textures
  * @return mlx_texture_t* Pointer to selected texture
  */
-mlx_texture_t	*get_wall_texture(t_side side, t_game *g)
+mlx_texture_t	*get_wall_texture(t_ray *ray, t_game *g)
 {
-	if (side == NO)
+	if (ray->door_hit)
+		return (g->tex_door);
+	if (ray->side == NO)
 		return (g->tex_no);
-	if (side == SO)
+	if (ray->side == SO)
 		return (g->tex_so);
-	if (side == EA)
+	if (ray->side == EA)
 		return (g->tex_ea);
-	if (side == WE)
+	if (ray->side == WE)
 		return (g->tex_we);
-	return (g->tex_door);
+	return (NULL);
 }
 
 /**
@@ -54,7 +56,7 @@ double	calc_wall_hit_position(t_ray *ray, t_game *g)
 		wall_x = g->pos.x + ray->wall_dist * ray->dir.x;
 		if (ray->side == DOOR_CLOSED && ray->is_vertical_hit)
 			wall_x = g->pos.y + ray->wall_dist * ray->dir.y;
-	}	
+	}
 	else
 	{
 		wall_x = g->pos.y + ray->wall_dist * ray->dir.y;
