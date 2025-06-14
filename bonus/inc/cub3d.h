@@ -126,6 +126,7 @@ typedef struct s_ray
 	t_cell	cell; // Cell in the grid that the ray is currently crossing
 	t_cell	cell_move; // Move to the next cell the ray will cross
 	bool	wall_hit; // Indicates if the ray hit a wall
+	bool	is_vertical_hit;
 	int		top_px;
 	int		bottom_px;
 }	t_ray;

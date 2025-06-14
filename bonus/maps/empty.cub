@@ -1,0 +1,15 @@
+        WE                  ./bonus/assets/bricks.png
+NO ./bonus/assets/skulls.png            
+        EA ./bonus/assets/wood_white.png
+SO ./bonus/assets/skulls.png
+DO ./bonus/assets/metal.png
+
+F 220,100,0
+C 225,30,0
+
+    1111 11
+    11111111111
+    100W0000001
+    100001D1001
+    10000001001
+    11111111111

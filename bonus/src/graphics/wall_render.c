@@ -89,6 +89,8 @@ void	render_textured_wall(t_ray *ray, int x, t_game *g)
 
 	tex = get_wall_texture(ray->side, g);
 	wall_x = calc_wall_hit_position(ray, g);
+	if (ray->side == DOOR_CLOSED && ray->is_vertical_hit)
+		wall_x = 1.0 - wall_x;
 	tex_x = get_texture_horizontal(tex, wall_x);
 	draw_textured_pixels(x, ray, g, tex_x);
 }
