@@ -1,5 +1,7 @@
 NAME = libft.a
 
+ROOT_MAKEFILE = ../../Makefile
+
 SRCS = ft_atoi.c \
 	ft_atol.c \
 	ft_bzero.c \
@@ -60,7 +62,7 @@ OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 all: $(NAME)
 
-%.o: %.c Makefile libft.h
+%.o: %.c Makefile $(ROOT_MAKEFILE) libft.h
 	cc -c $< -o $@ $(FLAGS) -I .
 
 $(NAME): $(OBJS)

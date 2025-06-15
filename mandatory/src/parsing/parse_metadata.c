@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_metadata.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eproust <contact@edouardproust.dev>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 bool	is_metadata_parsed(t_map *map)
@@ -12,20 +24,24 @@ bool	is_metadata_parsed(t_map *map)
  * Extract the value for the given metadata id,
  * and save it into the t_map struct.
  *
- * @note Skip spaces between id and value. //TODO verify if ok with subject
+ * @note Skip spaces between id and value.
  */
 static int	parse_metadata(char *id, char *line, char **map_tx)
 {
 	int	start;
 	int	end;
 	int	line_len;
+	int	sub_len;
 
 	if (*map_tx != NULL)
 		return (put_error3(E_PARSING, id, "double definition"), EXIT_FAILURE);
 	line_len = ft_strlen(line);
 	start = count_space_chars(line, 0, line_len, false);
 	end = count_space_chars(line, 0, line_len - 1, true);
-	*map_tx = ft_substr(line, start, line_len - start - end - 1);
+	sub_len = line_len - start - end;
+	if (line_len > 0 && line[line_len - 1] == '\n')
+		sub_len--;
+	*map_tx = ft_substr(line, start, sub_len);
 	if (!*map_tx)
 		return (put_error3(E_FATAL_PARSING, id, "metadata trim"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eproust <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/05 16:08:45 by eproust           #+#    #+#             */
+/*   Updated: 2024/12/16 14:32:13 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -44,10 +56,10 @@ typedef struct s_cell
 	int	y;
 }	t_cell;
 
-typedef struct color
+typedef struct s_color
 {
-	char		*str;
-	uint32_t	rgb;
+	char	*str;
+	int32_t	rgb;
 }	t_color;
 
 typedef struct s_map

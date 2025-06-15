@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   config.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpapadak <fpapadak@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CONFIG_H
 # define CONFIG_H
 
@@ -6,7 +18,7 @@
 # define HEIGHT			640		/* Main window height in pixels */
 
 /* Minimap Settings */
-# define MM_SCALE 		 14		/* Pixels per grid cell in minimap */
+# define MM_SCALE 		 10		/* Pixels per grid cell in minimap */
 # define MM_X 			 14		/* X offset from left window edge */
 # define MM_Y 			 10		/* Y offset from top window edge */
 # define MM_COLOR_WALL	 0x00000099	/* Color of the walls in minimap */

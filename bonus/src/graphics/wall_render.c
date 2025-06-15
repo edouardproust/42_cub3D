@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wall_render.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpapadak <fpapadak@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
- * Determines how much to stretch/compress the texture vertically 
+ * Determines how much to stretch/compress the texture vertically
  * based on wall distance
- * 
+ *
  * Key calculations:
  * - line_height = HEIGHT / distance - Closer walls appear taller
  * - step - How much to move in texture for each screen pixel
@@ -38,7 +50,7 @@ static double	calc_vertical_scale(t_ray *ray, mlx_texture_t *tex,
  * - Finds corresponding texture row (tex_y)
  * - Gets RGBA color from texture
  * - Paints the screen pixel
- * 
+ *
  * @param x Screen column to draw to
  * @param ray Ray data with wall dimensions
  * @param g Game structure with screen buffer
@@ -76,7 +88,7 @@ static void	draw_textured_pixels(int x, t_ray *ray, t_game *g, int tex_x)
  * 2. Wall hit position calculation
  * 3. Texture coordinate mapping
  * 4. Pixel-by-pixel rendering
- * 
+ *
  * @param ray Raycast results for current screen column
  * @param x Screen column to render
  * @param g Game structure with textures and render target

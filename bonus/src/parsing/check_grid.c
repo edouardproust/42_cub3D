@@ -1,18 +1,14 @@
-/**
- * @TODO
- * Grid:
- * 🟢 Must contains only the following characters: 0, 1, N, S, E, W
- * 🟢 Must be closed/surrounded by walls (char '1')
- * 🟢 Cannot contain empty lines
- * 🟢 Cannot contain spaces between walls
- * 🟢 Needs to be the last element in the file (no extra data after)
- * Allowed for grid:
- * 🟢 Spaces outside of the walls (char '1')
- *
- * If error:
- * 🟠 Clean program exit + print "Error\n" followed by detail
- * of the error
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_grid.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpapadak <fpapadak@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
@@ -40,7 +36,7 @@ static void	check_grid_line(char *line, bool *player_found,
 
 /**
  * @note This functions accepts empty lines after the grid, if they only
- *  contain spaces. //TODO verify with Ava that this is conform to subject
+ *  contain spaces.
  */
 void	check_grid_lines(t_game *g)
 {

@@ -1,35 +1,32 @@
-/**
- * @TODO
- * Metadata:
- * 🟢 Each element of data must start by the identifier, followed by
- * the correct information:
- * 		🟢 Check number of args
- * 		🟢 File exists
- * 		🟢 Identifier followed by texture path: NO, SO, WE, EA
- * 		🟢 Identifiers for the colors: F, C
- * 		🟢 Color format: [0-255],[0-255],[0-255]
- * Allowed for metadata:
- * 🟢 Unlimited new lines
- * 🟢 Unlimited spacing
- * 🟢 Mixed order
- *
- * If error:
- * 🟠 Clean program exit + print "Error\n" followed by detail
- * of the error
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_metadata.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpapadak <fpapadak@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
 static void	check_texture(char *id, char *filepath, t_game *g)
 {
-	int	fd;
+	int		fd;
+	char	buf;
+	ssize_t	ret;
 
 	if (is_blank_str(filepath))
 		exit_game3(E_PARSING, id, "No texture path provided", g);
 	fd = open(filepath, O_RDONLY);
 	if (fd == -1)
 		exit_game2(E_PARSING, filepath, g);
+	ret = read(fd, &buf, 1);
 	close(fd);
+	if (ret == -1 && errno == EISDIR)
+		exit_game2(E_PARSING, id, g);
 }
 
 /**

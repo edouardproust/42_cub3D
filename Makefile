@@ -43,6 +43,11 @@ libft:
 	$(MAKE) -C $(LIBFT_DIR)
 
 libmlx:
+	@if [ -f "$(MLX_DIR)/build/CMakeCache.txt" ]; then \
+		if [ "$$(stat -c %Y Makefile)" -gt "$$(stat -c %Y $(MLX_DIR)/build/CMakeCache.txt)" ]; then \
+			rm -rf $(MLX_DIR)/build; \
+		fi; \
+	fi
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build
 	$(MAKE) -C $(MLX_DIR)/build -j4
 
