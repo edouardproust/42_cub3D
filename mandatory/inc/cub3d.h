@@ -56,7 +56,7 @@ typedef struct s_cell
 	int	y;
 }	t_cell;
 
-typedef struct color
+typedef struct s_color
 {
 	char		*str;
 	uint32_t	rgb;

@@ -71,7 +71,7 @@ typedef struct s_door
 	int	state;
 }	t_door;
 
-typedef struct color
+typedef struct s_color
 {
 	char		*str;
 	uint32_t	rgb;
