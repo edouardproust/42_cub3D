@@ -1,8 +1,8 @@
-        WE                  ./bonus/assets/Castle3.png
-NO ./bonus/assets/Castle22.png            
-        EA ./bonus/assets/Castle20.png
-SO ./bonus/assets/Castle17.png
-DO ./bonus/assets/metal.png
+        WE                  ./bonus/assets/castle1.png
+NO ./bonus/assets/castle5.png
+        EA ./bonus/assets/castle3.png
+SO ./bonus/assets/castle4.png
+DO ./bonus/assets/door.png
 
 F 35,79,30
 C 186,224,243

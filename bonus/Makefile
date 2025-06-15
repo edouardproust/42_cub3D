@@ -1,5 +1,7 @@
 NAME = ../cub3D_bonus
 
+ROOT_MAKEFILE = ../Makefile
+
 # ************************************
 # Sources                            *
 # ************************************
@@ -96,7 +98,7 @@ INCLUDES = -I$(H_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)/include/MLX42
 
 all: $(NAME)
 
-$(O_DIR)/%.o: $(C_DIR)/%.c Makefile $(HEADERS) $(LIBFT) $(MLX)
+$(O_DIR)/%.o: $(C_DIR)/%.c Makefile $(ROOT_MAKEFILE) $(HEADERS) $(LIBFT) $(MLX)
 	@mkdir -p $(@D)
 	cc -c $(FLAGS) $< -o $@ $(INCLUDES)
 

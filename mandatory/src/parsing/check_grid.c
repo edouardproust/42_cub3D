@@ -1,19 +1,3 @@
-/**
- * @TODO
- * Grid:
- * 🟢 Must contains only the following characters: 0, 1, N, S, E, W
- * 🟢 Must be closed/surrounded by walls (char '1')
- * 🟢 Cannot contain empty lines
- * 🟢 Cannot contain spaces between walls
- * 🟢 Needs to be the last element in the file (no extra data after)
- * Allowed for grid:
- * 🟢 Spaces outside of the walls (char '1')
- *
- * If error:
- * 🟠 Clean program exit + print "Error\n" followed by detail
- * of the error
-*/
-
 #include "cub3d.h"
 
 static void	check_grid_line(char *line, bool *player_found,
