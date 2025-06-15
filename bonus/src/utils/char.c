@@ -22,3 +22,8 @@ bool	is_grid_char(char c)
 	return (c == ' ' || c == '1' || c == '0' || c == 'D'
 		|| is_grid_player_char(c));
 }
+
+int	is_space_tab(char c)
+{
+	return (c == ' ' || c == '\t');
+}
