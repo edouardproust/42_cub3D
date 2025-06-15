@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wall_textures.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpapadak <fpapadak@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
+
 /**
  * Loads all textures from paths specified in the map file into MLX textures.
  * Exits game on failure to load any texture.
@@ -42,7 +55,7 @@ mlx_texture_t	*get_wall_texture(t_ray *ray, t_game *g)
 /**
  * Calculates horizontal hit position on wall surface (0.0-1.0).
  * Uses floor() to isolate fractional part of wall coordinate.
- * 
+ *
  * @param ray Ray data containing hit distance and direction
  * @param g Game structure with player position
  * @return double Position along wall width (0.0 = left edge, 1.0 = right edge)
@@ -69,7 +82,7 @@ double	calc_wall_hit_position(t_ray *ray, t_game *g)
 
 /**
  * Converts wall hit position to texture column index.
- * 
+ *
  * @param tex Texture to get from
  * @param ray Ray data containing hit side and direction
  * @param wall_x Fractional wall position from calc_wall_hit_position()

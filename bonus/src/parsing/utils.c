@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpapadak <fpapadak@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
@@ -71,7 +83,8 @@ bool	is_valid_door_position(t_map *map, int y, int x)
 	horizontal = (grid[y][x - 1] == '1' && grid[y][x + 1] == '1');
 	vertical = (grid[y - 1][x] == '1' && grid[y + 1][x] == '1');
 	if (horizontal)
-	{	if (grid[y - 1][x] != '1' || grid[y + 1][x] != '1')
+	{
+		if (grid[y - 1][x] != '1' || grid[y + 1][x] != '1')
 			return (true);
 	}
 	if (vertical)
@@ -79,5 +92,5 @@ bool	is_valid_door_position(t_map *map, int y, int x)
 		if (grid[y][x - 1] != '1' || grid[y][x + 1] != '1')
 			return (true);
 	}
-	return false;
+	return (false);
 }
