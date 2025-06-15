@@ -58,8 +58,8 @@ typedef struct s_cell
 
 typedef struct s_color
 {
-	char		*str;
-	uint32_t	rgb;
+	char	*str;
+	int32_t	rgb;
 }	t_color;
 
 typedef struct s_map

@@ -31,13 +31,17 @@ static int	parse_metadata(char *id, char *line, char **map_tx)
 	int	start;
 	int	end;
 	int	line_len;
+	int	sub_len;
 
 	if (*map_tx != NULL)
 		return (put_error3(E_PARSING, id, "double definition"), EXIT_FAILURE);
 	line_len = ft_strlen(line);
 	start = count_space_chars(line, 0, line_len, false);
 	end = count_space_chars(line, 0, line_len - 1, true);
-	*map_tx = ft_substr(line, start, line_len - start - end - 1);
+	sub_len = line_len - start - end;
+	if (line_len > 0 && line[line_len - 1] == '\n')
+		sub_len--;
+	*map_tx = ft_substr(line, start, sub_len);
 	if (!*map_tx)
 		return (put_error3(E_FATAL_PARSING, id, "metadata trim"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
