@@ -83,7 +83,7 @@ int	parse_line_to_grid(char *line, t_map *map, int ret)
 		return (EXIT_SUCCESS);
 	if (!map->grid && !is_blank_str(line))
 		ret = init_grid(map, line);
-	else if (map->grid) // TODO #1
+	else if (map->grid)
 		ret = add_line_to_grid(map, line);
 	return (ret);
 }
