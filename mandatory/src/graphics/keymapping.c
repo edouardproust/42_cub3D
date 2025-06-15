@@ -1,5 +1,9 @@
 #include "cub3d.h"
-
+/**
+ * Provides key mapping between MLX keycodes and engine key enums.
+ * 
+ * @return Static keymap array
+ */
 static t_keymap	*get_keymap(void)
 {
 	static t_keymap	keymap[] = {
@@ -18,6 +22,12 @@ static t_keymap	*get_keymap(void)
 	return (keymap);
 }
 
+/**
+ * Converts MLX keycode to engine-specific key enum.
+ * 
+ * @param mlx_key MLX keycode
+ * @return Mapped KEY_* enum or KEY_COUNT if unmapped
+ */
 t_keys	mlx_key_to_enum(keys_t mlx_key)
 {
 	t_keymap	*keymap;
@@ -34,6 +44,13 @@ t_keys	mlx_key_to_enum(keys_t mlx_key)
 	return (KEY_COUNT);
 }
 
+/**
+ * Handles special key actions:
+ * - ESC: Close window
+ * 
+ * @param keydata MLX key event data
+ * @param game Game context pointer
+ */
 void	handle_special_keys(mlx_key_data_t keydata, t_game *game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
