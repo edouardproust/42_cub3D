@@ -53,7 +53,7 @@ static void	draw_textured_pixels(int x, t_ray *ray, t_game *g, int tex_x)
 	int				y;
 	int				tex_y;
 
-	tex = get_wall_texture(ray->side, g);
+	tex = get_wall_texture(ray, g);
 	tex_pos = calc_vertical_scale(ray, tex, &step, g);
 	y = ray->top_px;
 	while (y <= ray->bottom_px)
@@ -87,8 +87,10 @@ void	render_textured_wall(t_ray *ray, int x, t_game *g)
 	double			wall_x;
 	int				tex_x;
 
-	tex = get_wall_texture(ray->side, g);
+	tex = get_wall_texture(ray, g);
 	wall_x = calc_wall_hit_position(ray, g);
+	if (ray->side == DOOR_CLOSED && ray->is_vertical_hit)
+		wall_x = 1.0 - wall_x;
 	tex_x = get_texture_horizontal(tex, wall_x);
 	draw_textured_pixels(x, ray, g, tex_x);
 }

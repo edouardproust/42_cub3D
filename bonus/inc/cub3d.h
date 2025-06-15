@@ -26,7 +26,15 @@ typedef enum e_side
 	EA,
 	SO,
 	WE,
+	DOOR_OPEN,
+	DOOR_CLOSED
 }	t_side;
+
+typedef enum e_door_state
+{
+	CLOSED,
+	OPEN,
+}	t_door_state;
 
 /****************************************/
 /* Structs and Typedefs                 */
@@ -44,6 +52,13 @@ typedef struct s_cell
 	int	y;
 }	t_cell;
 
+typedef struct s_door
+{
+	int	x;
+	int	y;
+	int	state;
+}	t_door;
+
 typedef struct color
 {
 	char		*str;
@@ -56,6 +71,7 @@ typedef struct s_map
 	char			*texture_so;
 	char			*texture_ea;
 	char			*texture_we;
+	char			*texture_door;
 	t_color			color_c;
 	t_color			color_f;
 	char			**grid;
@@ -63,6 +79,8 @@ typedef struct s_map
 	int				grid_rows;
 	t_cell			start_pos;
 	char			start_dir;
+	t_door			*doors;
+	int				door_count;
 }	t_map;
 
 typedef struct s_keymap
@@ -85,12 +103,15 @@ typedef struct s_game
 	double			last_frame;
 	bool			key_states[KEY_COUNT];
 	bool			minimap_visible;
+	bool			mouse_captured;
 	int32_t			win_width;
 	int32_t			win_height;
 	mlx_texture_t	*tex_no;
 	mlx_texture_t	*tex_so;
 	mlx_texture_t	*tex_ea;
 	mlx_texture_t	*tex_we;
+	mlx_texture_t	*tex_door;
+	bool			force_redraw;
 }	t_game;
 
 typedef struct s_ray
@@ -105,6 +126,8 @@ typedef struct s_ray
 	t_cell	cell; // Cell in the grid that the ray is currently crossing
 	t_cell	cell_move; // Move to the next cell the ray will cross
 	bool	wall_hit; // Indicates if the ray hit a wall
+	bool	door_hit;
+	bool	is_vertical_hit;
 	int		top_px;
 	int		bottom_px;
 }	t_ray;
@@ -122,11 +145,13 @@ int				parse_line_to_grid(char *line, t_map *map, int ret);
 void			check_metadata_lines(t_game *g);
 void			check_grid_lines(t_game *g);
 void			check_grid_is_closed(t_game *g);
+void			init_doors(t_game *g);
 bool			has_valid_extension(char *path, char *ext);
 bool			has_more_than_one_word(char *str);
 void			trim_empty_lines_after_grid(t_game *g);
 void			uniformize_grid_margins(t_game *g);
 void			set_map_player(t_map *map, int x, int y, char dir);
+bool			is_valid_door_position(t_map *map, int y, int x);
 
 /******** Graphics ********/
 void			display_game(t_game *game);
@@ -139,16 +164,21 @@ t_keys			mlx_key_to_enum(keys_t mlx_key);
 void			handle_special_keys(mlx_key_data_t keydata, t_game *game);
 
 /* Minimap */
+void			display_minimap(t_game *game);
+void			draw_player(t_game *g);
+void			draw_minimap_door_cell(t_game *g, int map_x, int map_y);
+void			draw_minimap_doors(t_game *g);
 void			update_minimap_player_sprite(t_game *g);
 void			update_minimap_dir_sprite(t_game *g);
 
 /* Raycasting */
 void			cast_one_ray(t_ray *ray, double screen_px_col, t_game *g);
 void			draw_view_on_screen(t_game *g);
+void			perform_dda_algorythm(t_ray *ray, t_game *g);
 
 /* Textures */
 void			load_textures(t_game *g);
-mlx_texture_t	*get_wall_texture(t_side side, t_game *g);
+mlx_texture_t	*get_wall_texture(t_ray *ray, t_game *g);
 double			calc_wall_hit_position(t_ray *ray, t_game *g);
 int				get_texture_horizontal(mlx_texture_t *tex, double wall_x);
 void			render_textured_wall(t_ray *ray, int x, t_game *g);
@@ -156,6 +186,11 @@ void			render_textured_wall(t_ray *ray, int x, t_game *g);
 /******** Player ********/
 bool			move_player(t_game *game, double move_speed);
 bool			rotate_player(t_game *game, double delta_time);
+bool			handle_mouse_rotation(t_game *g, double delta_time);
+
+/******** Doors ********/
+t_door			*get_door_pos(t_map *map, int x, int y);
+void			toggle_doors(t_game *g);
 
 /******** Utils ********/
 /* MLX */

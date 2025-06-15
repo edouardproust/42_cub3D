@@ -7,6 +7,8 @@ static void	draw_minimap_cell(t_game *game, int x, int y, char cell)
 	int	color;
 
 	i = 0;
+	if (cell == 'D')
+		return ;
 	while (i < MM_SCALE)
 	{
 		j = 0;
@@ -95,6 +97,7 @@ void	display_minimap(t_game *g)
 		mlx_image_to_window(g->mlx, g->minimap, MM_X,
 			g->win_height - mm_height - MM_Y);
 		draw_minimap_grid(g);
+		draw_minimap_doors(g);
 	}
 	draw_player(g);
 }

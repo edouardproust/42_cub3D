@@ -51,34 +51,6 @@ static void	calc_initial_cell_move(t_ray *ray)
 		ray->cell_move.y = -1;
 }
 
-static void	perform_dda_algorythm(t_ray *ray, t_game *g)
-{
-	ray->wall_hit = false;
-	while (!ray->wall_hit)
-	{
-		if (ray->length_x < ray->length_y)
-		{
-			ray->length_x += ray->len_step_x;
-			ray->cell.x += ray->cell_move.x;
-			if (ray->dir.x > 0)
-				ray->side = EA;
-			else
-				ray->side = WE;
-		}
-		else
-		{
-			ray->length_y += ray->len_step_y;
-			ray->cell.y += ray->cell_move.y;
-			if (ray->dir.y > 0)
-				ray->side = SO;
-			else
-				ray->side = NO;
-		}
-		if (g->map->grid[ray->cell.y][ray->cell.x] == '1')
-			ray->wall_hit = true;
-	}
-}
-
 /**
  * @param screen_px_col	Index of the column of pixel on the screen,
  * starting form the left

@@ -6,28 +6,32 @@
 # define HEIGHT			640		/* Main window height in pixels */
 
 /* Minimap Settings */
-# define MM_SCALE 		14		/* Pixels per grid cell in minimap */
-# define MM_X 			14		/* X offset from left window edge */
-# define MM_Y 			10		/* Y offset from top window edge */
-# define MM_COLOR_WALL	0x00000099	/* Color of the walls in minimap */
-# define MM_COLOR_FLOOR	0xFFFFF090	/* Color of the walls in minimap */
-# define MM_PLAYER_IMG	"bonus/assets/player.png"
-# define MM_PLAYR_WIDTH	20
-# define MM_DIR_IMG		"bonus/assets/viewpoint.png"
-# define MM_DIR_WIDTH	8
+# define MM_SCALE 		 14		/* Pixels per grid cell in minimap */
+# define MM_X 			 14		/* X offset from left window edge */
+# define MM_Y 			 10		/* Y offset from top window edge */
+# define MM_COLOR_WALL	 0x00000099	/* Color of the walls in minimap */
+# define MM_COLOR_FLOOR	 0xFFFFF090	/* Color of the floor in minimap */
+# define MM_COLOR_OPEN	 0x00FF00FF	/* Color of the door if open in minimap */
+# define MM_COLOR_CLOSED 0xFF0000FF	/* Color of the door if closed in minimap */
 
 /* Player Settings */
 # define MOVE_SPEED 	5.0		/* Base movement speed (units/second) */
 # define ROT_SPEED		3.0		/* Rotation speed (radians/second) */
+# define MM_PLAYER_IMG	"bonus/assets/player.png"
+# define MM_PLAYR_WIDTH	20
+# define MM_DIR_IMG		"bonus/assets/viewpoint.png"
+# define MM_DIR_WIDTH	8
+# define M_SENSITIVITY	0.5
 
 /* 3D Rendering Settings */
-# define COLOR_MODE		false
-# define FISHEYE_EFFECT	false
-# define FOV_FACTOR		0.66
-# define WALL_COLOR_NO	0xFF00FFFF	/* magenta */
-# define WALL_COLOR_SO	0x00FFFFFF	/* cyan */
-# define WALL_COLOR_EA	0xFFFF00FF	/* yellow */
-# define WALL_COLOR_WE	0x00FF00FF	/* green */
+# define COLOR_MODE			false
+# define FISHEYE_EFFECT		false
+# define FOV_FACTOR			0.66
+# define WALL_COLOR_NO		0xFF00FFFF	/* magenta */
+# define WALL_COLOR_SO		0x00FFFFFF	/* cyan */
+# define WALL_COLOR_EA		0xFFFF00FF	/* yellow */
+# define WALL_COLOR_WE		0x00FF00FF	/* green */
+# define DOOR_COLOR_CLOSED 	0xFF0000FF	/* red */
 
 /* Keyboard Settings */
 typedef enum e_keys
@@ -42,6 +46,8 @@ typedef enum e_keys
 	KEY_LEFT,
 	KEY_RIGHT,
 	KEY_M,
+	KEY_TAB,
+	KEY_F,
 	KEY_COUNT
 }	t_keys;
 

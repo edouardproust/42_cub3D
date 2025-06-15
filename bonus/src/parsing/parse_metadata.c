@@ -3,7 +3,8 @@
 bool	is_metadata_parsed(t_map *map)
 {
 	if (map->texture_no && map->texture_so && map->texture_ea
-		&& map->texture_we && map->color_c.str && map->color_f.str)
+		&& map->texture_we && map->color_c.str && map->color_f.str
+		&& map->texture_door)
 		return (true);
 	return (false);
 }
@@ -64,6 +65,8 @@ int	parse_line_to_metadata(char *line, t_map *map, int ret)
 		ret = parse_metadata("F", line + 1, &map->color_f.str);
 	else if (ft_strncmp(line, "C ", 2) == 0)
 		ret = parse_metadata("C", line + 1, &map->color_c.str);
+	else if (ft_strncmp(line, "DO ", 3) == 0)
+		ret = parse_metadata("DO", line + 2, &map->texture_door);
 	else if (line[0] != '\0')
 		return (put_error3(E_PARSING, line, "invalid metadata line"),
 			EXIT_FAILURE);

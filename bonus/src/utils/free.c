@@ -20,6 +20,8 @@ void	free_map(t_map *map)
 	free(map->texture_we);
 	free(map->color_c.str);
 	free(map->color_f.str);
+	free(map->texture_door);
+	free(map->doors);
 	free_grid(map->grid, map->grid_rows);
 	free(map);
 }
@@ -34,6 +36,8 @@ static void	free_textures(t_game *g)
 		mlx_delete_texture(g->tex_ea);
 	if (g->tex_we)
 		mlx_delete_texture(g->tex_we);
+	if (g->tex_door)
+		mlx_delete_texture(g->tex_door);
 }
 
 void	free_game(t_game *g)

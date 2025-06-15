@@ -43,6 +43,32 @@ void	update_minimap_player_sprite(t_game *g)
 	g->mm_player->instances[0].y = y - g->mm_player->height / 2;
 }
 
+static bool	is_cell_blocking(t_game *g, int x, int y)
+{
+	char	cell;
+	int		i;
+	t_door	*door;
+
+	cell = g->map->grid[y][x];
+	if (x < 0 || x >= g->map->grid_cols || y < 0 || y >= g->map->grid_rows)
+		return (true);
+	if (cell == '1' || cell == ' ')
+		return (true);
+	if (cell == 'D')
+	{
+		i = 0;
+		while (i < g->map->door_count)
+		{
+			door = &g->map->doors[i];
+			if (door->x == x && door->y == y)
+				return (door->state == CLOSED);
+			i++;
+		}
+		return (true);
+	}
+	return (false);
+}
+
 /**
  * Move player if keys UP, DOWN< LEFT or RIGHT is pressed.
  *
@@ -55,19 +81,14 @@ bool	move_player(t_game *g, double delta_time)
 	double	move_speed;
 	t_point	new_pos;
 	bool	has_moved;
-	char	cell_char;
 
 	move_speed = MOVE_SPEED * fmin(delta_time, 0.1);
 	has_moved = calc_new_player_pos(&new_pos, g, move_speed);
 	if (has_moved)
 	{
-		cell_char = g->map->grid[(int)g->pos.y][(int)new_pos.x];
-		if (new_pos.x > 0 && new_pos.x < g->map->grid_cols
-			&& cell_char != '1' && cell_char != ' ')
+		if (!is_cell_blocking(g, (int)new_pos.x, (int)g->pos.y))
 			g->pos.x = new_pos.x;
-		cell_char = g->map->grid[(int)new_pos.y][(int)g->pos.x];
-		if (new_pos.y > 0 && new_pos.y < g->map->grid_rows
-			&& cell_char != '1' && cell_char != ' ')
+		if (!is_cell_blocking(g, (int)g->pos.x, (int)new_pos.y))
 			g->pos.y = new_pos.y;
 		update_minimap_player_sprite(g);
 		update_minimap_dir_sprite(g);

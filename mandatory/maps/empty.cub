@@ -1,0 +1,12 @@
+        WE                  ./mandatory/assets/bricks.png
+NO ./mandatory/assets/skulls.png            
+        EA ./mandatory/assets/wood_white.png
+SO ./mandatory/assets/skulls.png
+
+
+F 220,100,0
+C 225,30,0
+
+    111 11
+    1W0D11
+    111111
