@@ -18,7 +18,7 @@
 # define HEIGHT			640		/* Main window height in pixels */
 
 /* Minimap Settings */
-# define MM_SCALE 		 14		/* Pixels per grid cell in minimap */
+# define MM_SCALE 		 10		/* Pixels per grid cell in minimap */
 # define MM_X 			 14		/* X offset from left window edge */
 # define MM_Y 			 10		/* Y offset from top window edge */
 # define MM_COLOR_WALL	 0x00000099	/* Color of the walls in minimap */
