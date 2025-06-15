@@ -1,5 +1,12 @@
 #include "cub3d.h"
-
+/**
+ * Attempts to toggle a door's state if player is adjacent.
+ * 
+ * @param door Door to toggle
+ * @param px Player grid X
+ * @param py Player grid Y
+ * @return true if door was toggled, false otherwise
+ */
 static bool	try_toggle_door(t_door *door, int px, int py)
 {
 	if (abs(door->x - px) > 1 || abs(door->y - py) > 1)
@@ -10,6 +17,14 @@ static bool	try_toggle_door(t_door *door, int px, int py)
 	return (true);
 }
 
+/**
+ * Toggles all doors adjacent to player position.
+ * 
+ * @param g Game context
+ * @param player_x Player grid X
+ * @param player_y Player grid Y
+ * @return true if any door was toggled, false otherwise
+ */
 static bool	toggle_all_adjacent_doors(t_game *g, int player_x, int player_y)
 {
 	int		i;
@@ -29,6 +44,14 @@ static bool	toggle_all_adjacent_doors(t_game *g, int player_x, int player_y)
 	return (toggled_any);
 }
 
+/**
+ * Door interaction handler:
+ * - Prevents rapid toggling with cooldown
+ * - Toggles adjacent doors
+ * - Forces redraw if doors changed
+ * 
+ * @param g Game context
+ */
 void	toggle_doors(t_game *g)
 {
 	static double	last_toggle = 0;

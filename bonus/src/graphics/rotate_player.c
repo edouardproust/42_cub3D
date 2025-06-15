@@ -1,5 +1,10 @@
 #include "cub3d.h"
-
+/**
+ * Updates minimap direction indicator sprite position.
+ * Places sprite at player's facing direction.
+ * 
+ * @param g Game context pointer
+ */
 void	update_minimap_dir_sprite(t_game *g)
 {
 	int	x;
@@ -11,6 +16,13 @@ void	update_minimap_dir_sprite(t_game *g)
 	g->mm_dir->instances[0].y = y - g->mm_dir->height / 2;
 }
 
+/**
+ * Rotates player direction and camera plane vectors.
+ * 
+ * @param g Game context
+ * @param rot_speed Rotation amount in radians
+ * @return true (always indicates rotation occurred)
+ */
 static bool	update_vectors_on_rotate(t_game *g, double rot_speed)
 {
 	double	old_dir_x;
@@ -56,6 +68,16 @@ bool	rotate_player(t_game *g, double delta_time)
 	return (has_moved);
 }
 
+/**
+ * Handles mouse-based rotation:
+ * - Calculates rotation delta from mouse movement
+ * - Applies rotation with sensitivity scaling
+ * - Resets mouse to center
+ * 
+ * @param g Game context
+ * @param delta_time Frame time in seconds
+ * @return true if rotated, false otherwise
+ */
 bool	handle_mouse_rotation(t_game *g, double delta_time)
 {
 	int		mouse_x;

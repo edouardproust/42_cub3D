@@ -19,7 +19,7 @@ static void	set_wall_screen_boundaries(t_ray *ray, double wall_dist,
 }
 
 static int	get_side_color(t_side side)
-{	
+{
 	if (side == NO)
 		return (WALL_COLOR_NO);
 	if (side == SO)

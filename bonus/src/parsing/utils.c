@@ -59,6 +59,17 @@ void	set_map_player(t_map *map, int x, int y, char dir)
 	}
 }
 
+/**
+ * Validates door placement rules:
+ * - Must be surrounded by walls on opposite sides
+ * - Cannot be on map edges
+ * - Must have non-wall adjacent cells on all four direactions
+ * 
+ * @param map Map data
+ * @param y Door grid Y
+ * @param x Door grid X
+ * @return true if valid placement, false otherwise
+ */
 bool	is_valid_door_position(t_map *map, int y, int x)
 {
 	char	**grid;
@@ -71,7 +82,8 @@ bool	is_valid_door_position(t_map *map, int y, int x)
 	horizontal = (grid[y][x - 1] == '1' && grid[y][x + 1] == '1');
 	vertical = (grid[y - 1][x] == '1' && grid[y + 1][x] == '1');
 	if (horizontal)
-	{	if (grid[y - 1][x] != '1' || grid[y + 1][x] != '1')
+	{
+		if (grid[y - 1][x] != '1' || grid[y + 1][x] != '1')
 			return (true);
 	}
 	if (vertical)
@@ -79,5 +91,5 @@ bool	is_valid_door_position(t_map *map, int y, int x)
 		if (grid[y][x - 1] != '1' || grid[y][x + 1] != '1')
 			return (true);
 	}
-	return false;
+	return (false);
 }

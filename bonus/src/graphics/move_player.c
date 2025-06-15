@@ -32,6 +32,12 @@ static bool	calc_new_player_pos(t_point	*new_pos, t_game *g, double move_speed)
 	return ((new_pos->x != g->pos.x) || (new_pos->y != g->pos.y));
 }
 
+/**
+ * Updates minimap player sprite position to match current player coords.
+ * Centers sprite on player's minimap position.
+ * 
+ * @param g Game context pointer
+ */
 void	update_minimap_player_sprite(t_game *g)
 {
 	int	x;
@@ -43,6 +49,17 @@ void	update_minimap_player_sprite(t_game *g)
 	g->mm_player->instances[0].y = y - g->mm_player->height / 2;
 }
 
+/**
+ * Checks if a map cell blocks player movement. Handles:
+ * - Solid walls ('1', ' ')
+ * - Closed doors ('D')
+ * - Map boundaries
+ * 
+ * @param g Game context
+ * @param x Grid X coordinate
+ * @param y Grid Y coordinate
+ * @return true if cell is blocking, false otherwise
+ */
 static bool	is_cell_blocking(t_game *g, int x, int y)
 {
 	char	cell;

@@ -57,7 +57,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		put_error("Wrong number of arguments. Usage: ./cub3D_bonus <map_file.cub>");
+		put_error("Wrong number of arguments. "
+			"Usage: ./cub3D_bonus <map_file.cub>");
 		return (EXIT_FAILURE);
 	}
 	game = init_game_data(argv);
