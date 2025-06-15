@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_metadata.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eproust <contact@edouardproust.dev>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	check_texture(char *id, char *filepath, t_game *g)
@@ -13,9 +25,8 @@ static void	check_texture(char *id, char *filepath, t_game *g)
 		exit_game2(E_PARSING, filepath, g);
 	ret = read(fd, &buf, 1);
 	close(fd);
-	if (ret == -1 && errno == EISDIR) {
+	if (ret == -1 && errno == EISDIR)
 		exit_game2(E_PARSING, id, g);
-	}
 }
 
 /**

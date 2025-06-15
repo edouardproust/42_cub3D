@@ -24,7 +24,7 @@ static void	check_grid_line(char *line, bool *player_found,
 
 /**
  * @note This functions accepts empty lines after the grid, if they only
- *  contain spaces. //TODO verify with Ava that this is conform to subject
+ *  contain spaces.
  */
 void	check_grid_lines(t_game *g)
 {

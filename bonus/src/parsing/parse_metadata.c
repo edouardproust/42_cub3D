@@ -13,7 +13,7 @@ bool	is_metadata_parsed(t_map *map)
  * Extract the value for the given metadata id,
  * and save it into the t_map struct.
  *
- * @note Skip spaces between id and value. //TODO verify if ok with subject
+ * @note Skip spaces between id and value.
  */
 static int	parse_metadata(char *id, char *line, char **map_tx)
 {

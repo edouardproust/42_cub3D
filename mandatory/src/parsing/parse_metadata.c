@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_metadata.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eproust <contact@edouardproust.dev>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 bool	is_metadata_parsed(t_map *map)
@@ -12,7 +24,7 @@ bool	is_metadata_parsed(t_map *map)
  * Extract the value for the given metadata id,
  * and save it into the t_map struct.
  *
- * @note Skip spaces between id and value. //TODO verify if ok with subject
+ * @note Skip spaces between id and value.
  */
 static int	parse_metadata(char *id, char *line, char **map_tx)
 {

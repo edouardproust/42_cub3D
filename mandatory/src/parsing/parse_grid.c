@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_grid.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eproust <contact@edouardproust.dev>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /**
@@ -31,7 +43,6 @@ static int	init_grid(t_map *map, char *line)
  *
  * @param map  Map structure with existing grid
  * @param line New line of grid content (with trailing newline)
- *	exit_game("DEBUG", g);
 
  * @return EXIT_SUCCESS on successful addition,
  *         EXIT_FAILURE if:
@@ -68,12 +79,6 @@ static int	add_line_to_grid(t_map *map, char *line)
  *           - Grid initialization fails
  *           - Grid expansion fails
  *         EXIT_SUCCESS for empty lines before grid starts
- * @TODO #1:
- * I parse also empty lines (i check them later on in the validation).
- * I do this to allow empty lines after the grid.
- * But: ARE EMPTY LINE SAFTER THE GRID ALLOWED? If not, then we need to 
- * add the condition here to check if line is empty, and stop parsing as soon 
- * as we encounter an empty line.
  */
 int	parse_line_to_grid(char *line, t_map *map, int ret)
 {
@@ -83,7 +88,7 @@ int	parse_line_to_grid(char *line, t_map *map, int ret)
 		return (EXIT_SUCCESS);
 	if (!map->grid && !is_blank_str(line))
 		ret = init_grid(map, line);
-	else if (map->grid) // TODO #1
+	else if (map->grid)
 		ret = add_line_to_grid(map, line);
 	return (ret);
 }
