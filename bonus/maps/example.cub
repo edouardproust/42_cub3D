@@ -1,17 +1,17 @@
 
-   
-WE   ./bonus/assets/bricks.png
-NO ./bonus/assets/concrete.png
 
-         
-EA       ./bonus/assets/wood_blue_old.png
-SO ./bonus/assets/skulls.png
-   
-   
-DO   ./bonus/assets/paint_red.png
+WE   ./bonus/assets/castle1.png
+NO ./bonus/assets/castle2.png
+
+
+EA       ./bonus/assets/castle3.png
+SO ./bonus/assets/castle4.png
+
+
+DO   ./bonus/assets/door.png
 
 F 255,100,0
-  
+
 C 225,222,0
 
         1111111111111111111111111
@@ -30,5 +30,5 @@ C 225,222,0
 11111111 1111111 111111111111
 
 
-                
-     
+
+

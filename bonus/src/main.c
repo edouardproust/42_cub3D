@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpapadak <fpapadak@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 17:01:26 by eproust           #+#    #+#             */
+/*   Updated: 2025/06/15 17:02:03 by eproust          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	init_game_vectors(t_game *g)
@@ -57,8 +69,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		put_error("Wrong number of arguments. "
-			"Usage: ./cub3D_bonus <map_file.cub>");
+		put_error("Wrong number of arguments."
+			" Usage: ./cub3D_bonus <map_file.cub>");
 		return (EXIT_FAILURE);
 	}
 	game = init_game_data(argv);

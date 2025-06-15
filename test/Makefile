@@ -1,34 +1,74 @@
-NAME = ./cub3D
+NAME = ../cub3D
 
-NAME_BONUS = ./cub3D_bonus
+ROOT_MAKEFILE = ../Makefile
+
+# ************************************
+# Sources                            *
+# ************************************
+
+C_DIR = src
+
+C_FILES = debug.c \
+	main.c \
+	parsing/map.c \
+	parsing/parse_grid.c \
+	parsing/parse_metadata.c \
+	parsing/trim_grid.c \
+	parsing/utils.c \
+	parsing/check_grid.c \
+	parsing/check_metadata.c \
+	graphics/init_mlx.c \
+	graphics/keymapping.c \
+	graphics/hooks.c \
+	graphics/move_player.c \
+	graphics/rotate_player.c \
+	graphics/draw_screen.c \
+	graphics/raycasting.c \
+	graphics/wall_textures.c \
+	graphics//wall_render.c \
+	utils/mlx.c \
+	utils/char.c \
+	utils/error.c \
+	utils/exit.c \
+	utils/free.c \
+	utils/string.c
+
+SRCS = $(addprefix $(C_DIR)/,$(C_FILES))
 
 
 # ************************************
-# Dirs                               *
+# Objects                            *
 # ************************************
 
-MANDATORY_DIR = mandatory
+O_DIR = $(C_DIR)/_obj
 
-BONUS_DIR = bonus
+OBJS = $(addprefix $(O_DIR)/,$(C_FILES:.c=.o))
+
 
 # ************************************
-# OPTIONS                            *
+# Headers                            *
 # ************************************
 
-VALGRIND_SUPP = valgrind.supp
+H_DIR = inc
 
-VALGRIND_FLAGS = --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=yes --suppressions=$(VALGRIND_SUPP)
+H_FILES = cub3d.h \
+	config.h
 
-VALGRIND_MAP = $(MANDATORY_DIR)/maps/test.cub
+HEADERS = $(addprefix $(H_DIR)/,$(H_FILES))
 
-VALGRIND_MAP_BONUS = $(BONUS_DIR)/maps/test.cub
+
+# ************************************
+# Flags                              *
+# ************************************
+
+CFLAGS = -Wall -Wextra -Werror
 
 
 # ************************************
 # Libraries                          *
 # ************************************
 
-LIBS_DIR = lib
+LIBS_DIR = ../lib
 
 LIBFT_DIR = $(LIBS_DIR)/libft
 
@@ -42,42 +82,35 @@ LIBS = $(LIBFT) $(MLX) -ldl -lglfw -pthread -lm
 
 
 # ************************************
+# Includes                           *
+# ************************************
+
+INCLUDES = -I$(H_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)/include/MLX42
+
+
+# ************************************
 # Rules                              *
 # ************************************
 
-all: libft libmlx
-	$(MAKE) -C $(MANDATORY_DIR)
+all: $(NAME)
 
-bonus: libft libmlx
-	$(MAKE) -C $(BONUS_DIR)
+$(O_DIR)/%.o: $(C_DIR)/%.c Makefile $(ROOT_MAKEFILE) $(HEADERS) $(LIBFT) $(MLX)
+	@mkdir -p $(@D)
+	cc -c $(FLAGS) $< -o $@ $(INCLUDES)
 
-libft:
-	$(MAKE) -C $(LIBFT_DIR)
-
-libmlx:
-	cmake $(MLX_DIR) -B $(MLX_DIR)/build
-	$(MAKE) -C $(MLX_DIR)/build -j4
+$(NAME): $(OBJS) $(LIBFT)
+	cc -o $@ $^ $(LIBS)
 
 clean:
-	$(MAKE) -C $(MANDATORY_DIR) clean
-	$(MAKE) -C $(BONUS_DIR) clean
-	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -rf $(MLX)/build
+	rm -rf $(O_DIR)
 
 fclean: clean
-	rm -rf $(NAME) $(NAME_BONUS)
+	rm -f $(NAME)
 
 re: fclean all
-
-valgrind:
-	valgrind $(VALGRIND_FLAGS) $(NAME) $(VALGRIND_MAP)
-
-valgrind_bonus:
-	valgrind $(VALGRIND_FLAGS) $(NAME_BONUS) $(VALGRIND_MAP_BONUS)
-
 
 # ************************************
 # Phony                              *
 # ************************************
 
-.PHONY: all clean fclean re libft libmlx valgrind
+.PHONY: all clean fclean re
