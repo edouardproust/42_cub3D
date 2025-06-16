@@ -69,12 +69,16 @@ double	calc_wall_hit_position(t_ray *ray, t_game *g)
 		wall_x = g->pos.x + ray->wall_dist * ray->dir.x;
 		if (ray->side == DOOR_CLOSED && ray->is_vertical_hit)
 			wall_x = g->pos.y + ray->wall_dist * ray->dir.y;
+		if (ray->side == SO)
+			wall_x = 1 - wall_x;
 	}
 	else
 	{
 		wall_x = g->pos.y + ray->wall_dist * ray->dir.y;
 		if (ray->side == DOOR_CLOSED && !ray->is_vertical_hit)
 			wall_x = g->pos.x + ray->wall_dist * ray->dir.x;
+		if (ray->side == WE)
+			wall_x = 1 - wall_x;
 	}
 	wall_x = wall_x - floor(wall_x);
 	return (wall_x);
