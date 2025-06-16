@@ -11,9 +11,14 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 /**
- * @note redraw the 3D view on 30fps (instead of 60)
+ * Main game loop running at ~30 FPS. Handles:
+ * - Player movement/rotation
+ * - Mouse look
+ * - Conditional rendering (3D view and minimap)
+ * - Frame pacing
+ * 
+ * @param param Game context pointer (cast to t_game*)
  */
 static void	loop_hook(void *param)
 {
@@ -42,6 +47,12 @@ static void	loop_hook(void *param)
 		draw_player(game);
 }
 
+/**
+ * Cleanup hook triggered on window close. Frees game resources
+ * and exits the program.
+ * 
+ * @param param Game context pointer (cast to t_game*)
+ */
 static void	close_hook(void *param)
 {
 	t_game	*game;
@@ -51,6 +62,13 @@ static void	close_hook(void *param)
 	exit(EXIT_SUCCESS);
 }
 
+/**
+ * Keyboard input handler. Updates key states and processes
+ * special keys (ESC, M, TAB, F) immediately.
+ * 
+ * @param keydata MLX key event data
+ * @param param Game context pointer (cast to t_game*)
+ */
 static void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
@@ -63,6 +81,17 @@ static void	key_hook(mlx_key_data_t keydata, void *param)
 		game->key_states[mapped_key] = (keydata.action != MLX_RELEASE);
 }
 
+/**
+ * Window resize handler. Adjusts:
+ * - Screen buffer size
+ * - Mouse position (when captured)
+ * - Minimap position
+ * - Forces view redraw
+ * 
+ * @param width New window width
+ * @param height New window height
+ * @param param Game context pointer (cast to t_game*)
+ */
 static void	resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;

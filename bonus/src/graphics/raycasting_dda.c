@@ -11,7 +11,12 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+/**
+ * Advances raycasting along X-axis (vertical hit detection).
+ * Updates ray state and sets cardinal direction.
+ * 
+ * @param ray Current raycasting context
+ */
 static void	advance_ray_x(t_ray *ray)
 {
 	ray->length_x += ray->len_step_x;
@@ -23,6 +28,12 @@ static void	advance_ray_x(t_ray *ray)
 		ray->side = WE;
 }
 
+/**
+ * Advances raycasting along Y-axis (horizontal hit detection).
+ * Updates ray state and sets cardinal direction.
+ * 
+ * @param ray Current raycasting context
+ */
 static void	advance_ray_y(t_ray *ray)
 {
 	ray->length_y += ray->len_step_y;
@@ -34,6 +45,15 @@ static void	advance_ray_y(t_ray *ray)
 		ray->side = NO;
 }
 
+/**
+ * Processes door hits during raycasting. Marks ray as:
+ * - Wall hit if door is closed
+ * - Door hit for special rendering
+ * 
+ * @param ray Current raycasting context
+ * @param g Game context
+ * @return true if hit closed door, false otherwise
+ */
 static bool	ray_cast_on_door(t_ray *ray, t_game *g)
 {
 	t_door	*door;
@@ -50,6 +70,15 @@ static bool	ray_cast_on_door(t_ray *ray, t_game *g)
 	return (false);
 }
 
+/**
+ * Executes DDA (Digital Differential Analysis) algorithm:
+ * - Steps through grid until hitting wall/door
+ * - Tracks hit direction and position
+ * - Handles special door cases
+ * 
+ * @param ray Raycasting context
+ * @param g Game context
+ */
 void	perform_dda_algorythm(t_ray *ray, t_game *g)
 {
 	ray->wall_hit = false;

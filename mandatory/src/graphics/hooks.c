@@ -34,6 +34,12 @@ static void	loop_hook(void *param)
 		draw_view_on_screen(game);
 }
 
+/**
+ * Cleanup hook triggered on window close. Frees game resources
+ * and exits the program.
+ * 
+ * @param param Game context pointer (cast to t_game*)
+ */
 static void	close_hook(void *param)
 {
 	t_game	*game;
@@ -43,6 +49,13 @@ static void	close_hook(void *param)
 	exit(EXIT_SUCCESS);
 }
 
+/**
+ * Keyboard input handler. Updates key states and processes
+ * special keys (ESC) immediately.
+ * 
+ * @param keydata MLX key event data
+ * @param param Game context pointer (cast to t_game*)
+ */
 static void	key_hook(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
@@ -55,6 +68,14 @@ static void	key_hook(mlx_key_data_t keydata, void *param)
 		game->key_states[mapped_key] = (keydata.action != MLX_RELEASE);
 }
 
+/**
+ * Window resize handler. Adjusts:
+ * - Screen buffer size
+ * 
+ * @param width New window width
+ * @param height New window height
+ * @param param Game context pointer (cast to t_game*)
+ */
 static void	resize_hook(int32_t width, int32_t height, void *param)
 {
 	t_game	*game;

@@ -11,7 +11,16 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+/**
+ * Determines the minimap color for a door at given grid coordinates.
+ * Searches through the door list to find a door at (x,y) and returns
+ * the color based on its state (open/closed).
+ * 
+ * @param g Game context pointer
+ * @param x Grid X coordinate
+ * @param y Grid Y coordinate
+ * @return MM_COLOR_OPEN or MM_COLOR_CLOSED (default if door not found)
+ */
 static int	get_door_color(t_game *g, int x, int y)
 {
 	int		i;
@@ -33,6 +42,14 @@ static int	get_door_color(t_game *g, int x, int y)
 	return (MM_COLOR_CLOSED);
 }
 
+/**
+ * Draws a single door cell on the minimap at specified grid coordinates.
+ * Fills a MM_SCALE x MM_SCALE pixel area with the door's color.
+ * 
+ * @param g Game context pointer
+ * @param map_x Grid X coordinate
+ * @param map_y Grid Y coordinate
+ */
 void	draw_minimap_door_cell(t_game *g, int map_x, int map_y)
 {
 	int	i;
@@ -54,6 +71,12 @@ void	draw_minimap_door_cell(t_game *g, int map_x, int map_y)
 	}
 }
 
+/**
+ * Iterates through the entire map grid and draws all 'D' (door) cells
+ * onto the minimap using draw_minimap_door_cell().
+ * 
+ * @param g Game context pointer
+ */
 void	draw_minimap_doors(t_game *g)
 {
 	int	x;
@@ -73,6 +96,14 @@ void	draw_minimap_doors(t_game *g)
 	}
 }
 
+/**
+ * Finds and returns a door structure at specified grid coordinates.
+ * 
+ * @param map Map data pointer
+ * @param x Grid X coordinate
+ * @param y Grid Y coordinate
+ * @return Pointer to door structure, or NULL if not found
+ */
 t_door	*get_door_pos(t_map *map, int x, int y)
 {
 	int	i;

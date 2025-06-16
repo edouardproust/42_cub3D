@@ -69,19 +69,19 @@ int	parse_line_to_metadata(char *line, t_map *map, int ret)
 		return (ret);
 	while (ft_isspace(*line))
 		line++;
-	if (ft_strncmp(line, "NO ", 3) == 0)
+	if (ft_strncmp(line, "NO", 2) == 0 && is_space_tab(line[2]))
 		ret = parse_metadata("NO", line + 2, &map->texture_no);
-	else if (ft_strncmp(line, "SO ", 3) == 0)
+	else if (ft_strncmp(line, "SO", 2) == 0 && is_space_tab(line[2]))
 		ret = parse_metadata("SO", line + 2, &map->texture_so);
-	else if (ft_strncmp(line, "EA ", 3) == 0)
+	else if (ft_strncmp(line, "EA", 2) == 0 && is_space_tab(line[2]))
 		ret = parse_metadata("EA", line + 2, &map->texture_ea);
-	else if (ft_strncmp(line, "WE ", 3) == 0)
+	else if (ft_strncmp(line, "WE", 2) == 0 && is_space_tab(line[2]))
 		ret = parse_metadata("WE", line + 2, &map->texture_we);
-	else if (ft_strncmp(line, "F ", 2) == 0)
+	else if (ft_strncmp(line, "F", 1) == 0 && is_space_tab(line[1]))
 		ret = parse_metadata("F", line + 1, &map->color_f.str);
-	else if (ft_strncmp(line, "C ", 2) == 0)
+	else if (ft_strncmp(line, "C", 1) == 0 && is_space_tab(line[1]))
 		ret = parse_metadata("C", line + 1, &map->color_c.str);
-	else if (ft_strncmp(line, "DO ", 3) == 0)
+	else if (ft_strncmp(line, "DO", 2) == 0 && is_space_tab(line[2]))
 		ret = parse_metadata("DO", line + 2, &map->texture_door);
 	else if (line[0] != '\0')
 		return (put_error3(E_PARSING, line, "invalid metadata line"),

@@ -185,5 +185,6 @@ int				count_space_chars(char *str, int start, int end, bool rtl);
 /* Char */
 bool			is_grid_char(char c);
 bool			is_grid_player_char(char c);
+int				is_space_tab(char c);
 
 #endif

@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+/**
+ * Fills door structures with positions from map grid.
+ * 
+ * @param map Map data pointer
+ */
 static void	populate_doors(t_map *map)
 {
 	int	x;
@@ -38,6 +42,14 @@ static void	populate_doors(t_map *map)
 	}
 }
 
+/**
+ * Counts 'D' characters in map grid.
+ * 
+ * @param grid 2D map array
+ * @param rows Grid row count
+ * @param cols Grid column count
+ * @return Number of doors found
+ */
 static int	count_doors(char **grid, int rows, int cols)
 {
 	int	count;
@@ -60,6 +72,14 @@ static int	count_doors(char **grid, int rows, int cols)
 	return (count);
 }
 
+/**
+ * Initializes door system:
+ * - Counts doors in map
+ * - Allocates door array
+ * - Populates door positions
+ * 
+ * @param g Game context pointer
+ */
 void	init_doors(t_game *g)
 {
 	t_map	*map;
